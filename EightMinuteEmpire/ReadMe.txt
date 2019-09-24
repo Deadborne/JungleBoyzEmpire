@@ -23,6 +23,7 @@ EightMinuteEmpire.vcxproj.filters
 
 EightMinuteEmpire.cpp
     This is the main application source file.
+    USE THIS FILE TO AS THE DRIVER CLASS TO RUN/TEST YOUR FILES
 
 /////////////////////////////////////////////////////////////////////////////
 Other standard files:
