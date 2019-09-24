@@ -2,6 +2,12 @@
     CONSOLE APPLICATION : EightMinuteEmpire Project Overview
 ========================================================================
 
+Remember to do the following:
+1.) Create your own branches for your work.
+2.) Pull from master if it is not up to date (probably not applicable for the first assignment)
+3.) If you want to merge with the master. CREATE A PULL REQUEST!!!
+4.) Test test test!
+
 AppWizard has created this EightMinuteEmpire application for you.
 
 This file contains a summary of what you will find in each of the files that
