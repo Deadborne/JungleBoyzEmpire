@@ -4,16 +4,18 @@
 
 #include "stdafx.h"
 #include <string>
-#include<iostream>
+#include <iostream>
 #include "Map.h"
 #include "Country.h"
-
-#include <boost/graph/adjacency_list.hpp>
-
 using namespace std;
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/graphviz.hpp>
+using namespace boost;
+
 
 int main()
 {
+
 	cout << "Hello World! What is your name? \n";
 	string name;
 	name = "rofl";
@@ -25,6 +27,29 @@ int main()
 	m.getNum();
 	Country c = Country(12, 1);
 	c.getId();
+
+	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
+	Graph territories;
+	typedef adjacency_list< listS, vecS, directedS > digraph;
+	Graph continents;
+	typedef adjacency_list< listS, vecS, directedS > digraph;
+
+	// instantiate a digraph object with 8 vertices
+	Graph g(8);
+
+	// add some edges
+	add_edge(0, 1, g);
+	add_edge(1, 5, g);
+	add_edge(5, 6, g);
+	add_edge(2, 3, g);
+	add_edge(2, 4, g);
+	add_edge(3, 5, g);
+	add_edge(4, 5, g);
+	add_edge(5, 7, g);
+
+	// represent graph in DOT format and send to cout
+	write_graphviz(cout, g);
+
 	
 	Country d = Country(1, 1);
 	d.setOwner(1);
@@ -42,4 +67,5 @@ int main()
 
     return 0;
 }
+
 

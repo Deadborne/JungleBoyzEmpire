@@ -11,7 +11,6 @@ using namespace std;
 Country::Country(int countryId, int continentId) : _countryId(countryId), _continentId(continentId)
 {
 }
-
 //returns the ID of the country
 int Country::getId()
 {
