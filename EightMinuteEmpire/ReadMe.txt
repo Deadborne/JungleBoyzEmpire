@@ -1,3 +1,7 @@
+[[ IMPORTANT: ]]
+If you're having a hard time running the solution from your local machine (you're getting an error that says "The Windows SDK version 10.0.17763.0 was not found."), you'll likely have to retarget the solution.
+To do this, right click on the solution in your Project Explorer and choose the Retarget Solution item. Select the specified Windows SDK version, and you'll be good to go.
+
 ========================================================================
     CONSOLE APPLICATION : EightMinuteEmpire Project Overview
 ========================================================================
