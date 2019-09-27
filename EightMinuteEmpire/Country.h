@@ -1,10 +1,10 @@
 #pragma once
 #include "stdafx.h"
-class Map
+class Country
 {
 private:
-	int num;
+	int countryId;
 public:
-	Map(int n);
+	Country(int n);
 	int getNum();
 };

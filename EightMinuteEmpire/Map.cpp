@@ -1,3 +1,4 @@
+#pragma once
 #include "stdafx.h"
 #include "Map.h"
 #include <iostream>
@@ -15,4 +16,5 @@ int Map::getNum()
 	getline(cin, rofl);
 	return number;
 };
-
+
+
