@@ -10,14 +10,10 @@ class Card {
 
 	public:
 		Card();
-		Card(bool wildcard, std::string mat, std::string act1, std::string act2);
+		Card(std::string mat, std::string act1, std::string act2);
 		~Card();
-		bool isWild() { return isWildcard; }
-		std::string getMaterial() const { return material; }
-		std::string getAction1() const { return action1; }
-		std::string getAction2() const { return action2; }
-
-
-
+		std::string getMaterial() const;
+		std::string getAction1() const;
+		std::string getAction2() const;
 
 };

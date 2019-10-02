@@ -1,18 +1,32 @@
 // Deck.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+#include <vector>
 #include "Card.h"
 #include <iostream>
 using std::cout;
 using std::endl;
 using std::string;
+using std::vector;
 
 int main()
 {
     std::cout << "Hello World!\n";
 
-	Card c1(false, "coal", "Spawn 5", "Move 2");
-	Card c2(true, "wildcard", "Move 2", "");
+	// Deck Object
+	vector<Card> deck;
+	vector<Card> hand;
+
+	Card c1("coal", "Spawn 5", "Move 2");
+	deck[0] = c1;
+	Card c2("wildcard", "Move 2", "");
+	deck[1] = c2;
+
+}
+
+// Player draws card from top of deck and places at the hand space
+Card draw(vector<Card> d, vector<Card> h) {
+	h[h.size()-1] = d[0];
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
