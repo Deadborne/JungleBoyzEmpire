@@ -19,5 +19,4 @@ class Card {
 		std::string getAction1() const;
 		std::string getAction2() const;
 		std::string getOperator() const;
-
 };

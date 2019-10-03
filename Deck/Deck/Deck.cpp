@@ -1,16 +1,19 @@
 // Deck.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-
+#include <time.h>
 #include <vector>
 #include "Card.h"
 #include <iostream>
-#include <random>
-#include <time.h>
+#include <algorithm>
 using std::cout;
 using std::endl;
 using std::string;
 using std::vector;
-using std::srand;
+using std::random_shuffle;
+
+void shuffleDeck(vector<Card> d);
+void draw(vector<Card> d, vector<Card> h);
+void printDeck(vector<Card> d);
 
 int main()
 {
@@ -39,14 +42,41 @@ int main()
 	deck[15] = Card("anvil", 1, "place 3", "", "");
 	deck[16] = Card("carrot", 2, "place 3", "", "");
 	deck[17] = Card("coal", 1, "place 2", "build", "or");
+	deck[18] = Card("anvil", 1, "build", "", "");
+	deck[19] = Card("carrot", 1, "build", "", "");
+	deck[20] = Card("carrot", 1, "build", "", "");
+	deck[21] = Card("tree", 1, "build", "", "");
+	deck[22] = Card("tree", 1, "build", "", "");
+	deck[23] = Card("shard", 1, "place 2", "", "");
+	deck[24] = Card("carrot", 1, "destroy", "place 1", "and");
+	deck[24] = Card("carrot", 1, "place 4", "move 2", "or");
+	deck[25] = Card("tree", 1, "destroy", "build", "or");
+	deck[26] = Card("coal", 1, "moveOver 2", "", "");
 
-	cout << deck[0].getGood() << "" << endl;
+
+	// shuffles deck before game
+	shuffleDeck(deck);
+	printDeck(deck);
+
+	return 0;
 
 }
 
 // Player draws card from top of deck and places at the hand space
 void draw(vector<Card> d, vector<Card> h) {
 	h[h.size()-1] = d[0];
+}
+
+// Shuffle deck method
+void shuffleDeck(vector<Card> d) {
+	srand(unsigned(time(NULL)));
+	random_shuffle(d.begin(), d.end());
+}
+
+// Print cards from deck based on their good
+void printDeck(vector<Card> d) {
+	for (auto& i : d)
+		cout << "Goods: " << i.getGoodAmount() << " " << i.getGood() << endl;
 }
 
 
