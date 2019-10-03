@@ -4,30 +4,51 @@
 #include <vector>
 #include "Card.h"
 #include <iostream>
+#include <random>
+#include <time.h>
 using std::cout;
 using std::endl;
 using std::string;
 using std::vector;
+using std::srand;
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    cout << "Hello World!\n";
 
 	// Deck Object
-	vector<Card> deck;
-	vector<Card> hand;
+	vector<Card> deck(42);
+	// Hand Object with face-up cards
+	vector<Card> hand(6);
 
-	Card c1("coal", "Spawn 5", "Move 2");
-	deck[0] = c1;
-	Card c2("wildcard", "Move 2", "");
-	deck[1] = c2;
+	deck[0] = Card("shard", 1, "move 2", "", "");
+	deck[1] = Card("anvil", 1, "place 3", "move 3", "or");
+	deck[2] = Card("anvil", 2, "move 4", "", "");
+	deck[3] = Card("anvil", 1, "move 4", "", "");
+	deck[4] = Card("tree", 1, "move 6", "", "");
+	deck[5] = Card("tree", 1, "move 3", "", "");
+	deck[6] = Card("anvil", 1, "place 3", "", "");
+	deck[7] = Card("shard", 1, "place 2", "", "");
+	deck[8] = Card("wildcard", 1, "moveOver 2", "", "");
+	deck[9] = Card("tree", 1, "moveOver 4", "", "");
+	deck[10] = Card("anvil", 1, "moveOver 3", "", "");
+	deck[11] = Card("wildcard", 1, "place 2", "", "");
+	deck[12] = Card("coal", 1, "place 2", "", "");
+	deck[13] = Card("shard", 1, "place 2", "", "");
+	deck[14] = Card("coal", 1, "place 3", "", "");
+	deck[15] = Card("anvil", 1, "place 3", "", "");
+	deck[16] = Card("carrot", 2, "place 3", "", "");
+	deck[17] = Card("coal", 1, "place 2", "build", "or");
+
+	cout << deck[0].getGood() << "" << endl;
 
 }
 
 // Player draws card from top of deck and places at the hand space
-Card draw(vector<Card> d, vector<Card> h) {
+void draw(vector<Card> d, vector<Card> h) {
 	h[h.size()-1] = d[0];
 }
+
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
