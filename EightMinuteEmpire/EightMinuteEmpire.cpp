@@ -4,6 +4,7 @@
 
 #include "stdafx.h"
 #include <string>
+
 #include <iostream>
 #include "Map.h"
 #include "Country.h"
@@ -16,9 +17,14 @@ using namespace boost;
 int main()
 {
 
+#include<iostream>
+using namespace std;
+
+int main()
+{
 	cout << "Hello World! What is your name? \n";
 	string name;
-	name = "rofl";
+
 	getline(cin, name);
 	cout << "Hello " << name << "!\n";
 	cout << "Please press enter to close the console :D";
