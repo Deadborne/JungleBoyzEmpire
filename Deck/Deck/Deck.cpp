@@ -6,7 +6,7 @@
 #include <random>
 #include <algorithm>
 #include <iterator>
-
+using std::cin;
 using std::cout;
 using std::endl;
 using std::string;
@@ -33,59 +33,61 @@ int main()
 	vector<Card> hand(6);
 
 	int players = 0;
-	cout << "Enter amount of Players: " << endl;
+	cout << "Enter amount of Players: ";
 	cin >> players;
 	while (players < 2 || players > 5) {
-		cout << "Invalid amount of players. Must be between 2 and 5" << endl;
+		cout << "Invalid amount of players. Must be between 2 and 5: ";
 		cin >> players;
 	}
 	cout << "You chose " << players << " players";
 
 
 	// Fill deck with cards
-	deck[0] = Card("shard", 1, "move", 2, "", 0, "", false);
-	deck[1] = Card("anvil", 1, "place", 3, "move", 3, "or", false);
-	deck[2] = Card("anvil", 2, "move", 4, "", 0, "", false);
-	deck[3] = Card("anvil", 1, "move", 4, "", 0, "", false);
-	deck[4] = Card("tree", 1, "move", 6, "", 0, "", true);
-	deck[5] = Card("tree", 1, "move", 3, "", 0, "", false);
-	deck[6] = Card("anvil", 1, "place", 3, "", 0, "", false);
-	deck[7] = Card("shard", 1, "place", 2, "", 0, "", true);
-	deck[8] = Card("wildcard", 1, "moveOver", 2, "", 0, "", false);
-	deck[9] = Card("tree", 1, "moveOver", 4, "", 0, "", false);
-	deck[10] = Card("anvil", 1, "moveOver", 3, "", 0, "", false);
-	deck[11] = Card("wildcard", 1, "place", 2, "", 0, "", false);
-	deck[12] = Card("coal", 1, "place", 2, "", 0, "", false);
-	deck[13] = Card("shard", 1, "place", 2, "", 0, "", false);
-	deck[14] = Card("coal", 1, "place", 3, "", 0, "", false);
-	deck[15] = Card("anvil", 1, "place", 3, "", 0, "", false);
-	deck[16] = Card("carrot", 2, "place", 3, "", 0, "", false);
-	deck[17] = Card("coal", 1, "place", 2, "build", 1, "or", false);
-	deck[18] = Card("anvil", 1, "build", 1, "", 0, "", false);
-	deck[19] = Card("carrot", 1, "build", 1, "", 0, "", false);
-	deck[20] = Card("carrot", 1, "build", 1, "", 0, "", false);
-	deck[21] = Card("tree", 1, "build", 1, "", 0, "", false);
-	deck[22] = Card("tree", 1, "build", 1, "", 0, "", false);
-	deck[23] = Card("shard", 1, "place", 2, "", 0, "", false);
-	deck[24] = Card("carrot", 1, "destroy", 1, "place", 1, "and", false);
-	deck[24] = Card("carrot", 1, "place", 4, "move", 2, "or", true);
-	deck[25] = Card("tree", 1, "destroy", 1, "build", 1, "or", false);
-	deck[26] = Card("coal", 1, "moveOver", 2, "", 0, "", false);
-	deck[27] = Card("anvil", 1, "place", 3, "move", 4, "or", false);
-	deck[28] = Card("anvil", 1, "place", 3, "move", 4, "or", false);
-	deck[29] = Card("carrot", 1, "moveOver", 3, "", 0, "", false);
-	deck[30] = Card("tree", 1, "moveOver", 3, "", 0, "", false);
-	deck[31] = Card("coal", 1, "moveOver", 3, "", 0, "", false);
-	deck[32] = Card("carrot", 2, "move", 4, "", 0, "", false);
-	deck[33] = Card("advil", 1, "move", 5, "", 0, "", false);
-	deck[34] = Card("coal", 1, "moveOver", 2, "", 0, "", false);
-	deck[35] = Card("wildcard", 1, "moveOver", 3, "", 0, "", false);
-	deck[36] = Card("carrot", 1, "move", 5, "", 0, "", false);
-	deck[37] = Card("coal", 1, "move", 2, "", 0, "", false);
-	deck[38] = Card("tree", 1, "place", 2, "move", 3, "or", false);
-	deck[39] = Card("carrot", 1, "move", 4, "", 0, "", false);
-	deck[40] = Card("carrot", 1, "place", 3, "", 0, "", false);
-	deck[41] = Card("shard", 1, "place", 1, "", 0, "", false);
+	deck[0] = Card("tree", 1, "move", 3, "", 0, "", false);
+	deck[1] = Card("anvil", 1, "place", 3, "", 0, "", false);
+	deck[2] = Card("anvil", 1, "place", 3, "move", 3, "or", false);
+	deck[3] = Card("wildcard", 1, "moveOver", 2, "", 0, "", false);
+	deck[4] = Card("tree", 1, "moveOver", 4, "", 0, "", false);
+	deck[5] = Card("anvil", 1, "moveOver", 3, "", 0, "", false);
+	deck[6] = Card("wildcard", 1, "place", 2, "", 0, "", false);
+	deck[7] = Card("coal", 1, "place", 2, "", 0, "", false);
+	deck[8] = Card("shard", 1, "place", 2, "", 0, "", false);
+	deck[9] = Card("coal", 1, "place", 3, "", 0, "", false);
+	deck[10] = Card("anvil", 1, "place", 3, "", 0, "", false);
+	deck[11] = Card("carrot", 2, "place", 3, "", 0, "", false);
+	deck[12] = Card("coal", 1, "place", 2, "build", 1, "or", false);
+	deck[13] = Card("anvil", 1, "build", 1, "", 0, "", false);
+	deck[14] = Card("carrot", 1, "build", 1, "", 0, "", false);
+	deck[15] = Card("carrot", 1, "build", 1, "", 0, "", false);
+	deck[16] = Card("tree", 1, "build", 1, "", 0, "", false);
+	deck[17] = Card("tree", 1, "build", 1, "", 0, "", false);
+	deck[18] = Card("shard", 1, "place", 2, "", 0, "", false);
+	deck[19] = Card("carrot", 1, "destroy", 1, "place", 1, "and", false);
+	deck[20] = Card("shard", 1, "move", 2, "", 0, "", false);
+	deck[21] = Card("tree", 1, "destroy", 1, "build", 1, "or", false);
+	deck[22] = Card("anvil", 1, "move", 4, "", 0, "", false);
+	deck[23] = Card("anvil", 1, "place", 3, "move", 4, "or", false);
+	deck[24] = Card("anvil", 1, "place", 3, "move", 4, "or", false);
+	deck[25] = Card("carrot", 1, "moveOver", 3, "", 0, "", false);
+	deck[26] = Card("tree", 1, "moveOver", 3, "", 0, "", false);
+	deck[27] = Card("coal", 1, "moveOver", 3, "", 0, "", false);
+	deck[28] = Card("carrot", 2, "move", 4, "", 0, "", false);
+	deck[29] = Card("advil", 1, "move", 5, "", 0, "", false);
+	deck[30] = Card("coal", 1, "moveOver", 2, "", 0, "", false);
+	deck[31] = Card("wildcard", 1, "moveOver", 3, "", 0, "", false);
+	deck[32] = Card("carrot", 1, "move", 5, "", 0, "", false);
+	deck[33] = Card("coal", 1, "move", 2, "", 0, "", false);
+	deck[34] = Card("tree", 1, "place", 2, "move", 3, "or", false);
+	deck[35] = Card("carrot", 1, "move", 4, "", 0, "", false);
+	deck[36] = Card("carrot", 1, "place", 3, "", 0, "", false);
+	deck[37] = Card("shard", 1, "place", 1, "", 0, "", false);
+
+	if (players == 5) {
+		deck[38] = Card("anvil", 2, "move", 4, "", 0, "", true);
+		deck[39] = Card("shard", 1, "place", 2, "", 0, "", true);
+		deck[40] = Card("carrot", 1, "place", 4, "move", 2, "or", true);
+		deck[41] = Card("coal", 1, "moveOver", 2, "", 0, "", true);
+	}
 
 	cout << "\n" << endl;
 
