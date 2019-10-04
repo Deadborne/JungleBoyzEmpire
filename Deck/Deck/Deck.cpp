@@ -1,17 +1,21 @@
 // Deck.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-#include <time.h>
 #include <vector>
 #include "Card.h"
 #include <iostream>
+#include <random>
 #include <algorithm>
+#include <iterator>
+
 using std::cout;
 using std::endl;
 using std::string;
 using std::vector;
-using std::random_shuffle;
+using std::shuffle;
+using std::mt19937;
+using std::random_device;
 
-void shuffleDeck(vector<Card> d);
+vector<Card> shuffleDeck(vector<Card> d);
 void draw(vector<Card> d, vector<Card> h);
 void printDeck(vector<Card> d);
 
@@ -52,11 +56,26 @@ int main()
 	deck[24] = Card("carrot", 1, "place 4", "move 2", "or");
 	deck[25] = Card("tree", 1, "destroy", "build", "or");
 	deck[26] = Card("coal", 1, "moveOver 2", "", "");
+	deck[27] = Card("anvil", 1, "place 3", "move 4", "or");
+	deck[28] = Card("anvil", 1, "place 3", "move 4", "or");
+	deck[29] = Card("carrot", 1, "moveOver 3", "", "");
+	deck[30] = Card("tree", 1, "moveOver 3", "", "");
+	deck[31] = Card("coal", 1, "moveOver 3", "", "");
+	deck[32] = Card("carrot", 2, "move 4", "", "");
+	deck[33] = Card("advil", 1, "move 5", "", "");
+	deck[34] = Card("coal", 1, "moveOver 2", "", "");
+	deck[35] = Card("wildcard", 1, "moveOver 3", "", "");
+	deck[36] = Card("carrot", 1, "move 5", "", "");
+	deck[37] = Card("coal", 1, "move 2", "", "");
+	deck[38] = Card("tree", 1, "place 2", "move 3", "or");
+	deck[39] = Card("carrot", 1, "move 4", "", "");
+	deck[40] = Card("carrot", 1, "place 3", "", "");
+	deck[41] = Card("shard", 1, "place 1", "", "");
+
 
 
 	// shuffles deck before game
-	shuffleDeck(deck);
-	printDeck(deck);
+	printDeck(shuffleDeck(deck));
 
 	return 0;
 
@@ -68,15 +87,22 @@ void draw(vector<Card> d, vector<Card> h) {
 }
 
 // Shuffle deck method
-void shuffleDeck(vector<Card> d) {
-	srand(unsigned(time(NULL)));
-	random_shuffle(d.begin(), d.end());
+vector<Card> shuffleDeck(vector<Card> d) {
+	random_device rd;
+	mt19937 g(rd());
+
+	shuffle(d.begin(), d.end(), g);
+	return d;
 }
 
 // Print cards from deck based on their good
 void printDeck(vector<Card> d) {
 	for (auto& i : d)
-		cout << "Goods: " << i.getGoodAmount() << " " << i.getGood() << endl;
+		cout << "Goods: " << i.getGoodAmount() << " " << i.getGood() << ", Action1: " << i.getAction1() << ", Action2: " << i.getAction2() << " " << endl;
+}
+
+void printCard(vector<Card> d, int i) {
+	cout << "Goods: " << d[i].getGoodAmount() << " " << d[i].getGood() << ", Action1: " << d[i].getAction1() << ", Action2: " << d[i].getAction2() << " " <<  endl;
 }
 
 
