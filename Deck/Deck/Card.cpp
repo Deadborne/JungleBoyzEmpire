@@ -8,9 +8,19 @@ Card::Card() :
 	amount(0),
 	action1(""),
 	action2(""),
-	operate("")
+	num2(0),
+	operate(""),
+	isFive(false)
 {}
 
+// gd = good string
+// num = amount of good (1 or 2)
+// act1 = string of action1
+// n1 = amount of blocks used for action1
+// act = string of action2
+// n2 = amount of blocks used for action2
+// op = operator "and" or "or" or "" for cards with two actions
+// n5 = boolean that checks whether card is placed on deck
 Card::Card(std::string gd, int num, std::string act1, int n1, std::string act2, int n2, std::string op, bool n5) :
 	good(gd),
 	amount(num),
@@ -22,6 +32,7 @@ Card::Card(std::string gd, int num, std::string act1, int n1, std::string act2, 
 	isFive(n5)
 {}
 
+// Copy Constructor
 Card::Card(const Card &c) :
 	good(c.good),
 	amount(c.amount),
@@ -33,6 +44,7 @@ Card::Card(const Card &c) :
 	isFive(c.isFive)
 {}
 
+// Card Destructor
 Card::~Card() {}
 
 std::string Card::getGood() const {

@@ -32,6 +32,16 @@ int main()
 	// Hand Object with 6 face-up cards
 	vector<Card> hand(6);
 
+	int players = 0;
+	cout << "Enter amount of Players: " << endl;
+	cin >> players;
+	while (players < 2 || players > 5) {
+		cout << "Invalid amount of players. Must be between 2 and 5" << endl;
+		cin >> players;
+	}
+	cout << "You chose " << players << " players";
+
+
 	// Fill deck with cards
 	deck[0] = Card("shard", 1, "move", 2, "", 0, "", false);
 	deck[1] = Card("anvil", 1, "place", 3, "move", 3, "or", false);
