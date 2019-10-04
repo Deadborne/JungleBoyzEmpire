@@ -7,8 +7,17 @@
 
 using namespace std;
 
+//default constructor
+Country::Country() {
+
+}
+
 //constructor, takes countryID and continentId
 Country::Country(int countryId, int continentId) : _countryId(countryId), _continentId(continentId)
+{
+}
+//constructor, takes countryID, continentId, and a boolean for starting country or not
+Country::Country(int countryId, int continentId, bool isStart) : _countryId(countryId), _continentId(continentId), _isStart(isStart)
 {
 }
 //returns the ID of the country
