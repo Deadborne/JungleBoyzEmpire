@@ -25,4 +25,8 @@ class Card {
 		int getNumA2() const;
 		std::string getOperator() const;
 		bool getIsFive() const;
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> card
