@@ -11,20 +11,26 @@ Card::Card() :
 	operate("")
 {}
 
-Card::Card(std::string gd, int am, std::string act1, std::string act2, std::string op) :
+Card::Card(std::string gd, int num, std::string act1, int n1, std::string act2, int n2, std::string op, bool n5) :
 	good(gd),
-	amount(am),
+	amount(num),
 	action1(act1),
+	num1(n1),
 	action2(act2),
-	operate(op)
+	num2(n2),
+	operate(op),
+	isFive(n5)
 {}
 
 Card::Card(const Card &c) :
 	good(c.good),
 	amount(c.amount),
 	action1(c.action1),
+	num1(c.num1),
 	action2(c.action2),
-	operate(c.operate)
+	num2(c.num2),
+	operate(c.operate),
+	isFive(c.isFive)
 {}
 
 Card::~Card() {}
@@ -41,10 +47,23 @@ std::string Card::getAction1() const {
 	return action1;
 }
 
+int Card::getNumA1() const {
+	return num1;
+}
+
 std::string Card::getAction2() const {
 	return action2;
+}
+
+int Card::getNumA2() const {
+	return num2;
 }
 
 std::string Card::getOperator() const {
 	return operate;
 }
+
+bool Card::getIsFive() const {
+	return isFive;
+}
+
