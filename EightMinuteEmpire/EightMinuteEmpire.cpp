@@ -4,7 +4,6 @@
 
 #include "stdafx.h"
 #include <string>
-
 #include <iostream>
 #include "Map.h"
 #include "Country.h"
@@ -17,14 +16,9 @@ using namespace boost;
 int main()
 {
 
-#include<iostream>
-using namespace std;
-
-int main()
-{
 	cout << "Hello World! What is your name? \n";
 	string name;
-
+	name = "rofl";
 	getline(cin, name);
 	cout << "Hello " << name << "!\n";
 	cout << "Please press enter to close the console :D";
@@ -33,6 +27,8 @@ int main()
 	m.getNum();
 	Country c = Country(12, 1);
 	c.getId();
+
+	vector <Country> countries = vector <Country> (30);
 
 	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 	Graph territories;
@@ -57,19 +53,22 @@ int main()
 	write_graphviz(cout, g);
 
 	
-	Country d = Country(1, 1);
+	Country d = Country(1, 1, true);
 	d.setOwner(1);
-
 	d.buildCity(3);
-
-
 
 	cout << "The owner of country 1 is " << d.getOwner();
 	cout << "\nDoes player 4 have a city in this country?: " << d.hasCity(3);
 	cout << "\nDoes player 2 have a city in this country?: " << d.hasCity(1);
+	cout << "\n\n";
+
+	std::string in;
+
+	cout << "Alright baby boi, what map do you want to read? (Proper format is M#) \n";
+	getline(cin, in);
+	m.ReadMap(in, countries);
+
 	getline(cin, name);
-
-
 
     return 0;
 }
