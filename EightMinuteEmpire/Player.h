@@ -1,4 +1,4 @@
-//#pragma once
+#pragma once
 #include "stdafx.h"
 #ifndef Player_h
 #define Player_h
@@ -25,6 +25,11 @@ public:
 	//void MoveOverLand();
 	//void BuildCity();
 	//void DestroyArmy();
+
+	void getCountriesOwned();
+		
+
+	void setCountriesOwned();
 
 
 	void setPlayerID(int x);

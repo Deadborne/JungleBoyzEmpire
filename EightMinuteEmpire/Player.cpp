@@ -12,3 +12,14 @@ void Player::setPlayerID(int x) {
 int Player::getPlayerID() {
 	return playerID;
 }
+
+
+void Player::getCountriesOwned() {
+	vector<int> countriesOwned;
+
+	for (int i = 0; i <= )
+
+
+
+	
+}

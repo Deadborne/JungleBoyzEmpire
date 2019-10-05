@@ -1,4 +1,4 @@
-// EightMinuteEmpire.cpp : Defines the entry point for the console application.
+﻿// EightMinuteEmpire.cpp : Defines the entry point for the console application.
 //
 #pragma once
 
@@ -7,8 +7,7 @@
 #include <iostream>
 #include "Map.h"
 #include "Country.h"
-#include "Deck.h"
-#include "Card.h"
+#include "Player.h" 
 using namespace std;
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graphviz.hpp>
@@ -23,14 +22,12 @@ int main()
 	name = "rofl";
 	getline(cin, name);
 	cout << "Hello " << name << "!\n";
-	cout << "Please press enter to close the console :D";
+	cout << "Please press enter to close the console 😀";
 	getline(cin, name);
 	Map m = Map(12);
 	m.getNum();
 	Country c = Country(12, 1);
-	c.getId();
-
-	vector <Country> countries = vector <Country> (30);
+	c.getCountryId();
 
 	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 	Graph territories;
@@ -52,28 +49,37 @@ int main()
 	add_edge(5, 7, g);
 
 	// represent graph in DOT format and send to cout
-	write_graphviz(cout, g);
+	//write_graphviz(cout, g);
 
-	
-	Country d = Country(1, 1, true);
+
+	Country d = Country(1, 1);
 	d.setOwner(1);
+
 	d.buildCity(3);
 
-	cout << "The owner of country 1 is " << d.getOwner();
-	cout << "\nDoes player 4 have a city in this country?: " << d.hasCity(3);
-	cout << "\nDoes player 2 have a city in this country?: " << d.hasCity(1);
-	cout << "\n\n";
 
-	std::string in;
 
-	cout << "Alright baby boi, what map do you want to read? (Proper format is M#) \n";
-	getline(cin, in);
-	m.ReadMap(in, countries);
+	//cout << "The owner of country 1 is " << d.getOwner();
+	//cout << "\nDoes player 4 have a city in this country?: " << d.hasCity(3);
+	//cout << "\nDoes player 2 have a city in this country?: " << d.hasCity(1);
+
+
+
+	Country America = Country(1, 1, { 1,0,0,2,0 });
+
+
+
+	cout << "Country ID " << America.getId();
+	cout << "Country's Army Vector: ";
+		
+	America.printArmies();
+
+
+	//cout << America.getOwner();
+
+
 
 	getline(cin, name);
-	//Deck rofl = Deck();
-	//rofl.testCard();
-    return 0;
+
+	return 0;
 }
-
-

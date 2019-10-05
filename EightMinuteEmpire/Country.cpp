@@ -26,7 +26,7 @@ Country::Country(int countryId, int continentId, vector<int> armiesPerPlayer) : 
 }
 
 //returns the ID of the country
-int Country::getId()
+int Country::getCountryId()
 {
 	return _countryId;
 };
@@ -76,3 +76,16 @@ vector<int> Country::getArmiesPerPlayer() {
 	return _armiesPerPlayer;
 
 }
+
+void Country::printArmies() {
+	for (int i = 0; i < _armiesPerPlayer.size(); i++) {
+		cout << _armiesPerPlayer.at(i) << " ";
+	}
+
+
+}
+
+
+
+
+

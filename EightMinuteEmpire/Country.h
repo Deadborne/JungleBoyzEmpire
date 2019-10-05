@@ -19,10 +19,11 @@ public:
 	Country(int _countryId, int _continentId);
 	Country(int _countryId, int _continentId, bool _isStart);
 	Country(int _countryId, int _continentId, vector<int> _armiesPerPlayer);
-	int getId();
+	int getCountryId();
 	int getOwner();
 	void buildCity(int _playerId);
 	void setOwner(int _countryId);
 	bool hasCity(int _playerId);
 	vector<int> getArmiesPerPlayer();
+	void printArmies();
 };

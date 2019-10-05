@@ -118,4 +118,9 @@ void Map::ReadMap(string f, vector <Country> cv)
 	infile.close();
 }
 
+std::vector<Country> Map::getCountries() {
+	
+}
+
+
 
