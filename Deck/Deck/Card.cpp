@@ -78,7 +78,3 @@ std::string Card::getOperator() const {
 bool Card::getIsFive() const {
 	return isFive;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> card
