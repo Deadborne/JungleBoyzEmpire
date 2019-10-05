@@ -20,7 +20,5 @@ public:
 	void ReadMap(std::string _Filename, std::vector<Country> _v);
 
 	//WELTON
-	std::vector<Country> getCountries() {
-
-	}
+	std::vector<Country> getCountries();
 };

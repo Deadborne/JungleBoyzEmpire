@@ -17,7 +17,7 @@ int Player::getPlayerID() {
 void Player::getCountriesOwned() {
 	vector<int> countriesOwned;
 
-	for (int i = 0; i <= )
+	//for (int i = 0; i <= ) {}
 
 
 

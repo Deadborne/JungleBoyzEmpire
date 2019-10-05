@@ -69,7 +69,7 @@ int main()
 
 
 
-	cout << "Country ID " << America.getId();
+	cout << "Country ID " << America.getCountryId();
 	cout << "Country's Army Vector: ";
 		
 	America.printArmies();
