@@ -7,6 +7,8 @@
 #include <iostream>
 #include "Map.h"
 #include "Country.h"
+#include "Deck.h"
+#include "Card.h"
 using namespace std;
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graphviz.hpp>
@@ -69,7 +71,8 @@ int main()
 	m.ReadMap(in, countries);
 
 	getline(cin, name);
-
+	//Deck rofl = Deck();
+	//rofl.testCard();
     return 0;
 }
 

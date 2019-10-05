@@ -20,6 +20,11 @@ Country::Country(int countryId, int continentId) : _countryId(countryId), _conti
 Country::Country(int countryId, int continentId, bool isStart) : _countryId(countryId), _continentId(continentId), _isStart(isStart)
 {
 }
+
+Country::Country(int countryId, int continentId, vector<int> armiesPerPlayer) : _countryId(countryId), _continentId(continentId), _armiesPerPlayer(armiesPerPlayer)
+{
+}
+
 //returns the ID of the country
 int Country::getId()
 {
@@ -65,4 +70,9 @@ bool Country::hasCity(int playerId) {
 		return true;
 	else 
 		return false;
+}
+
+vector<int> Country::getArmiesPerPlayer() {
+	return _armiesPerPlayer;
+
 }
