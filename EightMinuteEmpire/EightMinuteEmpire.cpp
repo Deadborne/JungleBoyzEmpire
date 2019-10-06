@@ -83,7 +83,7 @@ int main()
 
 	
 	Player p = Player();
-	p.getCountriesOwned();
+	//p.getCountriesOwned();
 
 	
 	vector<int> test = { 1,4,9,3,6,2 }; //Desire index should be 6
@@ -91,14 +91,15 @@ int main()
 
 	result = max_element(test.begin(), test.end());
 	cout << "Max element at: " << std::distance(test.begin(), result) << '\n';
+	cout << "\nMax element is: " << *result;
 
 	
 	bool duplicatesExist = false;
 	//TESTING
 	for (int i = 0; ((i < test.size()) && (duplicatesExist == false)); i++) {
 		for (int j = i + 1; j < test.size(); j++) {
-			if (test.at(i) == test.at(j)) {
-				cout << "Duplicate value " << test.at(i)
+			if ((test.at(i) == test.at(j)) && (test.at(i) == *result)) {
+				cout << "\nDuplicate value " << test.at(i)
 					<< " at indices " << i << ", " << j << endl;
 				duplicatesExist = true;
 			}

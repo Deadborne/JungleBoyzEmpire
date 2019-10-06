@@ -17,36 +17,32 @@ int Player::getPlayerID() {
 
 void Player::getCountriesOwned() {
 	Map m = Map();				//Start the map
-	vector<Country> allCountries = m.getCountries();			//
+	vector<Country> allCountries = m.getCountries();
 	
-	vector<int> countriesOwned;	//This is where we will store countries owned by a player 
+	//This is where we will store countries owned by a player 
+	vector<int> countriesOwned;	
 
 	//Take the vector of country objects
 	//Loop through countries
 	for (int i = 0; i <= allCountries.size(); i++) {
 		//Get the army vector for each country
 		vector<int> armies = allCountries.at(i).getArmiesPerPlayer();
-		//Get the larg
+		//Get the largest element in the vector
 		vector<int>::iterator maxElement = max_element(armies.begin(), armies.end());
-		
 		bool duplicatesExist = false;
 
 		
-		//THIS FOR LOOP IS BROKEN
-		//Having issues getting the actual max element so we can check if duplicates match the max, meaning nobody owns this country.
+		//-----THIS PART OF THE FUNCTION HAS NOT BEEN TESTED-----//
 		//Does our matrix have duplicates? Does it therefore have an owner?
 		for (int i = 0; i < (armies.size() && (duplicatesExist== false)); i++) {
 			for (int j = i + 1; j < armies.size(); j++) {
 
 				//If there are duplicates in the array and one of them is equal to 
-				if (    (armies.at(i) == armies.at(j) ) && ( armies.at(i) == (*max_element(armies.begin(), armies.end()))    )) {
+				if ((armies.at(i) == armies.at(j)) && (armies.at(i) == *maxElement)) {
 					duplicatesExist = true;
 				}
-
 			}
-
 		}
-	
 		
 		//if the maxElement has a duplicate 
 		if (duplicatesExist == false) {
