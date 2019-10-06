@@ -22,12 +22,14 @@ int main()
 	name = "rofl";
 	getline(cin, name);
 	cout << "Hello " << name << "!\n";
-	cout << "Please press enter to close the console 😀";
+	cout << "Please Enter Map Name: ";//Wont display properly :\ 😀";
 	getline(cin, name);
 	Map m = Map(12);
 	m.getNum();
+	m.ReadMap(name);
+	
 	Country c = Country(12, 1);
-	c.getCountryId();
+	m.getCountries();
 
 	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 	Graph territories;

@@ -11,9 +11,14 @@ using namespace std;
 #include <boost/graph/graphviz.hpp>
 using namespace boost;
 
-
-
+//Hard code for the size, fixing later
+int	countrySize = 25;
 int number;
+
+Map::Map() {
+	
+}
+
 
 Map::Map(int num) {
 	number = num;
@@ -50,7 +55,7 @@ vector<string> Map::split(string _stringToBeSplit, string _delimeter)
 }
 
 
-void Map::ReadMap(string f, vector <Country> cv)
+void Map::ReadMap(string f)
 {
 	std::ifstream infile;
 	infile.open("./Maps/" + f + ".txt");
@@ -109,7 +114,7 @@ void Map::ReadMap(string f, vector <Country> cv)
 
 		//create a country, store it in the vector of countries
 		Country c = Country(countryNumber, continentNumber, starter);
-		cv.at(countryNumber) = c;
+		mappedCountries.push_back(c);
 		iss3.clear();
 	}
 
@@ -119,7 +124,12 @@ void Map::ReadMap(string f, vector <Country> cv)
 }
 
 std::vector<Country> Map::getCountries() {
-	
+	for (int i = 0; i < mappedCountries.size(); i++) {
+		cout << "Mapped Country: ";
+	}
+	string test = "";
+	getline(cin, test);
+	return mappedCountries;
 }
 
 
