@@ -122,6 +122,8 @@ void Map::ReadMap(string f)
 	infile.close();
 }
 
+
+//Map has a vector of country objects
 std::vector<Country> Map::getCountries() {
 	for (int i = 0; i < mappedCountries.size(); i++) {
 		cout << "Mapped Country: " << mappedCountries.at(i).getCountryId();

@@ -72,18 +72,23 @@ bool Country::hasCity(int playerId) {
 		return false;
 }
 
+
+//Public accessor for armiesPerPlayer - W
 vector<int> Country::getArmiesPerPlayer() {
 	return _armiesPerPlayer;
 
 }
 
+
+//Prints the armies in the country from which this function is called - W
 void Country::printArmies() {
 	for (int i = 0; i < _armiesPerPlayer.size(); i++) {
 		cout << _armiesPerPlayer.at(i) << " ";
 	}
 
-
 }
+
+
 
 
 

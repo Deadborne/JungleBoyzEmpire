@@ -71,19 +71,29 @@ int main()
 
 
 
-	cout << "Country ID " << America.getCountryId();
-	cout << "Country's Army Vector: ";
+	//cout << "Country ID " << America.getCountryId();
+	//cout << "Country's Army Vector: ";
 		
-	America.printArmies();
+	//America.printArmies();
 
 
 	//cout << America.getOwner();
 
 
 
+	
+	//Player p = Player();
+	//p.getCountriesOwned();
+
+	
+	vector<int> test = { 1,4,6,2,3,6,9,2 }; //Desire index should be 6
+	vector<int>::iterator result;
+
+	result = max_element(test.begin(), test.end());
+	cout << "Max element at: " << std::distance(test.begin(), result) << '\n';
+
 	getline(cin, name);
-	Player p = Player();
-	p.getCountriesOwned();
+
 
 	return 0;
 }
