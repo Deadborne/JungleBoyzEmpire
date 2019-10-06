@@ -31,24 +31,24 @@ int main()
 	Country c = Country(12, 1);
 	m.getCountries();
 
-	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
-	Graph territories;
-	typedef adjacency_list< listS, vecS, directedS > digraph;
-	Graph continents;
-	typedef adjacency_list< listS, vecS, directedS > digraph;
+	//typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
+	//Graph territories;
+	//typedef adjacency_list< listS, vecS, directedS > digraph;
+	//Graph continents;
+	//typedef adjacency_list< listS, vecS, directedS > digraph;
 
-	// instantiate a digraph object with 8 vertices
-	Graph g(8);
+	//// instantiate a digraph object with 8 vertices
+	//Graph g(8);
 
-	// add some edges
-	add_edge(0, 1, g);
-	add_edge(1, 5, g);
-	add_edge(5, 6, g);
-	add_edge(2, 3, g);
-	add_edge(2, 4, g);
-	add_edge(3, 5, g);
-	add_edge(4, 5, g);
-	add_edge(5, 7, g);
+	//// add some edges
+	//add_edge(0, 1, g);
+	//add_edge(1, 5, g);
+	//add_edge(5, 6, g);
+	//add_edge(2, 3, g);
+	//add_edge(2, 4, g);
+	//add_edge(3, 5, g);
+	//add_edge(4, 5, g);
+	//add_edge(5, 7, g);
 
 	// represent graph in DOT format and send to cout
 	//write_graphviz(cout, g);
@@ -82,6 +82,8 @@ int main()
 
 
 	getline(cin, name);
+	Player p = Player();
+	p.getCountriesOwned();
 
 	return 0;
 }

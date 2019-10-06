@@ -12,9 +12,8 @@ using namespace std;
 using namespace boost;
 
 //Hard code for the size, fixing later
-int	countrySize = 25;
 int number;
-
+static std::vector<Country> mappedCountries;
 Map::Map() {
 	
 }
@@ -125,7 +124,7 @@ void Map::ReadMap(string f)
 
 std::vector<Country> Map::getCountries() {
 	for (int i = 0; i < mappedCountries.size(); i++) {
-		cout << "Mapped Country: ";
+		cout << "Mapped Country: " << mappedCountries.at(i).getCountryId();
 	}
 	string test = "";
 	getline(cin, test);

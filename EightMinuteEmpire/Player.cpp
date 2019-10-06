@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 #include "Player.h"
+#include "Map.h"
 
 using namespace std;
 
@@ -15,6 +16,8 @@ int Player::getPlayerID() {
 
 
 void Player::getCountriesOwned() {
+	Map m = Map();
+	m.getCountries();
 	vector<int> countriesOwned;
 
 	//for (int i = 0; i <= ) {}
