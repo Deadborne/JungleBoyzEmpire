@@ -82,18 +82,41 @@ int main()
 
 
 	
-	//Player p = Player();
-	//p.getCountriesOwned();
+	Player p = Player();
+	p.getCountriesOwned();
 
 	
-	vector<int> test = { 1,4,6,2,3,6,9,2 }; //Desire index should be 6
+	vector<int> test = { 1,4,9,3,6,2 }; //Desire index should be 6
 	vector<int>::iterator result;
 
 	result = max_element(test.begin(), test.end());
 	cout << "Max element at: " << std::distance(test.begin(), result) << '\n';
 
+	
+	bool duplicatesExist = false;
+	//TESTING
+	for (int i = 0; ((i < test.size()) && (duplicatesExist == false)); i++) {
+		for (int j = i + 1; j < test.size(); j++) {
+			if (test.at(i) == test.at(j)) {
+				cout << "Duplicate value " << test.at(i)
+					<< " at indices " << i << ", " << j << endl;
+				duplicatesExist = true;
+			}
+		}
+	}
+
+	if (duplicatesExist == true) {
+		cout << "Bitch yeh";
+	}else {
+		cout << "Bitch nah";
+	}
+
+
+
+
+
+
+
 	getline(cin, name);
-
-
 	return 0;
 }
