@@ -55,15 +55,48 @@ void Player::getCountriesOwned() {
 				countriesOwned.push_back(allCountries.at(i).getCountryId());
 			}
 		}
-
-
-		
-
 	}
+}
 
 
-	
+//This function will allow you to place any given number of new armies in any country
+//As such, it ignores game rules:
+//	1. Each player can place 3 new armies in the starting country at game start
+//	2. Number of armies player can place is determined by the card he/she has drawn
+//	3. Player can only place new armies in countries where they own a city 
+void Player::placeNewArmies(int num_Armies, int countryID) {
+	Map m = Map();		
 
+	//Get armiesPerPlayer vector for desired country
+	vector<int> armies = m.getCountries().at(countryID).getArmiesPerPlayer();
+
+	//Add however many armies player wants to the appropriate index
+	armies.at(playerID - 1) += num_Armies;
+
+	//FOR REFERENCE
+	//Player ID correspondance with army vector: 
+	//			{0, 1, 2, 0, 0}
+	//			 ^  ^  ^  ^  ^
+	//			 P1 P2 P3 P4 P5
+	//This assumes implementation doesn't have a player ID '0'
 
 	
 }
+
+//Takes an originID and destinationID to represent origin and destination countries respectively
+//Subtracts an army from one country and adds one to another
+//Ignores game rules for qualifying army movements
+void Player::moveArmies(int num_Armies, int originID, int destinationID) {
+	Map m = Map();
+
+	//Pull armies from origin country
+	vector<int> originArmies = m.getCountries().at(originID).getArmiesPerPlayer();
+	originArmies.at(playerID - 1) -= num_Armies;
+
+	//Place them in their new destination country
+	vector<int> destinationArmies = m.getCountries().at(destinationID).getArmiesPerPlayer();
+	destinationArmies.at(playerID - 1) += num_Armies;
+	
+
+}
+

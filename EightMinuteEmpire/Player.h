@@ -20,8 +20,8 @@ public:
 
 
 	//void PayCoin();
-	//void PlaceNewArmies();
-	//void MoveArmies();
+	void placeNewArmies(int num_Armies, int countryID);
+	void moveArmies(int num_Armies, int originID, int destinationID);
 	//void MoveOverLand();
 	//void BuildCity();
 	//void DestroyArmy();
@@ -29,7 +29,7 @@ public:
 	void getCountriesOwned();
 		
 
-	void setCountriesOwned();
+	//void setCountriesOwned();
 
 
 	void setPlayerID(int x);
