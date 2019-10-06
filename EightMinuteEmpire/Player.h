@@ -13,7 +13,10 @@ class Player {
 private:
 	int playerID;
 	int regionsOwned;
-	vector<int> countriesOwned;
+	vector<int> countriesOwned;	
+
+	int availableArmies;		//Armies in player's bank [should be xx at game start]
+	int availableCities;		//Cities in player's bank [should be 3 at game start]
 
 public:
 	//void claimCountry();		//basically a setter
@@ -23,7 +26,7 @@ public:
 	void placeNewArmies(int num_Armies, int countryID);
 	void moveArmies(int num_Armies, int originID, int destinationID);
 	//void MoveOverLand();
-	//void BuildCity();
+	void buildCity(int cityLocationID);
 	//void DestroyArmy();
 
 	void getCountriesOwned();

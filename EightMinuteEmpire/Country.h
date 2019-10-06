@@ -26,4 +26,5 @@ public:
 	bool hasCity(int _playerId);
 	vector<int> getArmiesPerPlayer();
 	void printArmies();
+	vector<bool> getCities();
 };

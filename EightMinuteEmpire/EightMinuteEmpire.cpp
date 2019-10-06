@@ -112,11 +112,6 @@ int main()
 	//	cout << "Bitch nah";
 	//}
 
-	cout << "\n\nOriginal value: " << test.at(4);
-	test.at(4) += 100;
-	cout << "\nChange has occurred";
-	cout << "\nModified value: " << test.at(4);
-
 
 
 

@@ -88,7 +88,10 @@ void Country::printArmies() {
 
 }
 
+vector<bool> Country::getCities() {
+	return _cities;
 
+}
 
 
 

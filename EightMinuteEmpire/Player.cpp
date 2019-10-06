@@ -100,3 +100,24 @@ void Player::moveArmies(int num_Armies, int originID, int destinationID) {
 
 }
 
+//Builds a city in a country if the player has an army present and doesnt already have a city built there
+void Player::buildCity(int cityLocationID) {
+	Map m = Map();
+
+	//Check that they have cities left
+	if (availableCities != 0) {
+		//Get the armies vector
+		vector<int> armies = m.getCountries().at(cityLocationID).getArmiesPerPlayer();
+		//If the player has an army in that country, they are allowed to build a city
+		if (armies.at(playerID - 1) > 0) {
+			vector<bool> cities = m.getCountries().at(cityLocationID).getCities();
+			//Players are allowed only 1 city per country, so if they dont have a city present in that country:
+			if (cities.at(playerID - 1) != true) {
+				cities.at(playerID - 1) = true;
+				availableCities--;
+			}
+
+		}
+	}
+}
+
