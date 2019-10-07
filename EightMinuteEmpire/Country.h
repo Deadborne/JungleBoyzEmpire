@@ -1,6 +1,9 @@
 #pragma once
 #include "stdafx.h"
 #include <vector>
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/graphviz.hpp>
+using namespace boost;
 
 
 using namespace std;
@@ -28,6 +31,10 @@ public:
 	void printArmies();
 	vector<bool> getCities();
 	void setCities(vector<bool> newCities);
+
+	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
+	bool Country::isConnected(Graph _g, Country _c2);
+	bool Country::isAdjacent(Graph _g, Country _c2);
 
 	void setArmiesPerPlayer(vector<int> newArmies);
 };

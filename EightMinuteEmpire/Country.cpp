@@ -6,6 +6,9 @@
 #include <vector>
 
 using namespace std;
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/graphviz.hpp>
+using namespace boost;
 
 //default constructor
 Country::Country() {
@@ -107,6 +110,74 @@ void Country::printArmies() {
 	}
 
 }
+
+//tells you if two countries are connected (whether over land or sea)
+typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
+bool Country::isConnected(Graph g, Country c2) {
+
+	//stuff we need
+	vector<int> checker = { -1, -1, -1, -1, -1, -1, -1 };
+	typedef boost::graph_traits<Graph>::adjacency_iterator AdjacencyIterator;
+	AdjacencyIterator ai, a_end;
+	auto vertex_idMap = get(boost::vertex_index, g);
+	int baditerator = 0;
+	bool confirm = false;
+
+	//store adjacencies in checker vector
+	for (boost::tie(ai, a_end) = adjacent_vertices(_countryId, g); ai != a_end; ++ai) { 
+
+		int e;
+		std::cout << vertex_idMap[*ai];
+		e = vertex_idMap[*ai];
+		checker[baditerator] = e;
+		baditerator++;
+	}
+
+	//checker is now a vector of all adjacencies. Now we check if c2 is within that vector.
+	for (int i = 0; i < sizeof(checker); i++) {
+		if (checker[i] != c2._countryId)
+			confirm = false;
+		else {
+			confirm = true;
+			break;
+		}
+	}
+	return confirm;
+}
+
+//tells you if two countries are conneected over land only
+bool Country::isAdjacent(Graph g, Country c2) {
+
+	//stuff we need
+	vector<int> checker = { -1, -1, -1, -1, -1, -1, -1 };
+	typedef boost::graph_traits<Graph>::adjacency_iterator AdjacencyIterator;
+	AdjacencyIterator ai, a_end;
+	auto vertex_idMap = get(boost::vertex_index, g);
+	int baditerator = 0;
+	bool confirm = false;
+
+	//store adjacencies in checker vector
+	for (boost::tie(ai, a_end) = adjacent_vertices(_countryId, g); ai != a_end; ++ai) {
+
+		int e;
+		std::cout << vertex_idMap[*ai];
+		e = vertex_idMap[*ai];
+		checker[baditerator] = e;
+		baditerator++;
+	}
+
+	//checker is now a vector of all adjacencies. Now we check if c2 is within that vector.
+	for (int i = 0; i < sizeof(checker); i++) {
+		if ((checker[i] != c2._countryId) && (_continentId != c2._continentId))
+			confirm = false;
+		else {
+			confirm = true;
+			break;
+		}
+	}
+	return confirm;
+}
+
 
 
 

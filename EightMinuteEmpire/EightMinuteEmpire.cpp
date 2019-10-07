@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Country.h"
 #include "Player.h" 
+#include <ostream>
 using namespace std;
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graphviz.hpp>
@@ -110,16 +111,9 @@ int main()
 	//	cout << "Bitch yeh";
 	//}else {
 	//	cout << "Bitch nah";
-	//}
-
-
-
-
-
-
-
-
-
-	getline(cin, name);
+	//}		
+	
+	
+	//let's test adjacencies
 	return 0;
 }
