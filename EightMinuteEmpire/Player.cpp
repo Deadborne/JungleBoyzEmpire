@@ -6,6 +6,9 @@
 
 using namespace std;
 
+
+//----Mutators and Accessors----//
+
 void Player::setPlayerID(int x) {
 	playerID = x;
 }
@@ -23,6 +26,13 @@ void Player::setAvailableCities(int x) {
 }
 
 
+//----Required Functionality----//
+
+
+//Pays single coin by deleting it from players bank (and from existence)
+void Player::PayCoin() {
+	availableCoins--;
+}
 
 void Player::getCountriesOwned() {
 	Map m = Map();				//Start the map
@@ -117,13 +127,11 @@ void Player::moveArmies(int num_Armies, int originID, int destinationID) {
 	vector<int> destinationArmies = m.getCountries().at(destinationID).getArmiesPerPlayer();
 	destinationArmies.at(playerID - 1) += num_Armies;
 	m.getCountries().at(destinationID).setArmiesPerPlayer(destinationArmies);
-
 }
 
 //Builds a city in a country if the player has an army present and doesnt already have a city built there
 void Player::buildCity(int cityLocationID) {
 	Map m = Map();
-
 	//Check that they have cities left
 	if (availableCities != 0) {
 		//Get the armies vector
@@ -146,7 +154,6 @@ void Player::buildCity(int cityLocationID) {
 //From there, the city is removed from the country and deposited back into the owner's city bank
 void Player::destroyArmy(int cityLocationID, Player cityOwner) {
 	Map m = Map();
-
 	//Get counry's city vector
 	vector<bool> cities = m.getCountries().at(cityLocationID).getCities();
 

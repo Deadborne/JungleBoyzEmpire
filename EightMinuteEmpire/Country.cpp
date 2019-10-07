@@ -25,11 +25,38 @@ Country::Country(int countryId, int continentId, vector<int> armiesPerPlayer) : 
 {
 }
 
+
+//----Mutators & Accessors----//
+
+//Returns vector of cities for a given country
+vector<bool> Country::getCities() {
+	return _cities;
+}
+
+//Allows us to set the city vector for a given country
+void Country::setCities(vector<bool> newCities) {
+	_cities = newCities;
+}
+
 //returns the ID of the country
-int Country::getCountryId()
-{
+int Country::getCountryId(){
 	return _countryId;
 };
+
+//Public accessor for armiesPerPlayer - W
+vector<int> Country::getArmiesPerPlayer() {
+	return _armiesPerPlayer;
+
+}
+
+//Setter for armiesPerPlayer
+void Country::setArmiesPerPlayer(vector<int> newArmies) {
+	_armiesPerPlayer = newArmies;
+}
+
+
+
+//----Other Functionality----//
 
 //returns the owner of the country
 void Country::setOwner(int countryId)
@@ -53,13 +80,13 @@ void Country::setOwner(int countryId)
 }
 
 //builds a city in this country for the player being passed.
-void Country::buildCity(int playerId) 
+void Country::buildCity(int playerId)			//Is this fn redundant with player version? Should we delete?
 {
 	_cities[playerId] = true;
 }
 
 //tells you who the owner of the country is
-int Country::getOwner()
+int Country::getOwner() //check redundancy of this function
 {
 	return _countryOwner;
 }
@@ -73,18 +100,6 @@ bool Country::hasCity(int playerId) {
 }
 
 
-//Public accessor for armiesPerPlayer - W
-vector<int> Country::getArmiesPerPlayer() {
-	return _armiesPerPlayer;
-
-}
-
-//Setter for armiesPerPlayer
-void Country::setArmiesPerPlayer(vector<int> newArmies) {
-	_armiesPerPlayer = newArmies;
-}
-
-
 //Prints the armies in the country from which this function is called - W
 void Country::printArmies() {
 	for (int i = 0; i < _armiesPerPlayer.size(); i++) {
@@ -93,14 +108,7 @@ void Country::printArmies() {
 
 }
 
-vector<bool> Country::getCities() {
-	return _cities;
 
-}
-
-void Country::setCities(vector<bool> newCities) {
-	_cities = newCities;
-}
 
 
 

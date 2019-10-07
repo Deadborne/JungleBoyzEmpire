@@ -17,26 +17,36 @@ private:
 
 	int availableArmies;		//Armies in player's bank [should be xx at game start]
 	int availableCities;		//Cities in player's bank [should be 3 at game start]
+	int availableCoins;					//Coins in player's bank [should be xx at game start]
+
+	//----TODO----//
+	//Player needs to own a hand of cards
 
 public:
-	//void claimCountry();		//basically a setter
+	
+	//----Wish List----//
+	//void claimCountry();
+	//void setCountriesOwned();
 
 
-	//void PayCoin();
+	//----Required Functions----//
+	void PayCoin();
 	void placeNewArmies(int num_Armies, int countryID);
 	void moveArmies(int num_Armies, int originID, int destinationID);
-	//void MoveOverLand();
+	//void MoveOverLand();		//Wtf is this supposed to do?
 	void buildCity(int cityLocationID);
 	void destroyArmy(int cityLocationID, Player cityOwner);
+
+
 
 	void getCountriesOwned();
 		
 
-	//void setCountriesOwned();
+	
 
+	//----Mutators & Accessors----//
 	int getAvailableCities();
 	void setAvailableCities(int x);
-
 
 	void setPlayerID(int x);
 	int getPlayerID();
