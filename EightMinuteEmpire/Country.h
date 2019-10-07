@@ -27,4 +27,7 @@ public:
 	vector<int> getArmiesPerPlayer();
 	void printArmies();
 	vector<bool> getCities();
+	void setCities(vector<bool> newCities);
+
+	void setArmiesPerPlayer(vector<int> newArmies);
 };

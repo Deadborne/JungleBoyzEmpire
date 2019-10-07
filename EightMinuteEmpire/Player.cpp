@@ -14,6 +14,15 @@ int Player::getPlayerID() {
 	return playerID;
 }
 
+int Player::getAvailableCities() {
+	return availableCities;
+}
+
+void Player::setAvailableCities(int x) {
+	availableCities = x;
+}
+
+
 
 void Player::getCountriesOwned() {
 	Map m = Map();				//Start the map
@@ -67,20 +76,30 @@ void Player::getCountriesOwned() {
 void Player::placeNewArmies(int num_Armies, int countryID) {
 	Map m = Map();		
 
-	//Get armiesPerPlayer vector for desired country
-	vector<int> armies = m.getCountries().at(countryID).getArmiesPerPlayer();
+	//As long as we arent trying to place more armies than we have available to us, 
+	if ((availableArmies - num_Armies) >= 0) {
 
-	//Add however many armies player wants to the appropriate index
-	armies.at(playerID - 1) += num_Armies;
+		//Get armiesPerPlayer vector for desired country
+		vector<int> armies = m.getCountries().at(countryID).getArmiesPerPlayer();
+
+		//Add however many armies player wants to the appropriate index
+		armies.at(playerID - 1) += num_Armies;
+
+		//Push those changes to the actual array of armies
+		m.getCountries().at(countryID).setArmiesPerPlayer(armies);
+
+
+	} else {
+		//If the player has too few 
+		cerr << "\nOperation blocked. You only have " << availableArmies << " armies available to you.";
+	}
 
 	//FOR REFERENCE
 	//Player ID correspondance with army vector: 
 	//			{0, 1, 2, 0, 0}
 	//			 ^  ^  ^  ^  ^
 	//			 P1 P2 P3 P4 P5
-	//This assumes implementation doesn't have a player ID '0'
-
-	
+	//This assumes implementation doesn't have a player ID '0'	
 }
 
 //Takes an originID and destinationID to represent origin and destination countries respectively
@@ -92,11 +111,12 @@ void Player::moveArmies(int num_Armies, int originID, int destinationID) {
 	//Pull armies from origin country
 	vector<int> originArmies = m.getCountries().at(originID).getArmiesPerPlayer();
 	originArmies.at(playerID - 1) -= num_Armies;
+	m.getCountries().at(originID).setArmiesPerPlayer(originArmies);
 
 	//Place them in their new destination country
 	vector<int> destinationArmies = m.getCountries().at(destinationID).getArmiesPerPlayer();
 	destinationArmies.at(playerID - 1) += num_Armies;
-	
+	m.getCountries().at(destinationID).setArmiesPerPlayer(destinationArmies);
 
 }
 
@@ -114,10 +134,39 @@ void Player::buildCity(int cityLocationID) {
 			//Players are allowed only 1 city per country, so if they dont have a city present in that country:
 			if (cities.at(playerID - 1) != true) {
 				cities.at(playerID - 1) = true;
+				m.getCountries().at(cityLocationID).setCities(cities);
 				availableCities--;
 			}
 
 		}
 	}
 }
+
+//Player.destroyArmy will take the location of the city and a player object for the city owner.
+//From there, the city is removed from the country and deposited back into the owner's city bank
+void Player::destroyArmy(int cityLocationID, Player cityOwner) {
+	Map m = Map();
+
+	//Get counry's city vector
+	vector<bool> cities = m.getCountries().at(cityLocationID).getCities();
+
+	//Get the city owner's ID
+	int cityOwnerID = cityOwner.getPlayerID();
+
+	//If cityOwner has a city in that country
+	if (cities.at(cityOwnerID - 1) == true) {
+		//then make sure that is no longer the case
+		cities.at(cityOwnerID - 1) = false;
+
+		//Push the changes to the country array
+		m.getCountries().at(cityOwnerID).setCities(cities);
+		
+		//Add a city back to the player's city bank
+		cityOwner.setAvailableCities(cityOwner.getAvailableCities() - 1);
+	}
+
+
+}
+
+
 

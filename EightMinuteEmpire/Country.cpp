@@ -79,6 +79,11 @@ vector<int> Country::getArmiesPerPlayer() {
 
 }
 
+//Setter for armiesPerPlayer
+void Country::setArmiesPerPlayer(vector<int> newArmies) {
+	_armiesPerPlayer = newArmies;
+}
+
 
 //Prints the armies in the country from which this function is called - W
 void Country::printArmies() {
@@ -93,6 +98,9 @@ vector<bool> Country::getCities() {
 
 }
 
+void Country::setCities(vector<bool> newCities) {
+	_cities = newCities;
+}
 
 
 

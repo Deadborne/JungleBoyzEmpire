@@ -27,12 +27,15 @@ public:
 	void moveArmies(int num_Armies, int originID, int destinationID);
 	//void MoveOverLand();
 	void buildCity(int cityLocationID);
-	//void DestroyArmy();
+	void destroyArmy(int cityLocationID, Player cityOwner);
 
 	void getCountriesOwned();
 		
 
 	//void setCountriesOwned();
+
+	int getAvailableCities();
+	void setAvailableCities(int x);
 
 
 	void setPlayerID(int x);
