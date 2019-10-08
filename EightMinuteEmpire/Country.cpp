@@ -134,7 +134,7 @@ bool Country::isConnected(Graph g, Country c2) {
 	}
 
 	//checker is now a vector of all adjacencies. Now we check if c2 is within that vector.
-	for (int i = 0; i < sizeof(checker); i++) {
+	for (int i = 0; i < 8; i++) {
 		if (checker[i] != c2._countryId)
 			confirm = false;
 		else {
@@ -167,7 +167,7 @@ bool Country::isAdjacent(Graph g, Country c2) {
 	}
 
 	//checker is now a vector of all adjacencies. Now we check if c2 is within that vector.
-	for (int i = 0; i < sizeof(checker); i++) {
+	for (int i = 0; i < 8; i++) {
 		if ((checker[i] != c2._countryId) && (_continentId != c2._continentId))
 			confirm = false;
 		else {
