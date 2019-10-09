@@ -12,22 +12,24 @@ using namespace boost;
 
 //default constructor
 Country::Country() {
-
 }
 
 //constructor, takes countryID and continentId
-Country::Country(int countryId, int continentId) : _countryId(countryId), _continentId(continentId)
+Country::Country(int* countryId, int* continentId) : _countryId(countryId), _continentId(continentId)
 {
 }
 //constructor, takes countryID, continentId, and a boolean for starting country or not
-Country::Country(int countryId, int continentId, bool isStart) : _countryId(countryId), _continentId(continentId), _isStart(isStart)
+Country::Country(int* countryId, int* continentId, bool* isStart) : _countryId(countryId), _continentId(continentId), _isStart(isStart)
 {
 }
 
-Country::Country(int countryId, int continentId, vector<int> armiesPerPlayer) : _countryId(countryId), _continentId(continentId), _armiesPerPlayer(armiesPerPlayer)
+Country::Country(int* countryId, int* continentId, vector<int> armiesPerPlayer) : _countryId(countryId), _continentId(continentId), _armiesPerPlayer(armiesPerPlayer)
 {
 }
 
+Country::Country(int* countryId, int* continentId, vector<int> armiesPerPlayer, bool* isStart) : _countryId(countryId), _continentId(continentId), _armiesPerPlayer(armiesPerPlayer), _isStart(isStart)
+{
+}
 
 //----Mutators & Accessors----//
 
@@ -43,7 +45,7 @@ void Country::setCities(vector<bool> newCities) {
 
 //returns the ID of the country
 int Country::getCountryId(){
-	return _countryId;
+	return  *_countryId;
 };
 
 //Public accessor for armiesPerPlayer - W
@@ -110,7 +112,7 @@ void Country::printArmies() {
 	}
 
 }
-
+/*
 //tells you if two countries are connected (whether over land or sea)
 typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 bool Country::isConnected(Graph g, Country c2) {
@@ -177,7 +179,7 @@ bool Country::isAdjacent(Graph g, Country c2) {
 	}
 	return confirm;
 }
-
+*/
 
 
 

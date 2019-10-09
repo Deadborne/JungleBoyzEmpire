@@ -29,7 +29,7 @@ int main()
 	m.getNum();
 	m.ReadMap(name);
 	
-	Country c = Country(12, 1);
+	//Country c = Country(12, 1);
 	m.getCountries();
 
 	//typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
@@ -55,11 +55,6 @@ int main()
 	//write_graphviz(cout, g);
 
 
-	Country d = Country(1, 1);
-	d.setOwner(1);
-
-	d.buildCity(3);
-
 
 
 	//cout << "The owner of country 1 is " << d.getOwner();
@@ -68,11 +63,16 @@ int main()
 
 
 
-	Country America = Country(1, 1, { 1,0,0,2,0 });
+	//Country America = Country(1, 1, { 1,0,0,2,0 });
+
+	int ctry = 1;
+	int ctnt = 1;
+	
+	Country bamerica = Country(&ctry, &ctnt);
 
 
-
-	//cout << "Country ID " << America.getCountryId();
+	cout << "Country ID " << bamerica.getCountryId();
+	getline(cin, name);
 	//cout << "Country's Army Vector: ";
 		
 	//America.printArmies();
