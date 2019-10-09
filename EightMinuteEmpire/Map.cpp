@@ -14,10 +14,10 @@ using namespace boost;
 //Hard code for the size, fixing later
 int number;
 static std::vector<Country> mappedCountries;
+
 Map::Map() {
 	
 }
-
 
 Map::Map(int num) {
 	number = num;
@@ -65,7 +65,6 @@ void Map::ReadMap(string f)
 		cout << "That file is not valid.\n";
 	}
 
-
 	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 	Graph GameMap;
 	vector<string> v;
@@ -112,7 +111,7 @@ void Map::ReadMap(string f)
 		}
 
 		//create a country, store it in the vector of countries
-		Country c = Country(countryNumber, continentNumber, starter);
+		Country c = Country(&countryNumber, &continentNumber, &starter);
 		mappedCountries.push_back(c);
 		iss3.clear();
 	}

@@ -69,7 +69,8 @@ int main()
 	int ctnt = 1;
 	
 	Country bamerica = Country(&ctry, &ctnt);
-
+	bamerica.setOwner(1);
+	cout << (bamerica.getOwner()) << endl;
 
 	cout << "Country ID " << bamerica.getCountryId();
 	getline(cin, name);
@@ -113,7 +114,6 @@ int main()
 	//	cout << "Bitch nah";
 	//}		
 	
-	
-	//let's test adjacencies
+
 	return 0;
 }

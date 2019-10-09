@@ -11,9 +11,9 @@ using namespace std;
 using namespace boost;
 
 //default constructor
-Country::Country() {
+Country::Country() 
+{
 }
-
 //constructor, takes countryID and continentId
 Country::Country(int* countryId, int* continentId) : _countryId(countryId), _continentId(continentId)
 {
@@ -48,6 +48,11 @@ int Country::getCountryId(){
 	return  *_countryId;
 };
 
+//returns the ID of the continent
+int Country::getContinentId() {
+	return  *_continentId;
+};
+
 //Public accessor for armiesPerPlayer - W
 vector<int> Country::getArmiesPerPlayer() {
 	return _armiesPerPlayer;
@@ -63,21 +68,23 @@ void Country::setArmiesPerPlayer(vector<int> newArmies) {
 
 //----Other Functionality----//
 
-//returns the owner of the country
+//sets the owner of the country
 void Country::setOwner(int countryId)
 {
-	int currMax = 0, owner = -1;
+	int currMax = 0;
+	int *owner;
+	owner = new int(-1);
 
 	for (int i = 0; i < Country::_armiesPerPlayer.size(); i++) 
 	{
 		if (_armiesPerPlayer[i] > currMax)
 		{
-			owner = i;
+			owner = &i;
 			currMax = _armiesPerPlayer[i];
 		}
 		else if (_armiesPerPlayer[i] == currMax)
 		{
-			owner = -1;
+			*owner = -1;
 			break;
 		}
 	}
@@ -91,9 +98,9 @@ void Country::buildCity(int playerId)			//Is this fn redundant with player versi
 }
 
 //tells you who the owner of the country is
-int Country::getOwner() //check redundancy of this function
+int Country::getOwner() 
 {
-	return _countryOwner;
+	return *_countryOwner;
 }
 
 //checks if the player being passed as a param has a city in this country

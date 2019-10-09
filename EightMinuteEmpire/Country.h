@@ -13,9 +13,9 @@ private:
 	int cid;
 	int* _countryId;
 	int* _continentId;
-	int _countryOwner = -1;
+	int* _countryOwner;
 	bool* _isStart = false;
-	vector<int> _armiesPerPlayer{ 0,0,0,0,0 };
+	vector<int> _armiesPerPlayer{ 3,1,3,5,4 };
 	vector<bool> _cities{ false, false, false, false, false };
 
 public:
@@ -25,6 +25,7 @@ public:
 	Country(int* _countryId, int* _continentId, vector<int> _armiesPerPlayer);
 	Country(int* _countryId, int* _continentId, vector<int> _armiesPerPlayer, bool* _isStart);
 	int getCountryId();
+	int getContinentId();
 	int getOwner();
 	void buildCity(int _playerId);
 	void setOwner(int _countryId);
