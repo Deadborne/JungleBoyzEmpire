@@ -96,12 +96,13 @@ vector<int> Player::getCountriesOwned() {
 void Player::placeNewArmies(int num_Armies, int countryID) {
 	Map m = Map();		
 
+
 	//As long as we arent trying to place more armies than we have available to us, 
 	if ((availableArmies - num_Armies) >= 0) {
 		
 		//Get armiesPerPlayer vector for desired country
 		vector<int> armies = m.getCountries().at(countryID).getArmiesPerPlayer();
-
+		cout << "Id Test 1: " << m.getCountries().at(countryID).getCountryId();
 		//Add however many armies player wants to the appropriate index
 		armies.at(playerID - 1) += num_Armies;
 
@@ -109,11 +110,24 @@ void Player::placeNewArmies(int num_Armies, int countryID) {
 		cout << "\n Testing... \n";
 		cout << "num_armies:" << num_Armies << "\n";
 		cout << "on index: " << armies.at(playerID - 1) << "\n";
+		
+		cout << "TESTING ARMIES:\n";
+		for (int i = 0; i < armies.size(); i++) {
+			cout << armies.at(i);
+		}
+		
+		cout << "Id Test 2: " << m.getCountries().at(countryID).getCountryId();
+
 		//--------------------DebugStart----------------------//
+
+
+
 
 		//Push those changes to the actual array of armies
 		m.getCountries().at(countryID).setArmiesPerPlayer(armies);
 
+		cout << "\nCurrent..." << m.getCountries().at(0).getArmiesPerPlayer().at(0);
+		cout << "\nCurrent..." << m.getCountries().at(1).getArmiesPerPlayer().at(0);
 
 	} else {
 		//If the player has too few 

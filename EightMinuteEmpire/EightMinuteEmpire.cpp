@@ -142,15 +142,13 @@ int main()
 	//m.getCountries().at(0).setArmiesPerPlayer(arTest);
 
 	m.getCountries().at(0).printArmies();
-	player1.placeNewArmies(2, testID);
+
+	cout << "..." << testID;
+	player1.placeNewArmies(3, testID);
 	m.getCountries().at(0).printArmies();
 	//m.getCountries().at(0).printArmies();
 
 	cout << "TEST IN MAIN\n";
-
-	vector<int> vector1 = { 1,2,3,4,5 };
-	vector<int> vector2 = { 0,0,0,0,0 };
-
 
 
 
@@ -159,4 +157,6 @@ int main()
 	return 0;
 }
 
-void prinAry()
+void printAry() {
+
+}
