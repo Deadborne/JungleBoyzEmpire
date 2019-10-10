@@ -116,6 +116,8 @@ void Player::placeNewArmies(int num_Armies, int countryID) {
 			cout << armies.at(i);
 		}
 		
+
+
 		cout << "Id Test 2: " << m.getCountries().at(countryID).getCountryId();
 
 		//--------------------DebugStart----------------------//
