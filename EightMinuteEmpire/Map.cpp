@@ -69,10 +69,14 @@ Graph Map::ReadMap(string f)
 
 		int* countryNumber;
 		int* continentNumber;
+		int* connectingContinent;
 		bool* starter = false;
+		bool* connectsAcrossSea = false;
 		countryNumber = new int;
 		continentNumber = new int;
 		starter = new bool;
+		connectingContinent = new int;
+		connectsAcrossSea = new bool;
 
 		
 		std::string allAdjacent;
@@ -81,8 +85,17 @@ Graph Map::ReadMap(string f)
 		std::size_t pos = line.find(":");
 		std::istringstream iss(line.substr(0, pos));
 		iss >> *countryNumber;
+		//check if that's the starting country. If the find returns npos, that would mean nothing was found.
 		if (line.find("S") != std::string::npos) {
 			*starter = true;
+		}
+		//check if the country connects to a different continent. If the find returns npos, that would mean nothing was found.
+		if (line.find("C") != std::string::npos) {
+			std::size_t posC = line.find("C");
+			std::istringstream issC(line.substr(posC + 1, posC+2));
+			issC >> *connectingContinent;
+			*connectsAcrossSea = true;
+			issC.clear();
 		}
 		iss.clear();
 
@@ -103,8 +116,12 @@ Graph Map::ReadMap(string f)
 			int box;
 			std::istringstream intvertex(temp.at(i));
 			intvertex >> box;
-
 			add_edge(*countryNumber, box, GameMap);	
+		}
+
+		//store continent adjacencies in subgraph, if continets were found to be connected
+		if (*connectsAcrossSea == true) {
+			add_edge(*continentNumber, *connectingContinent, ContinentMap);
 		}
 
 		//create a country, store it in the vector of countries
@@ -114,42 +131,16 @@ Graph Map::ReadMap(string f)
 	}
 
 	//output the map
+	cout << "This is your current game map!" << endl;
 	write_graphviz(cout, GameMap);
+	//output continent subgraph
+	cout << "\nThis is continent subgraph!" << endl;
+	write_graphviz(cout, ContinentMap);
+
 	infile.close();
 	return GameMap;
 }
 
-Graph Map::ContinentMap(string f)
-{
-	std::ifstream infile;
-	infile.open("./Maps/" + f + ".txt");
-
-	std::string str;
-
-	if (!infile) {
-		cout << "That file is not valid.\n";
-	}
-
-	vector<string> temp;
-
-	while (std::getline(infile, str)) {
-
-		std::string line; //the line we grabbed
-
-		line = str;
-		int countryNumber;
-		int continentNumber;
-		bool starter = false;
-		std::string allAdjacent;
-
-
-	}
-
-	//output the map
-	write_graphviz(cout, GameMap);
-	infile.close();
-	return GameMap;
-}
 
 //Map has a vector of country objects
 std::vector<Country> Map::getCountries() {

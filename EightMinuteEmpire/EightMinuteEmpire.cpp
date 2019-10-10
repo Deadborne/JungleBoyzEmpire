@@ -37,7 +37,7 @@ int main()
 	getline(cin, in);
 	Graph GameMap = (m.ReadMap(in));
 
-	m.getCountries();
+	//m.getCountries();
 	
 
 	m.purge();
