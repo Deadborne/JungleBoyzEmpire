@@ -15,9 +15,9 @@ private:
 	int regionsOwned;
 	vector<int> countriesOwned;	
 
-	int availableArmies;		//Armies in player's bank [should be xx at game start]
+	int availableArmies;		//Armies in player's bank [should be 14 at game start]
 	int availableCities;		//Cities in player's bank [should be 3 at game start]
-	int availableCoins;					//Coins in player's bank [should be xx at game start]
+	int availableCoins;					//Coins in player's bank [should be 8(5p), 9(4p), 11(3p), 14(2p) at game start]
 
 	//----TODO----//
 	//Player needs to own a hand of cards
@@ -39,7 +39,7 @@ public:
 
 
 
-	void getCountriesOwned();
+	vector<int> getCountriesOwned();
 		
 
 	
@@ -50,6 +50,10 @@ public:
 
 	void setPlayerID(int x);
 	int getPlayerID();
+
+	void setAvailableCoins(int x);
+
+	void setAvailableArmies(int x);
 };
 
 

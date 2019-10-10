@@ -14,6 +14,8 @@ using namespace boost;
 //Hard code for the size, fixing later
 int number;
 static std::vector<Country> mappedCountries;
+
+
 Map::Map() {
 	
 }
@@ -118,16 +120,16 @@ void Map::ReadMap(string f)
 	}
 
 	//output the map
-	write_graphviz(cout, GameMap);
+	//write_graphviz(cout, GameMap);    //THIS MUST BE ACTIVE
 	infile.close();
 }
 
 
 //Map has a vector of country objects
 std::vector<Country> Map::getCountries() {
-	for (int i = 0; i < mappedCountries.size(); i++) {
+	/*for (int i = 0; i < mappedCountries.size(); i++) {
 		cout << "Mapped Country: " << mappedCountries.at(i).getCountryId();
-	}
+	}*/
 	string test = "";
 	getline(cin, test);
 	return mappedCountries;

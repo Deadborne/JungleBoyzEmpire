@@ -25,6 +25,14 @@ void Player::setAvailableCities(int x) {
 	availableCities = x;
 }
 
+void Player::setAvailableCoins(int x) {
+	availableCoins = x;
+}
+
+void Player::setAvailableArmies(int x) {
+	availableArmies = x;
+}
+
 
 //----Required Functionality----//
 
@@ -34,7 +42,7 @@ void Player::PayCoin() {
 	availableCoins--;
 }
 
-void Player::getCountriesOwned() {
+vector<int> Player::getCountriesOwned() {
 	Map m = Map();				//Start the map
 	vector<Country> allCountries = m.getCountries();
 	
@@ -43,7 +51,7 @@ void Player::getCountriesOwned() {
 
 	//Take the vector of country objects
 	//Loop through countries
-	for (int i = 0; i <= allCountries.size(); i++) {
+	for (int i = 0; i < allCountries.size(); i++) {
 		//Get the army vector for each country
 		vector<int> armies = allCountries.at(i).getArmiesPerPlayer();
 		//Get the largest element in the vector
@@ -75,6 +83,8 @@ void Player::getCountriesOwned() {
 			}
 		}
 	}
+
+	return countriesOwned;
 }
 
 
@@ -88,12 +98,18 @@ void Player::placeNewArmies(int num_Armies, int countryID) {
 
 	//As long as we arent trying to place more armies than we have available to us, 
 	if ((availableArmies - num_Armies) >= 0) {
-
+		
 		//Get armiesPerPlayer vector for desired country
 		vector<int> armies = m.getCountries().at(countryID).getArmiesPerPlayer();
 
 		//Add however many armies player wants to the appropriate index
 		armies.at(playerID - 1) += num_Armies;
+
+		//--------------------DebugStart----------------------//
+		cout << "\n Testing... \n";
+		cout << "num_armies:" << num_Armies << "\n";
+		cout << "on index: " << armies.at(playerID - 1) << "\n";
+		//--------------------DebugStart----------------------//
 
 		//Push those changes to the actual array of armies
 		m.getCountries().at(countryID).setArmiesPerPlayer(armies);

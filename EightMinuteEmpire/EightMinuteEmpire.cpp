@@ -9,6 +9,7 @@
 #include "Country.h"
 #include "Player.h" 
 #include <ostream>
+//#include <vector>
 using namespace std;
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graphviz.hpp>
@@ -18,11 +19,11 @@ using namespace boost;
 int main()
 {
 
-	cout << "Hello World! What is your name? \n";
+	//cout << "Hello World! What is your name? \n";
 	string name;
 	name = "rofl";
-	getline(cin, name);
-	cout << "Hello " << name << "!\n";
+	//getline(cin, name);
+	//cout << "Hello " << name << "!\n";
 	cout << "Please Enter Map Name: ";//Wont display properly :\ 😀";
 	getline(cin, name);
 	Map m = Map(12);
@@ -30,7 +31,7 @@ int main()
 	m.ReadMap(name);
 	
 	Country c = Country(12, 1);
-	m.getCountries();
+	//m.getCountries();
 
 	//typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 	//Graph territories;
@@ -55,10 +56,10 @@ int main()
 	//write_graphviz(cout, g);
 
 
-	Country d = Country(1, 1);
-	d.setOwner(1);
+	//Country d = Country(1, 1);
+	//d.setOwner(1);
 
-	d.buildCity(3);
+	//d.buildCity(3);
 
 
 
@@ -68,7 +69,7 @@ int main()
 
 
 
-	Country America = Country(1, 1, { 1,0,0,2,0 });
+	//Country America = Country(1, 1, { 1,0,0,2,0 });
 
 
 
@@ -83,11 +84,11 @@ int main()
 
 
 	
-	Player p = Player();
+	//Player p = Player();
 	//p.getCountriesOwned();
 
 	
-	vector<int> test = { 1,4,9,3,6,2 }; //Desire index should be 6
+	//vector<int> test = { 1,4,9,3,6,2 }; //Desire index should be 6
 	//vector<int>::iterator result;
 
 	//result = max_element(test.begin(), test.end());
@@ -115,5 +116,47 @@ int main()
 	
 	
 	//let's test adjacencies
+
+
+	Player player1 = Player();
+	player1.setAvailableArmies(14);
+
+
+	player1.setPlayerID(1);
+	cout << "PlayerID: " << player1.getPlayerID() << "\n";
+	//cout << player1.getAvailableCities();
+		
+	vector<int> vec = player1.getCountriesOwned();
+		//cout << vec.at(0) << vec.at(1);
+
+	for (int i = 0; i < vec.size(); i++) {
+		cout << "Owns: " << vec.at(i);
+	}
+		
+	cout << "Well aint that some shit: \n";
+	cout << "Country 1's ID: " << m.getCountries().at(0).getCountryId() 
+		<< "\n"; //Gets ID of the country at index 0 of vector of countries
+	
+	int testID = m.getCountries().at(0).getCountryId();
+	//vector<int> arTest = { 0,0,0,0,0 };
+	//m.getCountries().at(0).setArmiesPerPlayer(arTest);
+
+	m.getCountries().at(0).printArmies();
+	player1.placeNewArmies(2, testID);
+	m.getCountries().at(0).printArmies();
+	//m.getCountries().at(0).printArmies();
+
+	cout << "TEST IN MAIN\n";
+
+	vector<int> vector1 = { 1,2,3,4,5 };
+	vector<int> vector2 = { 0,0,0,0,0 };
+
+
+
+
+
+	getline(cin, name);
 	return 0;
 }
+
+void prinAry()

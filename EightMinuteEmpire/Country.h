@@ -14,7 +14,7 @@ private:
 	int _continentId;
 	int _countryOwner = -1;
 	bool _isStart = false;
-	vector<int> _armiesPerPlayer{ 5,8,3,4,2 };
+	vector<int> _armiesPerPlayer{ 0, 0, 0, 0, 0 };
 	vector<bool> _cities{ false, false, false, false, false };
 
 public:
