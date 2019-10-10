@@ -91,8 +91,23 @@ void Country::setOwner(int countryId)
 	_countryOwner = owner;
 }
 
+//sets the country ID
+void Country::setCountryId(int* countryId) {
+	_countryId = countryId;
+}
+
+//sets the continent ID
+void Country::setContinentId(int* continentId) {
+	_continentId = continentId;
+}
+
+//sets whether this is the starting country or not
+void Country::setStarterStatus(bool* status) {
+	_isStart = status;
+}
+
 //builds a city in this country for the player being passed.
-void Country::buildCity(int playerId)			//Is this fn redundant with player version? Should we delete?
+void Country::buildCity(int playerId)
 {
 	_cities[playerId] = true;
 }

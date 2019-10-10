@@ -12,25 +12,19 @@ using namespace std;
 using namespace boost;
 
 //Hard code for the size, fixing later
-int number;
+
 static std::vector<Country> mappedCountries;
+
+typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
+
+Graph GameMap;
+Graph ContinentMap;
 
 Map::Map() {
 	
 }
 
-Map::Map(int num) {
-	number = num;
-}
-
-int Map::getNum()
-{
-	cout << "Calling from map test! \n Hit 'Enter' to close the console\n";
-	string rofl;
-	getline(cin, rofl);
-	return number;
-}
-
+//this method is used to split the strings during file I/O
 vector<string> Map::split(string _stringToBeSplit, string _delimeter)
 {
 	std::vector<std::string> splittedString;
@@ -54,7 +48,7 @@ vector<string> Map::split(string _stringToBeSplit, string _delimeter)
 }
 
 
-void Map::ReadMap(string f)
+Graph Map::ReadMap(string f)
 {
 	std::ifstream infile;
 	infile.open("./Maps/" + f + ".txt");
@@ -65,53 +59,56 @@ void Map::ReadMap(string f)
 		cout << "That file is not valid.\n";
 	}
 
-	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
-	Graph GameMap;
-	vector<string> v;
+	vector<string> temp;
 
 	while (std::getline(infile, str)) {
 		
 		std::string line; //the line we grabbed
 
 		line = str;
-		int countryNumber;
-		int continentNumber;
-		bool starter = false;
+
+		int* countryNumber;
+		int* continentNumber;
+		bool* starter = false;
+		countryNumber = new int;
+		continentNumber = new int;
+		starter = new bool;
+
+		
 		std::string allAdjacent;
 		
 		//grabs first number (country number)
 		std::size_t pos = line.find(":");
 		std::istringstream iss(line.substr(0, pos));
-		iss >> countryNumber;
+		iss >> *countryNumber;
 		if (line.find("S") != std::string::npos) {
-			starter = true;
+			*starter = true;
 		}
 		iss.clear();
 
 		//grab the continent number
 		std::size_t pos2 = line.find("-");
 		std::istringstream iss2(line.substr(pos+1, pos2));
-		iss2 >> continentNumber;
+		iss2 >> *continentNumber;
 		iss2.clear();
 		
 		//grab adjacencies
 		std::istringstream iss3(line.substr(pos2 + 1));
 		iss3 >> allAdjacent;
-		v = split(allAdjacent, ",");
+		temp = split(allAdjacent, ",");
 
 		//store all adjacencies in map
-		for (int i = 0; i < v.size(); i++) {
+		for (int i = 0; i < temp.size(); i++) {
 			
 			int box;
-			std::istringstream intvertex(v.at(i));
+			std::istringstream intvertex(temp.at(i));
 			intvertex >> box;
 
-			add_edge(countryNumber, box, GameMap);
-			
+			add_edge(*countryNumber, box, GameMap);	
 		}
 
 		//create a country, store it in the vector of countries
-		Country c = Country(&countryNumber, &continentNumber, &starter);
+		Country c = Country(countryNumber, continentNumber, starter);
 		mappedCountries.push_back(c);
 		iss3.clear();
 	}
@@ -119,19 +116,60 @@ void Map::ReadMap(string f)
 	//output the map
 	write_graphviz(cout, GameMap);
 	infile.close();
+	return GameMap;
 }
 
+Graph Map::ContinentMap(string f)
+{
+	std::ifstream infile;
+	infile.open("./Maps/" + f + ".txt");
+
+	std::string str;
+
+	if (!infile) {
+		cout << "That file is not valid.\n";
+	}
+
+	vector<string> temp;
+
+	while (std::getline(infile, str)) {
+
+		std::string line; //the line we grabbed
+
+		line = str;
+		int countryNumber;
+		int continentNumber;
+		bool starter = false;
+		std::string allAdjacent;
+
+
+	}
+
+	//output the map
+	write_graphviz(cout, GameMap);
+	infile.close();
+	return GameMap;
+}
 
 //Map has a vector of country objects
 std::vector<Country> Map::getCountries() {
 	for (int i = 0; i < mappedCountries.size(); i++) {
-		cout << "Mapped Country: " << mappedCountries.at(i).getCountryId();
+		cout << "Country ID: " << mappedCountries.at(i).getCountryId() << endl;
+		cout << "Continent ID: " << mappedCountries.at(i).getContinentId() << endl;
 	}
 	string test = "";
 	getline(cin, test);
 	return mappedCountries;
 }
+//deletes the vector of countries and all its contents
+void Map::purge() {
 
-
+	for (int i = 0; i < mappedCountries.size(); i++) {
+		mappedCountries.at(i).setContinentId(NULL);
+		mappedCountries.at(i).setCountryId(NULL);
+		mappedCountries.at(i).setStarterStatus(NULL);
+	}
+	
+}
 
 
