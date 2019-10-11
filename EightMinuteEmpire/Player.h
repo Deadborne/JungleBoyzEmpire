@@ -32,10 +32,13 @@ public:
 	//----Required Functions----//
 	void PayCoin();
 	void placeNewArmies(int num_Armies, int countryID);
+	void NEWplaceNewArmies(int numArmies, Country& country);
 	void moveArmies(int num_Armies, int originID, int destinationID);
+	void NEWmoveArmies(int numArmies, Country& origin, Country& destination);
 	//void MoveOverLand();		//Wtf is this supposed to do?
 	void buildCity(int cityLocationID);
-	void destroyArmy(int cityLocationID, Player cityOwner);
+	void NEWbuildCity(Country& cityLocation);
+	void destroyCity(int cityLocationID, Player cityOwner);
 
 
 

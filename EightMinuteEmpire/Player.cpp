@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "stdafx.h"
@@ -88,6 +89,27 @@ vector<int> Player::getCountriesOwned() {
 }
 
 
+void Player::NEWplaceNewArmies(int numArmies, Country& country) {
+	Map m = Map();
+
+	if ((availableArmies - numArmies) >= 0) {
+		vector<int> armies = country.getArmiesPerPlayer();
+
+		armies.at(playerID - 1) += numArmies;
+
+		country.setArmiesPerPlayer(armies);
+		//country.printArmies();
+	}else {
+		//If the player has too few armies
+		cerr << "\nOperation blocked. You only have " << availableArmies << " armies available to you.";
+	}
+}
+
+
+
+
+
+
 //This function will allow you to place any given number of new armies in any country
 //As such, it ignores game rules:
 //	1. Each player can place 3 new armies in the starting country at game start
@@ -115,8 +137,6 @@ void Player::placeNewArmies(int num_Armies, int countryID) {
 		for (int i = 0; i < armies.size(); i++) {
 			cout << armies.at(i);
 		}
-		
-
 
 		cout << "Id Test 2: " << m.getCountries().at(countryID).getCountryId();
 
@@ -127,9 +147,10 @@ void Player::placeNewArmies(int num_Armies, int countryID) {
 
 		//Push those changes to the actual array of armies
 		m.getCountries().at(countryID).setArmiesPerPlayer(armies);
+		
 
-		cout << "\nCurrent..." << m.getCountries().at(0).getArmiesPerPlayer().at(0);
-		cout << "\nCurrent..." << m.getCountries().at(1).getArmiesPerPlayer().at(0);
+		//cout << "Woot:" << m.getCountries().at(countryID).getCountryId();
+		//m.getCountries().at(countryID).printArmies();
 
 	} else {
 		//If the player has too few 
@@ -143,6 +164,29 @@ void Player::placeNewArmies(int num_Armies, int countryID) {
 	//			 P1 P2 P3 P4 P5
 	//This assumes implementation doesn't have a player ID '0'	
 }
+
+
+
+void Player::NEWmoveArmies(int numArmies, Country& origin, Country& destination) {
+	Map m = Map();
+
+
+	//TODO: Add functionality to avoid moving more armies than exist in the vector 
+	
+	//Move from origin
+	vector<int> originArmies = origin.getArmiesPerPlayer();
+	originArmies.at(playerID - 1) -= numArmies;
+	origin.setArmiesPerPlayer(originArmies);
+
+	//Move to destination
+	vector<int> destinationArmies = destination.getArmiesPerPlayer();
+	destinationArmies.at(playerID - 1) += numArmies;
+	destination.setArmiesPerPlayer(destinationArmies);
+}
+
+
+
+
 
 //Takes an originID and destinationID to represent origin and destination countries respectively
 //Subtracts an army from one country and adds one to another
@@ -160,6 +204,37 @@ void Player::moveArmies(int num_Armies, int originID, int destinationID) {
 	destinationArmies.at(playerID - 1) += num_Armies;
 	m.getCountries().at(destinationID).setArmiesPerPlayer(destinationArmies);
 }
+
+
+
+void Player::NEWbuildCity(Country& cityLocation) {
+	Map m = Map();
+
+	if (availableCities != 0) {
+		vector<int> armies = cityLocation.getArmiesPerPlayer();
+
+		if (armies.at(playerID - 1) > 0) {
+			vector<bool> cities = cityLocation.getCities();
+
+			if (cities.at(playerID - 1) != true) {
+				cities.at(playerID - 1) = true;
+				cityLocation.setCities(cities);
+				availableCities--;
+			}
+			else {
+				cout << "\nCity already exists in country. Build one somewhere else.";
+			}
+		}
+		else {
+			cout << "\nCountry unoccupied. City cannot be built.";
+		}
+	}
+	else {
+		cout << "\nResources depleated. City cannot be built.";
+	}
+}
+
+
 
 //Builds a city in a country if the player has an army present and doesnt already have a city built there
 void Player::buildCity(int cityLocationID) {
@@ -184,7 +259,7 @@ void Player::buildCity(int cityLocationID) {
 
 //Player.destroyArmy will take the location of the city and a player object for the city owner.
 //From there, the city is removed from the country and deposited back into the owner's city bank
-void Player::destroyArmy(int cityLocationID, Player cityOwner) {
+void Player::destroyCity(int cityLocationID, Player cityOwner) {
 	Map m = Map();
 	//Get counry's city vector
 	vector<bool> cities = m.getCountries().at(cityLocationID).getCities();

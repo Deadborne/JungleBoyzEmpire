@@ -118,45 +118,91 @@ int main()
 	//let's test adjacencies
 
 
-	Player player1 = Player();
-	player1.setAvailableArmies(14);
 
-
-	player1.setPlayerID(1);
-	cout << "PlayerID: " << player1.getPlayerID() << "\n";
-	//cout << player1.getAvailableCities();
-		
-	vector<int> vec = player1.getCountriesOwned();
-		//cout << vec.at(0) << vec.at(1);
-
-	for (int i = 0; i < vec.size(); i++) {
-		cout << "Owns: " << vec.at(i);
-	}
-		
-	cout << "Well aint that some shit: \n";
-	cout << "Country 1's ID: " << m.getCountries().at(0).getCountryId() 
-		<< "\n"; //Gets ID of the country at index 0 of vector of countries
 	
-	int testID = m.getCountries().at(0).getCountryId();
+	//cout << "PlayerID: " << player1.getPlayerID() << "\n";
+	////cout << player1.getAvailableCities();
+	//	
+	//vector<int> vec = player1.getCountriesOwned();
+	//	//cout << vec.at(0) << vec.at(1);
+
+	//for (int i = 0; i < vec.size(); i++) {
+	//	cout << "Owns: " << vec.at(i);
+	//}
+	//	
+	//cout << "Well aint that some shit: \n";
+	//cout << "Country 1's ID: " << m.getCountries().at(0).getCountryId() 
+	//	<< "\n"; //Gets ID of the country at index 0 of vector of countries
+	//
+	//int testID = m.getCountries().at(0).getCountryId();
 	//vector<int> arTest = { 0,0,0,0,0 };
-	//m.getCountries().at(0).setArmiesPerPlayer(arTest);
+	////m.getCountries().at(0).setArmiesPerPlayer(arTest);
 
-	m.getCountries().at(0).printArmies();
-
-	cout << "..." << testID;
-	player1.placeNewArmies(3, testID);
-	m.getCountries().at(0).printArmies();
 	//m.getCountries().at(0).printArmies();
 
-	cout << "TEST IN MAIN\n";
+	//cout << "..." << testID;
+	//player1.placeNewArmies(3, testID);
+	//m.getCountries().at(0).printArmies();
+	////m.getCountries().at(0).printArmies();
+
+	//cout << "TEST IN MAIN\n";
+
+
+	//Country yeet = Country(1, 1, { 1,0,0,2,0 });
+	//
+	//cout << "\nYeet Test\n";
+	//yeet.printArmies();
+	//cout << "\n";
+	//player1.NEWplaceNewArmies(5, yeet);
+	//cout << "\n";
+	//yeet.printArmies();
 
 
 
+
+	//START OF ACTUAL DRIVER -- DO NOT DELETE PLEASE -- WILL MOVE
+	Player player1 = Player();
+	player1.setAvailableArmies(14);
+	player1.setPlayerID(1);
+	player1.setAvailableCities(3);
+
+	Player player2 = Player();
+	player2.setAvailableArmies(14);
+	player2.setPlayerID(2);
+	player2.setAvailableCities(3);
+
+	Country c1 = m.getCountries().at(0);
+	Country c2 = m.getCountries().at(1);
+
+	cout << "Place new armies in a country \n";
+	cout << "Armies in Country 1: \n";
+	c1.printArmies();
+	cout << "\n";
+
+	player1.NEWplaceNewArmies(5, c1);
+	cout << "\nPlayer 1 has placed 6 new armies in Country 1: \n";
+	c1.printArmies();
+
+	cout << "\n\n\nMove armies from Country 1 to Country 2\n";
+	cout << "Player 1 has 0 armies in Country 2:\n";
+	c2.printArmies();
+	
+	player1.NEWmoveArmies(2, c1, c2);
+	cout << "\n     player 1 moving 2 armies from c1 to c2... \n";
+	
+	cout << "Armies now in Country 1:\n";
+	c1.printArmies();
+	cout << "\nArmies now in Country 2:\n";
+	c2.printArmies();
+
+
+	cout << "\n\n\nAdd a city to Country 1:\n";
+	cout << "Player 1 has *" << c1.getCities().at(0) << "* cities in Country 1";
+	cout << "\n     player 1 building city in c1...";
+	player1.NEWbuildCity(c1);
+	cout << "\nPlayer 1 now has *" << c1.getCities().at(0) << "* city in Country 1";
+	//cout << "\n\n\n Player 1 owns the following countries:\n" << player1.getCountriesOwned().at(0);
 
 	getline(cin, name);
 	return 0;
-}
-
-void printAry() {
-
 }
