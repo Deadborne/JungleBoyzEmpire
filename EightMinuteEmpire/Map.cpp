@@ -50,9 +50,10 @@ vector<string> Map::split(string _stringToBeSplit, string _delimeter)
 
 Graph Map::ReadMap(string f)
 {
+	bool hasStarter = false; //a map is invalid if it has no starting point
+
 	std::ifstream infile;
 	infile.open("./Maps/" + f + ".txt");
-
 	std::string str;
 
 	if (!infile) {
@@ -62,7 +63,7 @@ Graph Map::ReadMap(string f)
 	vector<string> temp;
 
 	while (std::getline(infile, str)) {
-		
+
 		std::string line; //the line we grabbed
 
 		line = str;
@@ -72,21 +73,27 @@ Graph Map::ReadMap(string f)
 		int* connectingContinent;
 		bool* starter = false;
 		bool* connectsAcrossSea = false;
+
 		countryNumber = new int;
 		continentNumber = new int;
 		starter = new bool;
 		connectingContinent = new int;
 		connectsAcrossSea = new bool;
 
-		
+
 		std::string allAdjacent;
-		
+
 		//grabs first number (country number)
 		std::size_t pos = line.find(":");
 		std::istringstream iss(line.substr(0, pos));
 		iss >> *countryNumber;
+		if (*countryNumber == -1) { 
+			cout << "Found a territory with no number. Map not created." << endl;
+			return NULL;
+		}
 		//check if that's the starting country. If the find returns npos, that would mean nothing was found.
 		if (line.find("S") != std::string::npos) {
+			hasStarter = true;
 			*starter = true;
 		}
 		//check if the country connects to a different continent. If the find returns npos, that would mean nothing was found.
@@ -103,6 +110,10 @@ Graph Map::ReadMap(string f)
 		std::size_t pos2 = line.find("-");
 		std::istringstream iss2(line.substr(pos+1, pos2));
 		iss2 >> *continentNumber;
+		if (*continentNumber == -1) { //check if there is a map without a continent.
+			cout << "Found a territory with no continent. Map not created." << endl;
+			return NULL;
+		}
 		iss2.clear();
 		
 		//grab adjacencies
@@ -110,16 +121,27 @@ Graph Map::ReadMap(string f)
 		iss3 >> allAdjacent;
 		temp = split(allAdjacent, ",");
 
+		if (temp.size() == 0) { //make sure there is no country with no adjacencies.
+			cout << "Found a country with no adjacencies. This is invalid. Map not created." << endl;
+			return NULL;
+		}
+
 		//store all adjacencies in map
 		for (int i = 0; i < temp.size(); i++) {
 			
 			int box;
 			std::istringstream intvertex(temp.at(i));
 			intvertex >> box;
-			add_edge(*countryNumber, box, GameMap);	
+			try {
+				add_edge(*countryNumber, box, GameMap);
+			}
+			catch (const std::exception&) {
+				cout << "Invalid country identifier. Map not created" << endl; //this would happen if a country has no identifier
+				return NULL;
+			}
 		}
 
-		//store continent adjacencies in subgraph, if continets were found to be connected
+		//store continent adjacencies in subgraph, if continents were found to be connected
 		if (*connectsAcrossSea == true) {
 			add_edge(*continentNumber, *connectingContinent, ContinentMap);
 		}
@@ -130,15 +152,21 @@ Graph Map::ReadMap(string f)
 		iss3.clear();
 	}
 
-	//output the map
-	cout << "This is your current game map!" << endl;
-	write_graphviz(cout, GameMap);
-	//output continent subgraph
-	cout << "\nThis is continent subgraph!" << endl;
-	write_graphviz(cout, ContinentMap);
-
 	infile.close();
-	return GameMap;
+	if (hasStarter == true) { //checks if the map also has a starting point. Won't create a map without one.
+		//output the map
+		cout << "This is your current game map!" << endl;
+		write_graphviz(cout, GameMap);
+		//output continent subgraph
+		cout << "\nThis is continent subgraph!" << endl;
+		write_graphviz(cout, ContinentMap);
+		return GameMap;
+	}
+	else {
+		cout << "This map has no starting point. Map not created." << endl;
+		return NULL;
+	}
+		
 }
 
 

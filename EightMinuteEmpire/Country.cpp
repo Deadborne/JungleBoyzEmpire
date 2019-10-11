@@ -53,7 +53,7 @@ int Country::getContinentId() {
 	return  *_continentId;
 };
 
-//Public accessor for armiesPerPlayer - W
+//Public accessor for armiesPerPlayer
 vector<int> Country::getArmiesPerPlayer() {
 	return _armiesPerPlayer;
 
@@ -134,7 +134,11 @@ void Country::printArmies() {
 	}
 
 }
-/*
+/* 
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::::::::::::THE FOLLOWING METHODS WILL BE USED IN THE FUTURE -- NOT PART OF ASSIGNMENT 1::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 //tells you if two countries are connected (whether over land or sea)
 typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 bool Country::isConnected(Graph g, Country c2) {
