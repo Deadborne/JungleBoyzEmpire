@@ -171,7 +171,7 @@ int main()
 	
 	for (int i = 0; i < players.size(); i++) {
 		int playerBid = *players.at(i).playerBid->_bidAmount;
-		bidVector[i] = rofl;
+		bidVector[i] = playerBid;
 	}
 	cout << "vector size: " << bidVector.size() << "\n";
 	Bid bidTest = Bid();
