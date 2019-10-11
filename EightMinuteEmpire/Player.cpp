@@ -207,5 +207,14 @@ void Player::destroyArmy(int cityLocationID, Player cityOwner) {
 
 }
 
+//Bid functionality
+//Remember to change this to a pointer
+void Player::setBid() {
+	playerBid = new Bid();
+	playerBid->setBid(playerID);
+	availableCoins -= *playerBid->_bidAmount;
+	//cout << "Available Coins: " << availableCoins << "\n";
+}
+
 
 

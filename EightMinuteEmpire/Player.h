@@ -2,10 +2,12 @@
 #include "stdafx.h"
 #ifndef Player_h
 #define Player_h
+#include "Bid.h"
 
 #include <string>
 #include "Country.h"
 #include <vector>
+
 
 using namespace std;
 
@@ -22,8 +24,11 @@ private:
 	//----TODO----//
 	//Player needs to own a hand of cards
 
+	
 public:
 	
+	//--- Bidding --- //
+	Bid *playerBid;
 	//----Wish List----//
 	//void claimCountry();
 	//void setCountriesOwned();
@@ -54,6 +59,10 @@ public:
 	void setAvailableCoins(int x);
 
 	void setAvailableArmies(int x);
+
+	void setBid();
+
+
 };
 
 

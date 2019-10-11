@@ -23,7 +23,7 @@
     <ProjectGuid>{120FD4AD-CE55-48DC-93A0-20517F6D25A0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>EightMinuteEmpire</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -144,6 +144,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bid.h" />
     <ClInclude Include="Card.h" />
     <ClInclude Include="Continent.h" />
     <ClInclude Include="Country.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bid.cpp" />
     <ClCompile Include="Continent.cpp" />
     <ClCompile Include="Country.cpp" />
     <ClCompile Include="Deck.cpp" />
