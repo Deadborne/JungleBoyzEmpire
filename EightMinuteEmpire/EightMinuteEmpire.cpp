@@ -151,7 +151,14 @@ int main()
 	cout << "TEST IN MAIN\n";
 
 
-	//Bidding test
+	//	______ _     _     _ _             
+	//	| ___ (_)   | |   | (_)            
+	//	| |_/ /_  __| | __| |_ _ __   __ _ 
+	//	| ___ \ |/ _` |/ _` | | '_ \ / _` |
+	//	| |_/ / | (_| | (_| | | | | | (_| |
+	//	\____/|_|\__,_|\__,_|_|_| |_|\__, |
+	//								  __/ |
+	//								 |___/ 
 	int startingPlayerIndex = -1;
 	vector<Player> players = { Player(), Player(), Player(), Player(), Player() };
 	for (int i = 0; i < players.size(); i++) {
