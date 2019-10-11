@@ -31,15 +31,15 @@ public:
 
 	//----Required Functions----//
 	void PayCoin();
-	void placeNewArmies(int num_Armies, int countryID);
-	void NEWplaceNewArmies(int numArmies, Country& country);
-	void moveArmies(int num_Armies, int originID, int destinationID);
-	void NEWmoveArmies(int numArmies, Country& origin, Country& destination);
+	void OLDplaceNewArmies(int num_Armies, int countryID);
+	void placeNewArmies(int numArmies, Country& country);
+	void OLDmoveArmies(int num_Armies, int originID, int destinationID);
+	void moveArmies(int numArmies, Country& origin, Country& destination);
 	//void MoveOverLand();		//Wtf is this supposed to do?
-	void buildCity(int cityLocationID);
-	void NEWbuildCity(Country& cityLocation);
-	void destroyCity(int cityLocationID, Player cityOwner);
-
+	void OLDbuildCity(int cityLocationID);
+	void buildCity(Country& cityLocation);
+	void OLDdestroyCity(int cityLocationID, Player cityOwner);
+	void destroyCity(Country& cityLocation, Player& cityOwner);
 
 
 	vector<int> getCountriesOwned();

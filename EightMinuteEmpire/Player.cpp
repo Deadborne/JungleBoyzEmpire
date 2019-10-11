@@ -89,7 +89,7 @@ vector<int> Player::getCountriesOwned() {
 }
 
 
-void Player::NEWplaceNewArmies(int numArmies, Country& country) {
+void Player::placeNewArmies(int numArmies, Country& country) {
 	Map m = Map();
 
 	if ((availableArmies - numArmies) >= 0) {
@@ -115,7 +115,7 @@ void Player::NEWplaceNewArmies(int numArmies, Country& country) {
 //	1. Each player can place 3 new armies in the starting country at game start
 //	2. Number of armies player can place is determined by the card he/she has drawn
 //	3. Player can only place new armies in countries where they own a city 
-void Player::placeNewArmies(int num_Armies, int countryID) {
+void Player::OLDplaceNewArmies(int num_Armies, int countryID) {
 	Map m = Map();		
 
 
@@ -167,21 +167,30 @@ void Player::placeNewArmies(int num_Armies, int countryID) {
 
 
 
-void Player::NEWmoveArmies(int numArmies, Country& origin, Country& destination) {
+void Player::moveArmies(int numArmies, Country& origin, Country& destination) {
 	Map m = Map();
 
-
-	//TODO: Add functionality to avoid moving more armies than exist in the vector 
-	
-	//Move from origin
 	vector<int> originArmies = origin.getArmiesPerPlayer();
-	originArmies.at(playerID - 1) -= numArmies;
-	origin.setArmiesPerPlayer(originArmies);
-
-	//Move to destination
 	vector<int> destinationArmies = destination.getArmiesPerPlayer();
-	destinationArmies.at(playerID - 1) += numArmies;
-	destination.setArmiesPerPlayer(destinationArmies);
+
+	//Avoid moving more armies than exist in the vector 
+	if (originArmies.at(playerID - 1) >= numArmies) {
+		//Move from origin
+
+		originArmies.at(playerID - 1) -= numArmies;
+		origin.setArmiesPerPlayer(originArmies);
+
+		//Move to destination
+
+		destinationArmies.at(playerID - 1) += numArmies;
+		destination.setArmiesPerPlayer(destinationArmies);
+
+	}
+	else {
+		cout << "\nThere are only " << originArmies.at(playerID - 1)
+			<< " armies in Country " << origin.getCountryId()
+			<< ". You cannot move more than that.";
+	}
 }
 
 
@@ -191,7 +200,7 @@ void Player::NEWmoveArmies(int numArmies, Country& origin, Country& destination)
 //Takes an originID and destinationID to represent origin and destination countries respectively
 //Subtracts an army from one country and adds one to another
 //Ignores game rules for qualifying army movements
-void Player::moveArmies(int num_Armies, int originID, int destinationID) {
+void Player::OLDmoveArmies(int num_Armies, int originID, int destinationID) {
 	Map m = Map();
 
 	//Pull armies from origin country
@@ -207,7 +216,7 @@ void Player::moveArmies(int num_Armies, int originID, int destinationID) {
 
 
 
-void Player::NEWbuildCity(Country& cityLocation) {
+void Player::buildCity(Country& cityLocation) {
 	Map m = Map();
 
 	if (availableCities != 0) {
@@ -237,7 +246,7 @@ void Player::NEWbuildCity(Country& cityLocation) {
 
 
 //Builds a city in a country if the player has an army present and doesnt already have a city built there
-void Player::buildCity(int cityLocationID) {
+void Player::OLDbuildCity(int cityLocationID) {
 	Map m = Map();
 	//Check that they have cities left
 	if (availableCities != 0) {
@@ -257,9 +266,9 @@ void Player::buildCity(int cityLocationID) {
 	}
 }
 
-//Player.destroyArmy will take the location of the city and a player object for the city owner.
+//Player.destroyCity will take the location of the city and a player object for the city owner.
 //From there, the city is removed from the country and deposited back into the owner's city bank
-void Player::destroyCity(int cityLocationID, Player cityOwner) {
+void Player::OLDdestroyCity(int cityLocationID, Player cityOwner) {
 	Map m = Map();
 	//Get counry's city vector
 	vector<bool> cities = m.getCountries().at(cityLocationID).getCities();
@@ -282,5 +291,25 @@ void Player::destroyCity(int cityLocationID, Player cityOwner) {
 
 }
 
+
+
+void Player::destroyCity(Country& cityLocation, Player& cityOwner) {
+	Map m = Map();
+
+	vector<bool> cities = cityLocation.getCities();
+
+	int cityOwnerID = cityOwner.getPlayerID();
+
+	if (cities.at(cityOwnerID - 1) == true) {
+		cities.at(cityOwnerID - 1) = false;
+
+		//In the country, set the city vector equal o the cities vector we have made in here
+		cityLocation.setCities(cities);
+
+		//Add that city back to the player's availableCities
+		cityOwner.setAvailableCities(cityOwner.getAvailableCities() + 1);
+	}
+
+}
 
 
