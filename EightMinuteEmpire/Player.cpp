@@ -76,7 +76,7 @@ vector<int> Player::getCountriesOwned() {
 		
 		//-----THIS PART OF THE FUNCTION HAS NOT BEEN TESTED-----//
 		//Does our matrix have duplicates? Does it therefore have an owner?
-		for (int i = 0; i < (armies.size() && (duplicatesExist== false)); i++) {
+		for (int i = 0; (i < armies.size() && (duplicatesExist== false)); i++) {
 			for (int j = i + 1; j < armies.size(); j++) {
 
 				//If there are duplicates in the array and one of them is equal to 
