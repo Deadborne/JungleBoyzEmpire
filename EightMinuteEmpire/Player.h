@@ -8,6 +8,7 @@
 #include <vector>
 
 using namespace std;
+typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 
 class Player {
 private:
@@ -27,7 +28,9 @@ public:
 	//----Wish List----//
 	//void claimCountry();
 	//void setCountriesOwned();
-
+	
+	void OLDdestroyCity(int cityLocationID, Player cityOwner);
+	void destroyCity(Country& cityLocation, Player& cityOwner);
 
 	//----Required Functions----//
 	void PayCoin();
@@ -35,11 +38,11 @@ public:
 	void placeNewArmies(int numArmies, Country& country);
 	void OLDmoveArmies(int num_Armies, int originID, int destinationID);
 	void moveArmies(int numArmies, Country& origin, Country& destination);
-	//void MoveOverLand();		//Wtf is this supposed to do?
+	void moveOverLand(int numArmies, Country& origin, Country& destination, Graph gameGraph);		//MoveArmies if we are adjacent on land
 	void OLDbuildCity(int cityLocationID);
 	void buildCity(Country& cityLocation);
-	void OLDdestroyCity(int cityLocationID, Player cityOwner);
-	void destroyCity(Country& cityLocation, Player& cityOwner);
+
+	void destroyArmy(Country& armyLocation, Player armyOwner);
 
 
 	vector<int> getCountriesOwned();
@@ -56,7 +59,10 @@ public:
 
 	void setAvailableCoins(int x);
 
+	int getAvailableArmies();
 	void setAvailableArmies(int x);
+
+	bool hasCityIn(Country& country);
 };
 
 

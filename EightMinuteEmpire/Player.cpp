@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Map.h"
 
+
 using namespace std;
 
 
@@ -28,6 +29,11 @@ void Player::setAvailableCities(int x) {
 
 void Player::setAvailableCoins(int x) {
 	availableCoins = x;
+}
+
+
+int Player::getAvailableArmies() {
+	return availableArmies;
 }
 
 void Player::setAvailableArmies(int x) {
@@ -92,6 +98,12 @@ vector<int> Player::getCountriesOwned() {
 void Player::placeNewArmies(int numArmies, Country& country) {
 	Map m = Map();
 
+	//Check that the country is either the starting country or one where the player owns a city
+	
+	//Add following validation later
+	//if ((country.isStartingCountry())||(hasCityIn(country)  == true)){}
+	
+	
 	if ((availableArmies - numArmies) >= 0) {
 		vector<int> armies = country.getArmiesPerPlayer();
 
@@ -106,7 +118,23 @@ void Player::placeNewArmies(int numArmies, Country& country) {
 }
 
 
+bool Player::hasCityIn(Country& country) {
+	Map m = Map();
 
+	//Get the cities for that country
+	vector<bool> cities = country.getCities();
+	//If the player has a city logged in the counry's city vector
+	if (cities.at(playerID - 1) == true) {
+		return true;
+	}
+	else {
+		return false;
+	}
+
+
+
+
+}
 
 
 
@@ -195,6 +223,16 @@ void Player::moveArmies(int numArmies, Country& origin, Country& destination) {
 
 
 
+void Player::moveOverLand(int numArmies, Country& origin, Country& destination, Graph gameGraph) {
+	if (origin.isAdjacent(gameGraph, destination)) {
+		cout << "\nCountries are adjacent. Movement approved.\n";
+		moveArmies(numArmies, origin, destination);
+	}
+	else {
+		cout << "The origin and destination countrie are not adjacent on land";
+	}
+}
+
 
 
 //Takes an originID and destinationID to represent origin and destination countries respectively
@@ -213,6 +251,37 @@ void Player::OLDmoveArmies(int num_Armies, int originID, int destinationID) {
 	destinationArmies.at(playerID - 1) += num_Armies;
 	m.getCountries().at(destinationID).setArmiesPerPlayer(destinationArmies);
 }
+
+
+
+void Player::destroyArmy(Country& armyLocation, Player armyOwner) {
+	Map m = Map();
+
+	vector<int> armies = armyLocation.getArmiesPerPlayer();
+
+	int armyOwnerID = armyOwner.getPlayerID();
+
+	if (armies.at(armyOwnerID - 1) > 0) {
+		
+		//decrement the number of armies in the given country for the given player
+		armies.at(armyOwnerID - 1) -= 1;
+
+		//push to country
+		armyLocation.setArmiesPerPlayer(armies);
+
+		//add the destroyed army back to the player's bank
+		armyOwner.setAvailableArmies(armyOwner.getAvailableArmies() + 1);
+	}
+	else {
+		cout << "\nPlayer " << armyOwnerID << " has no armies in Country " 
+			<< armyLocation.getCountryId() + 1 <<".\n";
+	}
+}
+
+
+
+
+
 
 
 

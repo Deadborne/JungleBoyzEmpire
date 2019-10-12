@@ -21,7 +21,7 @@ int main()
 
 	//cout << "Hello World! What is your name? \n";
 	string name;
-	name = "rofl";
+	name = "John";
 	//getline(cin, name);
 	//cout << "Hello " << name << "!\n";
 	cout << "Please Enter Map Name: ";//Wont display properly :\ 😀";
@@ -88,31 +88,7 @@ int main()
 	//p.getCountriesOwned();
 
 	
-	//vector<int> test = { 1,4,9,3,6,2 }; //Desire index should be 6
-	//vector<int>::iterator result;
 
-	//result = max_element(test.begin(), test.end());
-	//cout << "Max element at: " << std::distance(test.begin(), result) << '\n';
-	//cout << "\nMax element is: " << *result;
-
-	//
-	//bool duplicatesExist = false;
-	////TESTING
-	//for (int i = 0; ((i < test.size()) && (duplicatesExist == false)); i++) {
-	//	for (int j = i + 1; j < test.size(); j++) {
-	//		if ((test.at(i) == test.at(j)) && (test.at(i) == *result)) {
-	//			cout << "\nDuplicate value " << test.at(i)
-	//				<< " at indices " << i << ", " << j << endl;
-	//			duplicatesExist = true;
-	//		}
-	//	}
-	//}
-
-	//if (duplicatesExist == true) {
-	//	cout << "Bitch yeh";
-	//}else {
-	//	cout << "Bitch nah";
-	//}		
 	
 	
 	//let's test adjacencies
@@ -174,20 +150,20 @@ int main()
 	Country c1 = m.getCountries().at(0);
 	Country c2 = m.getCountries().at(1);
 
-	cout << "Place new armies in a country \n";
+	cout << "=====Place new armies in a country=====\n";
 	cout << "Armies in Country 1: \n";
 	c1.printArmies();
 	cout << "\n";
 
-	player1.NEWplaceNewArmies(5, c1);
-	cout << "\nPlayer 1 has placed 6 new armies in Country 1: \n";
+	player1.placeNewArmies(5, c1);
+	cout << "\nPlayer 1 has placed 5 new armies in Country 1: \n";
 	c1.printArmies();
-
-	cout << "\n\n\nMove armies from Country 1 to Country 2\n";
+	
+	getline(cin, name);
+	cout << "\n\n=====Move armies from Country 1 to Country 2=====\n";
 	cout << "Player 1 has 0 armies in Country 2:\n";
 	c2.printArmies();
-	
-	player1.NEWmoveArmies(2, c1, c2);
+	player1.moveArmies(2, c1, c2);
 	cout << "\n     player 1 moving 2 armies from c1 to c2... \n";
 	
 	cout << "Armies now in Country 1:\n";
@@ -195,13 +171,27 @@ int main()
 	cout << "\nArmies now in Country 2:\n";
 	c2.printArmies();
 
-
-	cout << "\n\n\nAdd a city to Country 1:\n";
+	getline(cin, name);
+	cout << "\n\n=====Add a city to Country 1=====\n";
 	cout << "Player 1 has *" << c1.getCities().at(0) << "* cities in Country 1";
 	cout << "\n     player 1 building city in c1...";
-	player1.NEWbuildCity(c1);
+	player1.buildCity(c1);
 	cout << "\nPlayer 1 now has *" << c1.getCities().at(0) << "* city in Country 1";
-	//cout << "\n\n\n Player 1 owns the following countries:\n" << player1.getCountriesOwned().at(0);
+	
+	getline(cin, name);
+	cout << "\n\n=====Destroy another player's army=====\n";
+	cout << "Recall Player 1 has 2 armies in Country 2:\n";
+	c2.printArmies();
+	cout << "\n      player 2 destroying one of Player 1's armies in Country 2...\n";
+	player2.destroyArmy(c2, player1);
+	cout << "Player 1 now has one fewer armies in Country 2:\n";
+	c2.printArmies();
+
+	getline(cin, name);
+	cout << "\n\n=====Move Over Land=====\n";
+	cout << "Recall Player 1 had 3 armies remaining in Country 1\n Let's move one to the adjacent Country, 2:\n";
+	player1.moveOverLand(1, c1, c2, m.g);
+	c2.printArmies();
 
 	getline(cin, name);
 	return 0;

@@ -121,6 +121,7 @@ void Map::ReadMap(string f)
 
 	//output the map
 	//write_graphviz(cout, GameMap);    //THIS MUST BE ACTIVE
+	g = GameMap;
 	infile.close();
 }
 

@@ -37,4 +37,6 @@ public:
 	bool Country::isAdjacent(Graph _g, Country _c2);
 
 	void setArmiesPerPlayer(vector<int> newArmies);
+
+	bool isStartingCountry();
 };
