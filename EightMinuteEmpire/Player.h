@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+#include "Bid.h"
 #ifndef Player_h
 #define Player_h
 
@@ -33,17 +34,17 @@ public:
 	//void claimCountry();
 	//void setCountriesOwned();
 	
-	void OLDdestroyCity(int cityLocationID, Player cityOwner);
+	//void OLDdestroyCity(int cityLocationID, Player cityOwner);
 	void destroyCity(Country& cityLocation, Player& cityOwner);
 
 	//----Required Functions----//
 	void PayCoin();
-	void OLDplaceNewArmies(int num_Armies, int countryID);
+	//void OLDplaceNewArmies(int num_Armies, int countryID);
 	void placeNewArmies(int numArmies, Country& country);
-	void OLDmoveArmies(int num_Armies, int originID, int destinationID);
+	//void OLDmoveArmies(int num_Armies, int originID, int destinationID);
 	void moveArmies(int numArmies, Country& origin, Country& destination);
 	void moveOverLand(int numArmies, Country& origin, Country& destination, Graph gameGraph);		//MoveArmies if we are adjacent on land
-	void OLDbuildCity(int cityLocationID);
+	//void OLDbuildCity(int cityLocationID);
 	void buildCity(Country& cityLocation);
 
 	void destroyArmy(Country& armyLocation, Player armyOwner);
