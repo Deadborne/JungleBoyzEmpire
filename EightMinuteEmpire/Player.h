@@ -14,14 +14,16 @@ typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 class Player {
 private:
 	int* playerID;
+
+
 	vector<int> continentsOwned;
 	vector<int> countriesOwned;
 
 
 
-	int availableArmies;				//Armies in player's bank [should be 14 at game start]
-	int availableCities;				//Cities in player's bank [should be 3 at game start]
-	int availableCoins;					//Coins in player's bank [should be 8(5p), 9(4p), 11(3p), 14(2p) at game start]
+	int *availableArmies;					//Armies in player's bank [should be 14 at game start]
+	int *availableCities;					//Cities in player's bank [should be 3 at game start]
+	int *availableCoins;					//Coins in player's bank [should be 8(5p), 9(4p), 11(3p), 14(2p) at game start]
 
 
 	Bid *playerBid;
@@ -57,7 +59,7 @@ public:
 	int getAvailableCities();
 	void setAvailableCities(int x);
 
-	void setPlayerID(int* x);
+	void setPlayerID(int x);
 	int getPlayerID();
 
 	void setAvailableCoins(int x);

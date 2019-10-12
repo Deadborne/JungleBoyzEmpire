@@ -10,8 +10,8 @@ using namespace std;
 
 //----Mutators and Accessors----//
 
-void Player::setPlayerID(int* x) {
-	*playerID = *x;
+void Player::setPlayerID(int x) {
+	playerID = new int(x);
 }
 
 int Player::getPlayerID() {
@@ -19,24 +19,23 @@ int Player::getPlayerID() {
 }
 
 int Player::getAvailableCities() {
-	return availableCities;
+	return *availableCities;
 }
 
 void Player::setAvailableCities(int x) {
-	availableCities = x;
+	availableCities = new int(x);
 }
 
 void Player::setAvailableCoins(int x) {
-	availableCoins = x;
+	availableCoins = new int(x);
 }
 
-
 int Player::getAvailableArmies() {
-	return availableArmies;
+	return *availableArmies;
 }
 
 void Player::setAvailableArmies(int x) {
-	availableArmies = x;
+	availableArmies = new int(x);
 }
 
 
@@ -109,14 +108,14 @@ vector<int> Player::getCountriesOwned() {
 //	2. Number of armies player can place is determined by the card he/she has drawn
 //	3. Player can only place new armies in countries where they own a city 
 void Player::placeNewArmies(int numArmies, Country& country) {
-	Map m = Map();
+	//Map m = Map();
 
 	//Check that the country is either the starting country or one where the player owns a city
 	//Add following validation later
 	//if ((country.isStartingCountry())||(hasCityIn(country)  == true)){}
 	
 	//Check army availability. Can't place an army if theyre all already deployed
-	if ((availableArmies - numArmies) >= 0) {
+	if ((*availableArmies - numArmies) >= 0) {
 		vector<int> armies = country.getArmiesPerPlayer();
 
 		//Change armies in player's slot
@@ -127,7 +126,7 @@ void Player::placeNewArmies(int numArmies, Country& country) {
 		
 	}else {
 		//If the player has too few armies
-		cerr << "\nOperation blocked. You only have " << availableArmies << " armies available to you.";
+		cerr << "\nOperation blocked. You only have " << *availableArmies << " armies available to you.";
 	}
 }
 
@@ -217,7 +216,7 @@ void Player::buildCity(Country& cityLocation) {
 			if (cities.at(*playerID - 1) != true) {
 				cities.at(*playerID - 1) = true;
 				cityLocation.setCities(cities);
-				availableCities--;
+				*availableCities--;
 			}
 			else {
 				cout << "\nCity already exists in country. Build one somewhere else.";

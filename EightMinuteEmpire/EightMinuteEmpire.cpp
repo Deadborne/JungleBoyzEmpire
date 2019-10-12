@@ -33,6 +33,9 @@ int main()
 	player1.setPlayerID(1);
 	player1.setAvailableCities(3);
 
+	cout << "\n\nPlayer 1 ID: " << player1.getPlayerID() <<"\n\n";
+
+
 	Player player2 = Player();
 	player2.setAvailableArmies(14);
 	player2.setPlayerID(2);
