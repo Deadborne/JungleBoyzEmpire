@@ -10,6 +10,7 @@ using namespace std;
 
 //----Mutators and Accessors----//
 
+
 void Player::setPlayerID(int x) {
 	playerID = new int(x);
 }
@@ -50,6 +51,10 @@ void Player::setBid() {
 	playerBid->setBid(*playerID);
 	availableCoins -= *playerBid->_bidAmount;
 	//cout << "Available Coins: " << availableCoins << "\n";
+}
+
+Bid Player::getBid() {
+	return *playerBid;
 }
 
 

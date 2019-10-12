@@ -58,7 +58,7 @@ public:
 	//----Mutators & Accessors----//
 	int getAvailableCities();
 	void setAvailableCities(int x);
-
+	
 	void setPlayerID(int x);
 	int getPlayerID();
 
@@ -73,6 +73,7 @@ public:
 	bool hasCityIn(Country& country);
 
 	void setBid();
+	Bid getBid();
 };
 
 
