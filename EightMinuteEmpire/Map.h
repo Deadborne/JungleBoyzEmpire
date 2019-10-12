@@ -5,16 +5,14 @@
 #include "Country.h"
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graphviz.hpp>
-typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
+
 
 
 class Map
 {
 private:
 	int num;
-	
 public:
-	Graph g;
 	Map();
 	Map(int n);
 	int getNum();

@@ -22,6 +22,8 @@ private:
 	int availableCities;		//Cities in player's bank [should be 3 at game start]
 	int availableCoins;					//Coins in player's bank [should be 8(5p), 9(4p), 11(3p), 14(2p) at game start]
 
+
+	Bid *playerBid;
 	//----TODO----//
 	//Player needs to own a hand of cards
 
@@ -65,6 +67,8 @@ public:
 	void setAvailableArmies(int x);
 
 	bool hasCityIn(Country& country);
+
+	void setBid();
 };
 
 
