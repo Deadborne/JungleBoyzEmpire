@@ -104,5 +104,8 @@
     <ClCompile Include="Bid.cpp">
       <Filter>Source Files\Bid</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerDriver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -38,6 +38,11 @@ void Player::setAvailableArmies(int x) {
 	availableArmies = new int(x);
 }
 
+int Player::getAvailableCoins() {
+	return *availableCoins;
+}
+
+
 
 //Bid functionality
 void Player::setBid() {
@@ -52,7 +57,7 @@ void Player::setBid() {
 
 //Pays single coin by deleting it from players bank (and from existence)
 void Player::PayCoin() {
-	availableCoins--;
+	setAvailableCoins(getAvailableCoins()-1);
 }
 
 //For future implementation, this function will scan countries, determine the owner

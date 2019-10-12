@@ -62,10 +62,13 @@ public:
 	void setPlayerID(int x);
 	int getPlayerID();
 
-	void setAvailableCoins(int x);
+	
 
 	int getAvailableArmies();
 	void setAvailableArmies(int x);
+
+	int getAvailableCoins();
+	void setAvailableCoins(int x);
 
 	bool hasCityIn(Country& country);
 
