@@ -14,7 +14,9 @@ class Player {
 private:
 	int playerID;
 	int regionsOwned;
-	vector<int> countriesOwned;	
+	vector<int> countriesOwned;
+
+
 
 	int availableArmies;		//Armies in player's bank [should be 14 at game start]
 	int availableCities;		//Cities in player's bank [should be 3 at game start]
