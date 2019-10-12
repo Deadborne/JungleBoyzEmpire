@@ -13,7 +13,7 @@ typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 
 class Player {
 private:
-	int playerID;
+	int* playerID;
 	vector<int> continentsOwned;
 	vector<int> countriesOwned;
 
@@ -25,6 +25,13 @@ private:
 
 
 	Bid *playerBid;
+
+	
+	//This is the member function for the Hand, once it is implemented and synced w/ my branch
+	//Hand *hand;
+	
+	
+	
 	//----TODO----//
 	//Player needs to own a hand of cards
 
@@ -50,7 +57,7 @@ public:
 	int getAvailableCities();
 	void setAvailableCities(int x);
 
-	void setPlayerID(int x);
+	void setPlayerID(int* x);
 	int getPlayerID();
 
 	void setAvailableCoins(int x);

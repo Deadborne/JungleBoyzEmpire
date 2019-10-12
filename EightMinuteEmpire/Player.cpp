@@ -10,12 +10,12 @@ using namespace std;
 
 //----Mutators and Accessors----//
 
-void Player::setPlayerID(int x) {
-	playerID = x;
+void Player::setPlayerID(int* x) {
+	*playerID = *x;
 }
 
 int Player::getPlayerID() {
-	return playerID;
+	return *playerID;
 }
 
 int Player::getAvailableCities() {
@@ -43,7 +43,7 @@ void Player::setAvailableArmies(int x) {
 //Bid functionality
 void Player::setBid() {
 	playerBid = new Bid();
-	playerBid->setBid(playerID);
+	playerBid->setBid(*playerID);
 	availableCoins -= *playerBid->_bidAmount;
 	//cout << "Available Coins: " << availableCoins << "\n";
 }
@@ -93,7 +93,7 @@ vector<int> Player::getCountriesOwned() {
 			int ownerIndex = std::distance(armies.begin(), maxElement);
 
 			//If the playerID is the same as the index with the most armies
-			if (playerID == ownerIndex + 1) {
+			if (*playerID == ownerIndex + 1) {
 				//Then add that country to the player's owned countries
 				countriesOwned.push_back(allCountries.at(i).getCountryId());
 			}
@@ -120,7 +120,7 @@ void Player::placeNewArmies(int numArmies, Country& country) {
 		vector<int> armies = country.getArmiesPerPlayer();
 
 		//Change armies in player's slot
-		armies.at(playerID - 1) += numArmies;
+		armies.at(*playerID - 1) += numArmies;
 
 		//Push to country object
 		country.setArmiesPerPlayer(armies);
@@ -129,30 +129,6 @@ void Player::placeNewArmies(int numArmies, Country& country) {
 		//If the player has too few armies
 		cerr << "\nOperation blocked. You only have " << availableArmies << " armies available to you.";
 	}
-}
-
-//Tells us if a player has a city in some given country
-bool Player::hasCityIn(Country& country) {
-	Map m = Map();
-
-	//Get the cities for that country
-	vector<bool> cities = country.getCities();
-
-	//If the player has a city logged in the counry's city vector
-	if (cities.at(playerID - 1) == true) {
-		return true;
-	}else {
-		return false;
-	}
-
-	//FOR REFERENCE
-	//Player ID correspondance with army vector: 
-	//			{0, 1, 2, 0, 0}
-	//			 ^  ^  ^  ^  ^
-	//			 P1 P2 P3 P4 P5
-	//This assumes implementation doesn't have a player ID '0'	
-
-
 }
 
 //Takes a number of armies, an origin country and a destination country. Subtracts armies from
@@ -165,19 +141,19 @@ void Player::moveArmies(int numArmies, Country& origin, Country& destination) {
 	vector<int> destinationArmies = destination.getArmiesPerPlayer();
 
 	//Avoid moving more armies than exist in the vector 
-	if (originArmies.at(playerID - 1) >= numArmies) {
+	if (originArmies.at(*playerID - 1) >= numArmies) {
 		
 		//Move from origin
-		originArmies.at(playerID - 1) -= numArmies;
+		originArmies.at(*playerID - 1) -= numArmies;
 		origin.setArmiesPerPlayer(originArmies);
 
 		//Move to destination
-		destinationArmies.at(playerID - 1) += numArmies;
+		destinationArmies.at(*playerID - 1) += numArmies;
 		destination.setArmiesPerPlayer(destinationArmies);
 
 	}
 	else {
-		cout << "\nThere are only " << originArmies.at(playerID - 1)
+		cout << "\nThere are only " << originArmies.at(*playerID - 1)
 			<< " armies in Country " << origin.getCountryId()
 			<< ". You cannot move more than that.";
 	}
@@ -235,11 +211,11 @@ void Player::buildCity(Country& cityLocation) {
 	if (availableCities != 0) {
 		vector<int> armies = cityLocation.getArmiesPerPlayer();
 		//2
-		if (armies.at(playerID - 1) > 0) {
+		if (armies.at(*playerID - 1) > 0) {
 			vector<bool> cities = cityLocation.getCities();
 			//3
-			if (cities.at(playerID - 1) != true) {
-				cities.at(playerID - 1) = true;
+			if (cities.at(*playerID - 1) != true) {
+				cities.at(*playerID - 1) = true;
 				cityLocation.setCities(cities);
 				availableCities--;
 			}
@@ -277,4 +253,27 @@ void Player::destroyCity(Country& cityLocation, Player& cityOwner) {
 
 }
 
+//Tells us if a player has a city in some given country
+bool Player::hasCityIn(Country& country) {
+	Map m = Map();
 
+	//Get the cities for that country
+	vector<bool> cities = country.getCities();
+
+	//If the player has a city logged in the counry's city vector
+	if (cities.at(*playerID - 1) == true) {
+		return true;
+	}
+	else {
+		return false;
+	}
+
+	//FOR REFERENCE
+	//Player ID correspondance with army vector: 
+	//			{0, 1, 2, 0, 0}
+	//			 ^  ^  ^  ^  ^
+	//			 P1 P2 P3 P4 P5
+	//This assumes implementation doesn't have a player ID '0'	
+
+
+}
