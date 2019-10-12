@@ -69,7 +69,7 @@ void Country::setArmiesPerPlayer(vector<int> newArmies) {
 //----Other Functionality----//
 
 //sets the owner of the country
-void Country::setOwner(int countryId)
+void Country::setOwner()
 {
 	int currMax = 0;
 	int *owner;
@@ -77,9 +77,12 @@ void Country::setOwner(int countryId)
 
 	for (int i = 0; i < Country::_armiesPerPlayer.size(); i++) 
 	{
+		cout << "Player " << i+1 << " has " << _armiesPerPlayer[i] << endl;
 		if (_armiesPerPlayer[i] > currMax)
 		{
-			owner = &i;
+			cout << "Setting the owner to " << i+1 << endl;
+			*owner = i+1;
+			cout << "owner is " << *owner << endl;
 			currMax = _armiesPerPlayer[i];
 		}
 		else if (_armiesPerPlayer[i] == currMax)
@@ -88,6 +91,8 @@ void Country::setOwner(int countryId)
 			break;
 		}
 	}
+	
+	cout << "The owner is, finally, " << *owner << endl;
 	_countryOwner = owner;
 }
 

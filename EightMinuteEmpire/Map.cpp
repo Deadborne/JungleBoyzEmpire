@@ -163,7 +163,7 @@ Graph Map::ReadMap(string f)
 		return GameMap;
 	}
 	else {
-		cout << "This map has no starting point. Map not created." << endl;
+		cout << "This map has no starting point, or is otherwise completely invalid. Map not created." << endl;
 		return NULL;
 	}
 		
@@ -188,7 +188,6 @@ void Map::purge() {
 		mappedCountries.at(i).setCountryId(NULL);
 		mappedCountries.at(i).setStarterStatus(NULL);
 	}
-	
 }
 
 

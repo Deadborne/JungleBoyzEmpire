@@ -18,7 +18,5 @@ public:
 	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 	Graph ReadMap(std::string _Filename);
 	void purge();
-
-	//WELTON
 	std::vector<Country> getCountries();
 };
