@@ -47,6 +47,10 @@ void Player::setBid() {
 	//cout << "Available Coins: " << availableCoins << "\n";
 }
 
+Bid Player::getBid() {
+	return *playerBid;
+}
+
 
 //----Required Functionality----//
 
