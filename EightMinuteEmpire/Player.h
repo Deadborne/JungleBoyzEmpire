@@ -14,13 +14,13 @@ typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 class Player {
 private:
 	int playerID;
-	int regionsOwned;
+	vector<int> continentsOwned;
 	vector<int> countriesOwned;
 
 
 
-	int availableArmies;		//Armies in player's bank [should be 14 at game start]
-	int availableCities;		//Cities in player's bank [should be 3 at game start]
+	int availableArmies;				//Armies in player's bank [should be 14 at game start]
+	int availableCities;				//Cities in player's bank [should be 3 at game start]
 	int availableCoins;					//Coins in player's bank [should be 8(5p), 9(4p), 11(3p), 14(2p) at game start]
 
 
@@ -34,26 +34,17 @@ public:
 	//void claimCountry();
 	//void setCountriesOwned();
 	
-	//void OLDdestroyCity(int cityLocationID, Player cityOwner);
+	
 	void destroyCity(Country& cityLocation, Player& cityOwner);
+	vector<int> getCountriesOwned();
 
 	//----Required Functions----//
 	void PayCoin();
-	//void OLDplaceNewArmies(int num_Armies, int countryID);
 	void placeNewArmies(int numArmies, Country& country);
-	//void OLDmoveArmies(int num_Armies, int originID, int destinationID);
 	void moveArmies(int numArmies, Country& origin, Country& destination);
-	void moveOverLand(int numArmies, Country& origin, Country& destination, Graph gameGraph);		//MoveArmies if we are adjacent on land
-	//void OLDbuildCity(int cityLocationID);
+	void moveOverLand(int numArmies, Country& origin, Country& destination, Graph gameGraph);
 	void buildCity(Country& cityLocation);
-
 	void destroyArmy(Country& armyLocation, Player armyOwner);
-
-
-	vector<int> getCountriesOwned();
-		
-
-	
 
 	//----Mutators & Accessors----//
 	int getAvailableCities();
@@ -71,10 +62,6 @@ public:
 
 	void setBid();
 };
-
-
-
-
 
 
 
