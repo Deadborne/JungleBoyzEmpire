@@ -92,7 +92,7 @@ int main()
 	c2.printArmies();
 
 	getline(cin, name);
-	cout << "\n\n=====The rest of the requiremens would printed here. Data members created in .h";
+	cout << "\n\n=====The rest of the requiremens would be printed here. Data members created in .h=====\n";
 
 
 

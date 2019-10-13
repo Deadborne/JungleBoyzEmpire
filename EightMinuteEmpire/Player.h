@@ -21,33 +21,25 @@ private:
 	vector<int>* countriesOwned;
 	vector<int>* HandOfCards;
 
-
-
 	int *availableArmies;					//Armies in player's bank [should be 14 at game start]
 	int *availableCities;					//Cities in player's bank [should be 3 at game start]
 	int *availableCoins;					//Coins in player's bank [should be 8(5p), 9(4p), 11(3p), 14(2p) at game start]
 
 
 	Bid *playerBid;
-
-	
-	//This is the member function for the Hand, once it is implemented and synced w/ my branch
-	//Hand *hand;
-	
-	
 	
 	//----TODO----//
 	//Player needs to own a hand of cards
 
 public:
-	
+	~Player();
 	//----Wish List----//
 	//void claimCountry();
 	//void setCountriesOwned();
-	~Player();
+	
 	
 	void destroyCity(Country& cityLocation, Player& cityOwner);
-	vector<int> getCountriesOwned();
+	//vector<int> getCountriesOwned();
 
 	//----Required Functions----//
 	void PayCoin();
@@ -77,7 +69,7 @@ public:
 	void setBid();
 	Bid getBid();
 
-
+	
 };
 
 
