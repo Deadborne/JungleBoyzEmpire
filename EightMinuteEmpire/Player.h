@@ -7,6 +7,7 @@
 #include <string>
 #include "Country.h"
 #include <vector>
+#include <string>
 
 using namespace std;
 typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
@@ -18,6 +19,8 @@ private:
 
 	vector<int> continentsOwned;
 	vector<int> countriesOwned;
+
+	vector<string> HandOfCards = { "card1", "card2", "card3", "card4" };
 
 
 
@@ -74,6 +77,8 @@ public:
 
 	void setBid();
 	Bid getBid();
+
+
 };
 
 

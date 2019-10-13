@@ -91,6 +91,11 @@ int main()
 	player1.moveOverLand(1, c1, c2, m.g);
 	c2.printArmies();
 
+	getline(cin, name);
+	cout << "\n\n=====The rest of the requiremens would printed here. Data members created in .h";
+
+
+
 	cout << "\n\n\n\n\nProgram end. Press Enter to terminate...";
 	
 	
