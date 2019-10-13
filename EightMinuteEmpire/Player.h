@@ -56,8 +56,6 @@ public:
 	void setPlayerID(int x);
 	int getPlayerID();
 
-	
-
 	int getAvailableArmies();
 	void setAvailableArmies(int x);
 
