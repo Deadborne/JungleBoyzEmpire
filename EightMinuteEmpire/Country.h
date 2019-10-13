@@ -15,15 +15,15 @@ private:
 	int* _continentId;
 	int* _countryOwner;
 	bool* _isStart = false;
-	vector<int> _armiesPerPlayer{0, 0, 0, 0, 0};
-	vector<bool> _cities{false, false, false, false, false};
+	vector<int*> _armiesPerPlayer{0, 0, 0, 0, 0};
+	vector<bool*> _cities{false, false, false, false, false};
 
 public:
 	Country();
 	Country(int* _countryId, int* _continentId);
 	Country(int* _countryId, int* _continentId, bool* _isStart);
-	Country(int* _countryId, int* _continentId, vector<int> _armiesPerPlayer);
-	Country(int* _countryId, int* _continentId, vector<int> _armiesPerPlayer, bool* _isStart);
+	Country(int* _countryId, int* _continentId, vector<int*> _armiesPerPlayer);
+	Country(int* _countryId, int* _continentId, vector<int*> _armiesPerPlayer, bool* _isStart);
 
 	int getCountryId();
 	int getContinentId();
@@ -37,11 +37,11 @@ public:
 	void setOwner();
 	bool hasCity(int _playerId);
 
-	vector<int> getArmiesPerPlayer();
+	vector<int*> getArmiesPerPlayer();
 	void printArmies();
 
-	vector<bool> getCities();
-	void setCities(vector<bool> newCities);
+	vector<bool*> getCities();
+	void setCities(vector<bool*> newCities);
 
 	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 
@@ -49,5 +49,5 @@ public:
 	bool Country::isConnected(Graph _g, Country _c2);
 	bool Country::isAdjacent(Graph _g, Country _c2);
 
-	void setArmiesPerPlayer(vector<int> newArmies);
+	void setArmiesPerPlayer(vector<int*> newArmies);
 };

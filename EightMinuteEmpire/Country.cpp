@@ -22,24 +22,24 @@ Country::Country(int* countryId, int* continentId) : _countryId(countryId), _con
 Country::Country(int* countryId, int* continentId, bool* isStart) : _countryId(countryId), _continentId(continentId), _isStart(isStart)
 {
 }
-
-Country::Country(int* countryId, int* continentId, vector<int> armiesPerPlayer) : _countryId(countryId), _continentId(continentId), _armiesPerPlayer(armiesPerPlayer)
+//constructor, takes countryID, continentId, and the armies vector
+Country::Country(int* countryId, int* continentId, vector<int*> armiesPerPlayer) : _countryId(countryId), _continentId(continentId), _armiesPerPlayer(armiesPerPlayer)
 {
 }
-
-Country::Country(int* countryId, int* continentId, vector<int> armiesPerPlayer, bool* isStart) : _countryId(countryId), _continentId(continentId), _armiesPerPlayer(armiesPerPlayer), _isStart(isStart)
+//constructor, takes countryID, continentId, the armies vector and whether it's a starting country or not
+Country::Country(int* countryId, int* continentId, vector<int*> armiesPerPlayer, bool* isStart) : _countryId(countryId), _continentId(continentId), _armiesPerPlayer(armiesPerPlayer), _isStart(isStart)
 {
 }
 
 //----Mutators & Accessors----//
 
 //Returns vector of cities for a given country
-vector<bool> Country::getCities() {
+vector<bool*> Country::getCities() {
 	return _cities;
 }
 
 //Allows us to set the city vector for a given country
-void Country::setCities(vector<bool> newCities) {
+void Country::setCities(vector<bool*> newCities) {
 	_cities = newCities;
 }
 
@@ -54,13 +54,13 @@ int Country::getContinentId() {
 };
 
 //Public accessor for armiesPerPlayer
-vector<int> Country::getArmiesPerPlayer() {
+vector<int*> Country::getArmiesPerPlayer() {
 	return _armiesPerPlayer;
 
 }
 
 //Setter for armiesPerPlayer
-void Country::setArmiesPerPlayer(vector<int> newArmies) {
+void Country::setArmiesPerPlayer(vector<int*> newArmies) {
 	_armiesPerPlayer = newArmies;
 }
 
@@ -77,22 +77,17 @@ void Country::setOwner()
 
 	for (int i = 0; i < Country::_armiesPerPlayer.size(); i++) 
 	{
-		cout << "Player " << i+1 << " has " << _armiesPerPlayer[i] << endl;
-		if (_armiesPerPlayer[i] > currMax)
+		if (*_armiesPerPlayer[i] > currMax)
 		{
-			cout << "Setting the owner to " << i+1 << endl;
 			*owner = i+1;
-			cout << "owner is " << *owner << endl;
-			currMax = _armiesPerPlayer[i];
+			currMax = *_armiesPerPlayer[i];
 		}
-		else if (_armiesPerPlayer[i] == currMax)
+		else if (*_armiesPerPlayer[i] == currMax)
 		{
 			*owner = -1;
 			break;
 		}
 	}
-	
-	cout << "The owner is, finally, " << *owner << endl;
 	_countryOwner = owner;
 }
 
@@ -114,7 +109,7 @@ void Country::setStarterStatus(bool* status) {
 //builds a city in this country for the player being passed.
 void Country::buildCity(int playerId)
 {
-	_cities[playerId] = true;
+	*_cities[playerId] = true;
 }
 
 //tells you who the owner of the country is
@@ -125,7 +120,7 @@ int Country::getOwner()
 
 //checks if the player being passed as a param has a city in this country
 bool Country::hasCity(int playerId) {
-	if (_cities[playerId] == true)
+	if (*_cities[playerId] == true)
 		return true;
 	else 
 		return false;
