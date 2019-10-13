@@ -8,6 +8,18 @@
 using namespace std;
 
 
+//Player::~Player() {
+//	delete availableArmies;					
+//	delete availableCities;					
+//	delete availableCoins;
+//	delete playerBid;
+//	delete playerID;
+//	delete continentsOwned;
+//	delete countriesOwned;
+//	delete HandOfCards;
+//}
+
+
 //----Mutators and Accessors----//
 
 

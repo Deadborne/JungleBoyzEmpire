@@ -17,9 +17,9 @@ private:
 	int* playerID;
 
 	//The following vectors are dummies for future use
-	vector<int> continentsOwned;
-	vector<int> countriesOwned;
-	vector<string> HandOfCards = { "card1", "card2", "card3", "card4" };
+	vector<int>* continentsOwned;
+	vector<int>* countriesOwned;
+	vector<int>* HandOfCards;
 
 
 
@@ -44,7 +44,7 @@ public:
 	//----Wish List----//
 	//void claimCountry();
 	//void setCountriesOwned();
-	
+	~Player();
 	
 	void destroyCity(Country& cityLocation, Player& cityOwner);
 	vector<int> getCountriesOwned();
