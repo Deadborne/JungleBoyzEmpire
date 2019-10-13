@@ -16,10 +16,9 @@ class Player {
 private:
 	int* playerID;
 
-
+	//The following vectors are dummies for future use
 	vector<int> continentsOwned;
 	vector<int> countriesOwned;
-
 	vector<string> HandOfCards = { "card1", "card2", "card3", "card4" };
 
 
