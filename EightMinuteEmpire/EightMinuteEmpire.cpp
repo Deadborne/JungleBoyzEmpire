@@ -1,77 +1,130 @@
-// EightMinuteEmpire.cpp : Defines the entry point for the console application.
-//
+﻿//// EightMinuteEmpire.cpp : Defines the entry point for the console application.
+////
 #pragma once
-
+//
 #include "stdafx.h"
-#include <string>
 
-#include <iostream>
-#include "Map.h"
-#include "Country.h"
-using namespace std;
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/graphviz.hpp>
-using namespace boost;
-
-
-int main()
-{
-
-#include<iostream>
-using namespace std;
-
-int main()
-{
-	cout << "Hello World! What is your name? \n";
-	string name;
-
-	getline(cin, name);
-	cout << "Hello " << name << "!\n";
-	cout << "Please press enter to close the console :D";
-	getline(cin, name);
-	Map m = Map(12);
-	m.getNum();
-	Country c = Country(12, 1);
-	c.getId();
-
-	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
-	Graph territories;
-	typedef adjacency_list< listS, vecS, directedS > digraph;
-	Graph continents;
-	typedef adjacency_list< listS, vecS, directedS > digraph;
-
-	// instantiate a digraph object with 8 vertices
-	Graph g(8);
-
-	// add some edges
-	add_edge(0, 1, g);
-	add_edge(1, 5, g);
-	add_edge(5, 6, g);
-	add_edge(2, 3, g);
-	add_edge(2, 4, g);
-	add_edge(3, 5, g);
-	add_edge(4, 5, g);
-	add_edge(5, 7, g);
-
-	// represent graph in DOT format and send to cout
-	write_graphviz(cout, g);
-
-	
-	Country d = Country(1, 1);
-	d.setOwner(1);
-
-	d.buildCity(3);
-
-
-
-	cout << "The owner of country 1 is " << d.getOwner();
-	cout << "\nDoes player 4 have a city in this country?: " << d.hasCity(3);
-	cout << "\nDoes player 2 have a city in this country?: " << d.hasCity(1);
-	getline(cin, name);
-
-
-
-    return 0;
-}
-
-
+//#include <string>
+//#include <iostream>
+//#include "Map.h"
+//#include "Country.h"
+//#include "Player.h" 
+//#include <ostream>
+////#include <vector>
+//using namespace std;
+//#include <boost/graph/adjacency_list.hpp>
+//#include <boost/graph/graphviz.hpp>
+//using namespace boost;
+//
+//
+//int main()
+//{	
+//	string name;
+//	name = "John";
+//	cout << "Please Enter Map Name: ";
+//	getline(cin, name);
+//	Map m = Map(12);
+//	m.getNum();
+//	m.ReadMap(name);
+//	
+//
+//	//START OF ACTUAL DRIVER -- DO NOT DELETE PLEASE -- WILL MOVE
+//	Player player1 = Player();
+//	player1.setAvailableArmies(14);
+//	player1.setPlayerID(1);
+//	player1.setAvailableCities(3);
+//
+//	cout << "\n\nPlayer 1 ID: " << player1.getPlayerID() <<"\n\n";
+//
+//
+//	Player player2 = Player();
+//	player2.setAvailableArmies(14);
+//	player2.setPlayerID(2);
+//	player2.setAvailableCities(3);
+//
+//	Country c1 = m.getCountries().at(0);
+//	Country c2 = m.getCountries().at(1);
+//
+//	cout << "=====Place new armies in a country=====\n";
+//	cout << "Armies in Country 1: \n";
+//	c1.printArmies();
+//	cout << "\n";
+//
+//	player1.placeNewArmies(5, c1);
+//	cout << "\nPlayer 1 has placed 5 new armies in Country 1: \n";
+//	c1.printArmies();
+//	
+//	getline(cin, name);
+//	cout << "\n\n=====Move armies from Country 1 to Country 2=====\n";
+//	cout << "Player 1 has 0 armies in Country 2:\n";
+//	c2.printArmies();
+//	player1.moveArmies(2, c1, c2);
+//	cout << "\n     player 1 moving 2 armies from c1 to c2... \n";
+//	
+//	cout << "Armies now in Country 1:\n";
+//	c1.printArmies();
+//	cout << "\nArmies now in Country 2:\n";
+//	c2.printArmies();
+//
+//	getline(cin, name);
+//	cout << "\n\n=====Add a city to Country 1=====\n";
+//	cout << "Player 1 has " << c1.getCities().at(0) << " cities in Country 1";
+//	cout << "\n     player 1 building city in c1...";
+//	player1.buildCity(c1);
+//	cout << "\nPlayer 1 now has " << c1.getCities().at(0) << " city in Country 1";
+//	
+//	getline(cin, name);
+//	cout << "\n\n=====Destroy another player's army=====\n";
+//	cout << "Recall Player 1 has 2 armies in Country 2:\n";
+//	c2.printArmies();
+//	cout << "\n      player 2 destroying one of Player 1's armies in Country 2...\n";
+//	player2.destroyArmy(c2, player1);
+//	cout << "Player 1 now has one fewer armies in Country 2:\n";
+//	c2.printArmies();
+//
+//	getline(cin, name);
+//	cout << "\n\n=====Move Over Land=====\n";
+//	cout << "Recall Player 1 had 3 armies remaining in Country 1\n      let's move one to the adjacent Country, 2...\n";
+//	player1.moveOverLand(1, c1, c2, m.g);
+//	c2.printArmies();
+//
+//	cout << "\n\n\n\n\nProgram end. Press Enter to terminate...";
+//
+//	//Start of bidding test
+//	int startingPlayerIndex = -1;
+//	vector<Player> players = { Player(), Player(), Player(), Player(), Player() };
+//	for (int i = 0; i < players.size(); i++) {
+//		players[i].setAvailableCoins(8);
+//		players[i].setPlayerID(i);
+//		players[i].setBid();
+//	}
+//
+//	vector<int> bidVector = vector<int>(players.size());
+//
+//	for (int i = 0; i < players.size(); i++) {
+//		int* playerBid = players.at(i).getBid()._bidAmount;
+//		bidVector[i] = *playerBid;
+//	}
+//	cout << "vector size: " << bidVector.size() << "\n";
+//	Bid bidTest = Bid();
+//	int winningBid = bidTest.calculateBid(bidVector);
+//	if (winningBid == -1) {
+//		cout << "Bets are tied! Picking a random player to start!\n";
+//		srand(time(NULL));
+//		startingPlayerIndex = (rand()) % bidVector.size();
+//	}
+//	else {
+//		cout << "Player : " << winningBid + 1 << " wins the bid!\n";
+//		startingPlayerIndex = winningBid;
+//	}
+//
+//	//Setting player bets back to 8 except for winner, unless it was a draw
+//	for (int i = 0; i < players.size(); i++) {
+//		if (i != startingPlayerIndex)
+//			players.at(i).setAvailableCoins(8);
+//	}
+//
+//	cout << "Player " << startingPlayerIndex + 1 << " starts!";
+//	getline(cin, name);
+//	return 0;
+//}

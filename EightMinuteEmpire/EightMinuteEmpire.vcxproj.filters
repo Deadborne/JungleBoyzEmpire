@@ -19,6 +19,30 @@
     <Filter Include="Header Files\Map">
       <UniqueIdentifier>{a92f6702-07f5-4a61-961e-34fc1b75c911}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Player">
+      <UniqueIdentifier>{cc900417-4872-4fae-8fce-19cfd36796f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Player">
+      <UniqueIdentifier>{48da581b-438c-4891-9387-4d5709557055}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Card">
+      <UniqueIdentifier>{b19de180-b171-4e32-b482-41c9c538d7b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Card">
+      <UniqueIdentifier>{c1e471b9-aa52-4540-b09f-83e60bd48b2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Deck">
+      <UniqueIdentifier>{bd092b6c-0448-4a15-9127-23a2e2baba8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Deck">
+      <UniqueIdentifier>{47a26dfe-1693-4957-a8e7-ebf70051ce3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Bid">
+      <UniqueIdentifier>{9a87e416-1141-4ec9-b6aa-650575429ff9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Bid">
+      <UniqueIdentifier>{5a1a9e80-adf8-4920-a495-4e10de245397}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -39,6 +63,21 @@
     <ClInclude Include="Continent.h">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Card.h">
+      <Filter>Header Files\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="Card.cpp">
+      <Filter>Source Files\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="Deck.h">
+      <Filter>Header Files\Deck</Filter>
+    </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files\Bid</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -55,6 +94,21 @@
     </ClCompile>
     <ClCompile Include="Continent.cpp">
       <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Deck.cpp">
+      <Filter>Source Files\Deck</Filter>
+    </ClCompile>
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files\Bid</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDriver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BidDriver.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
