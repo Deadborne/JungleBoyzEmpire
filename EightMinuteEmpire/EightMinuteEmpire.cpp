@@ -3,7 +3,7 @@
 #pragma once
 //
 #include "stdafx.h"
-
+/*
 
 
 	Player player1 = Player();
@@ -89,7 +89,7 @@
 void printAry() {
 	//Driver todos
 }
-
+*/
 //#include <string>
 //#include <iostream>
 //#include "Map.h"

@@ -246,14 +246,6 @@ Player::~Player() {
 }
 
 
-//Bid functionality
-//Remember to change this to a pointer
-void Player::setBid() {
-	playerBid = new Bid();
-	playerBid->setBid(playerID);
-	availableCoins -= *playerBid->_bidAmount;
-	//cout << "Available Coins: " << availableCoins << "\n";
-}
 
 //FUNTIONALITY NOT REQUIRED --- TO BE IMPLEMENTED IN A2//
 

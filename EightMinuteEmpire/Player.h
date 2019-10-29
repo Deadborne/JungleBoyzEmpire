@@ -38,7 +38,6 @@ public:
 
 	
 	//--- Bidding --- //
-	Bid *playerBid;
 
 	~Player();
 
@@ -68,7 +67,6 @@ public:
 	int getAvailableArmies();
 	void setAvailableArmies(int x);
 
-	void setBid();
 
 	int getAvailableCoins();
 	void setAvailableCoins(int x);
