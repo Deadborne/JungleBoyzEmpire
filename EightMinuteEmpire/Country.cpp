@@ -138,10 +138,7 @@ void Country::printArmies() {
 	}
 
 }
-/* 
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-::::::::::::THE FOLLOWING METHODS WILL BE USED IN THE FUTURE -- NOT PART OF ASSIGNMENT 1::::::::::::::::
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 //tells you if two countries are connected (whether over land or sea)
 typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
@@ -156,7 +153,7 @@ bool Country::isConnected(Graph g, Country c2) {
 	bool confirm = false;
 
 	//store adjacencies in checker vector
-	for (boost::tie(ai, a_end) = adjacent_vertices(_countryId, g); ai != a_end; ++ai) { 
+	for (boost::tie(ai, a_end) = adjacent_vertices(*_countryId, g); ai != a_end; ++ai) { 
 
 		int e;
 		std::cout << vertex_idMap[*ai];
@@ -167,7 +164,7 @@ bool Country::isConnected(Graph g, Country c2) {
 
 	//checker is now a vector of all adjacencies. Now we check if c2 is within that vector.
 	for (int i = 0; i < 8; i++) {
-		if (checker[i] != c2._countryId)
+		if (checker[i] != *c2._countryId)
 			confirm = false;
 		else {
 			confirm = true;
@@ -189,7 +186,7 @@ bool Country::isAdjacent(Graph g, Country c2) {
 	bool confirm = false;
 
 	//store adjacencies in checker vector
-	for (boost::tie(ai, a_end) = adjacent_vertices(_countryId, g); ai != a_end; ++ai) {
+	for (boost::tie(ai, a_end) = adjacent_vertices(*_countryId, g); ai != a_end; ++ai) {
 
 		int e;
 		e = vertex_idMap[*ai];
@@ -199,7 +196,7 @@ bool Country::isAdjacent(Graph g, Country c2) {
 
 	//checker is now a vector of all adjacencies. Now we check if c2 is within that vector.
 	for (int i = 0; i < 8; i++) {
-		if ((checker[i] != c2._countryId) && (_continentId != c2._continentId))
+		if ((checker[i] != *c2._countryId) && (_continentId != c2._continentId))
 			confirm = false;
 		else {
 			confirm = true;
@@ -208,7 +205,7 @@ bool Country::isAdjacent(Graph g, Country c2) {
 	}
 	return confirm;
 }
-*/
+
 
 
 

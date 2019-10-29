@@ -36,6 +36,7 @@ public:
 	void buildCity(int _playerId);
 	void setOwner();
 	bool hasCity(int _playerId);
+	bool isStartingCountry();
 
 	vector<int*> getArmiesPerPlayer();
 	void printArmies();

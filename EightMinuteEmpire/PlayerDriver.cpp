@@ -19,8 +19,7 @@ int main()
 	name = "John";
 	cout << "Please Enter Map Name: ";
 	getline(cin, name);
-	Map m = Map(12);
-	m.getNum();
+	Map m = Map();
 	m.ReadMap(name);
 
 

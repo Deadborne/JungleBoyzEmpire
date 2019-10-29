@@ -81,7 +81,7 @@ void Player::placeNewArmies(int numArmies, Country& country) {
 	
 	//Check army availability. Can't place an army if theyre all already deployed
 	if ((*availableArmies - numArmies) >= 0) {
-		vector<int> armies = country.getArmiesPerPlayer();
+		vector<int*> armies = country.getArmiesPerPlayer();
 
 		//Change armies in player's slot
 		armies.at(*playerID - 1) += numArmies;
@@ -101,11 +101,11 @@ void Player::moveArmies(int numArmies, Country& origin, Country& destination) {
 	Map m = Map();
 
 	//Build some temporary vectors to hold armies in each country
-	vector<int> originArmies = origin.getArmiesPerPlayer();
-	vector<int> destinationArmies = destination.getArmiesPerPlayer();
+	vector<int*> originArmies = origin.getArmiesPerPlayer();
+	vector<int*> destinationArmies = destination.getArmiesPerPlayer();
 
 	//Avoid moving more armies than exist in the vector 
-	if (originArmies.at(*playerID - 1) >= numArmies) {
+	if (*originArmies.at(*playerID - 1) >= numArmies) {
 		
 		//Move from origin
 		originArmies.at(*playerID - 1) -= numArmies;
@@ -141,7 +141,7 @@ void Player::destroyArmy(Country& armyLocation, Player armyOwner) {
 	Map m = Map();
 
 	//temporary army vector for country's armies
-	vector<int> armies = armyLocation.getArmiesPerPlayer();
+	vector<int*> armies = armyLocation.getArmiesPerPlayer();
 
 	//Player ID of the armyOwner (player whose army will be destoryed)
 	int armyOwnerID = armyOwner.getPlayerID();
@@ -173,13 +173,13 @@ void Player::buildCity(Country& cityLocation) {
 	
 	//1
 	if (availableCities != 0) {
-		vector<int> armies = cityLocation.getArmiesPerPlayer();
+		vector<int*> armies = cityLocation.getArmiesPerPlayer();
 		//2
 		if (armies.at(*playerID - 1) > 0) {
-			vector<bool> cities = cityLocation.getCities();
+			vector<bool*> cities = cityLocation.getCities();
 			//3
-			if (cities.at(*playerID - 1) != true) {
-				cities.at(*playerID - 1) = true;
+			if (*cities.at(*playerID - 1) != true) {
+				*cities.at(*playerID - 1) = true;
 				cityLocation.setCities(cities);
 				*availableCities--;
 			}
@@ -200,13 +200,13 @@ void Player::buildCity(Country& cityLocation) {
 void Player::destroyCity(Country& cityLocation, Player& cityOwner) {
 	Map m = Map();
 
-	vector<bool> cities = cityLocation.getCities();
+	vector<bool*> cities = cityLocation.getCities();
 
 	int cityOwnerID = cityOwner.getPlayerID();
 
 	//Make sure there's a city to destroy
-	if (cities.at(cityOwnerID - 1) == true) {
-		cities.at(cityOwnerID - 1) = false;
+	if (*cities.at(cityOwnerID - 1) == true) {
+		*cities.at(cityOwnerID - 1) = false;
 
 		//In the country, set the city vector equal o the cities vector we have made in here
 		cityLocation.setCities(cities);
@@ -222,19 +222,15 @@ bool Player::hasCityIn(Country& country) {
 	Map m = Map();
 
 	//Get the cities for that country
-	vector<bool> cities = country.getCities();
+	vector<bool*> cities = country.getCities();
 
 	//If the player has a city logged in the counry's city vector
-	if (cities.at(*playerID - 1) == true) {
+	if (*cities.at(*playerID - 1) == true) {
 		return true;
 	}
 	else {
 		return false;
 	}
-
-	
-
-
 }
 
 Player::~Player() {
