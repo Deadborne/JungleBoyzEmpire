@@ -245,6 +245,16 @@ Player::~Player() {
 	delete[] HandOfCards;
 }
 
+
+//Bid functionality
+//Remember to change this to a pointer
+void Player::setBid() {
+	playerBid = new Bid();
+	playerBid->setBid(playerID);
+	availableCoins -= *playerBid->_bidAmount;
+	//cout << "Available Coins: " << availableCoins << "\n";
+}
+
 //FUNTIONALITY NOT REQUIRED --- TO BE IMPLEMENTED IN A2//
 
 ////For future implementation, this function will scan countries, determine the owner
@@ -293,6 +303,7 @@ Player::~Player() {
 //
 //	return countriesOwned;
 //}
+
 
 
 

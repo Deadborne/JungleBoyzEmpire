@@ -144,6 +144,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bid.h" />
     <ClInclude Include="..\..\Card.h" />
     <ClInclude Include="Continent.h" />
     <ClInclude Include="Country.h" />
@@ -154,6 +155,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bid.cpp" />
     <ClCompile Include="..\..\Card.cpp" />
     <ClCompile Include="..\..\Deck.cpp" />
     <ClCompile Include="..\..\Hand.cpp" />

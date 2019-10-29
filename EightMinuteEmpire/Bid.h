@@ -2,6 +2,7 @@
 #include <vector>
 using namespace std;
 class Bid {
+
 public:
 	Bid();
 	Bid(int bidAmount);

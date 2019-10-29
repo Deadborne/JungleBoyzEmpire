@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Card">
       <UniqueIdentifier>{bf89685a-e55d-4b7a-b4e7-e7210d767e9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Bid">
+      <UniqueIdentifier>{702d5e5e-55bd-40b9-b43e-e481905346c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Bid">
+      <UniqueIdentifier>{6ffe4986-0100-40d2-b189-6db242706b42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -65,6 +71,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Card.h">
       <Filter>Header Files\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files\Bid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +112,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Card.cpp">
       <Filter>Source Files\Card</Filter>
+    </ClCompile>
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files\Bid</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
