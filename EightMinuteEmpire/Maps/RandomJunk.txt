@@ -1,0 +1,14 @@
+Part 2: Map loader
+Implement a group of C++ classes that reads and loads a map file in the .map text file format
+(generated from the project resources). The map loader must be able to read any of Eight-Minute
+Empire game such map. The map loader should store the map as a graph data structure (see Part
+1). The map loader should be able to read any text file (even ones that do not constitute a valid
+map). All the classes/functions that you implement for this component must all reside in a single
+.cpp/.h file duo named MapLoader.cpp/MapLoader.h. You must deliver a file named
+MapLoaderDriver.cpp file that contains a main function that reads various files and successfully
+creates a map object for valid map files, and rejects invalid map files of different kinds.
+Requirements part 2:
+? Map loader can read any Eight-Minute Empire map file.
+? Map loader creates a map object as a graph data structure (see Part 1).
+? Map loader should be able to read any text file (even invalid ones).
+? Driver reads many

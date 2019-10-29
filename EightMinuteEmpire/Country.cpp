@@ -11,49 +11,56 @@ using namespace std;
 using namespace boost;
 
 //default constructor
-Country::Country() {
-
+Country::Country() 
+{
 }
-
 //constructor, takes countryID and continentId
-Country::Country(int countryId, int continentId) : _countryId(countryId), _continentId(continentId)
+Country::Country(int* countryId, int* continentId) : _countryId(countryId), _continentId(continentId)
 {
 }
 //constructor, takes countryID, continentId, and a boolean for starting country or not
-Country::Country(int countryId, int continentId, bool isStart) : _countryId(countryId), _continentId(continentId), _isStart(isStart)
+Country::Country(int* countryId, int* continentId, bool* isStart) : _countryId(countryId), _continentId(continentId), _isStart(isStart)
 {
 }
-
-Country::Country(int countryId, int continentId, vector<int> armiesPerPlayer) : _countryId(countryId), _continentId(continentId), _armiesPerPlayer(armiesPerPlayer)
+//constructor, takes countryID, continentId, and the armies vector
+Country::Country(int* countryId, int* continentId, vector<int*> armiesPerPlayer) : _countryId(countryId), _continentId(continentId), _armiesPerPlayer(armiesPerPlayer)
 {
 }
-
+//constructor, takes countryID, continentId, the armies vector and whether it's a starting country or not
+Country::Country(int* countryId, int* continentId, vector<int*> armiesPerPlayer, bool* isStart) : _countryId(countryId), _continentId(continentId), _armiesPerPlayer(armiesPerPlayer), _isStart(isStart)
+{
+}
 
 //----Mutators & Accessors----//
 
 //Returns vector of cities for a given country
-vector<bool> Country::getCities() {
+vector<bool*> Country::getCities() {
 	return _cities;
 }
 
 //Allows us to set the city vector for a given country
-void Country::setCities(vector<bool> newCities) {
+void Country::setCities(vector<bool*> newCities) {
 	_cities = newCities;
 }
 
 //returns the ID of the country
 int Country::getCountryId(){
-	return _countryId;
+	return  *_countryId;
 };
 
-//Public accessor for armiesPerPlayer - W
-vector<int> Country::getArmiesPerPlayer() {
+//returns the ID of the continent
+int Country::getContinentId() {
+	return  *_continentId;
+};
+
+//Public accessor for armiesPerPlayer
+vector<int*> Country::getArmiesPerPlayer() {
 	return _armiesPerPlayer;
 
 }
 
 //Setter for armiesPerPlayer
-void Country::setArmiesPerPlayer(vector<int> newArmies) {
+void Country::setArmiesPerPlayer(vector<int*> newArmies) {
 	_armiesPerPlayer = newArmies;
 }
 
@@ -65,42 +72,59 @@ bool Country::isStartingCountry() {
 
 //----Other Functionality----//
 
-//returns the owner of the country
-void Country::setOwner(int countryId)
+//sets the owner of the country
+void Country::setOwner()
 {
-	int currMax = 0, owner = -1;
+	int currMax = 0;
+	int *owner;
+	owner = new int(-1);
 
 	for (int i = 0; i < Country::_armiesPerPlayer.size(); i++) 
 	{
-		if (_armiesPerPlayer[i] > currMax)
+		if (*_armiesPerPlayer[i] > currMax)
 		{
-			owner = i;
-			currMax = _armiesPerPlayer[i];
+			*owner = i+1;
+			currMax = *_armiesPerPlayer[i];
 		}
-		else if (_armiesPerPlayer[i] == currMax)
+		else if (*_armiesPerPlayer[i] == currMax)
 		{
-			owner = -1;
+			*owner = -1;
 			break;
 		}
 	}
 	_countryOwner = owner;
 }
 
+//sets the country ID
+void Country::setCountryId(int* countryId) {
+	_countryId = countryId;
+}
+
+//sets the continent ID
+void Country::setContinentId(int* continentId) {
+	_continentId = continentId;
+}
+
+//sets whether this is the starting country or not
+void Country::setStarterStatus(bool* status) {
+	_isStart = status;
+}
+
 //builds a city in this country for the player being passed.
-void Country::buildCity(int playerId)			//Is this fn redundant with player version? Should we delete?
+void Country::buildCity(int playerId)
 {
-	_cities[playerId] = true;
+	*_cities[playerId] = true;
 }
 
 //tells you who the owner of the country is
-int Country::getOwner() //check redundancy of this function
+int Country::getOwner() 
 {
-	return _countryOwner;
+	return *_countryOwner;
 }
 
 //checks if the player being passed as a param has a city in this country
 bool Country::hasCity(int playerId) {
-	if (_cities[playerId] == true)
+	if (*_cities[playerId] == true)
 		return true;
 	else 
 		return false;
@@ -114,6 +138,10 @@ void Country::printArmies() {
 	}
 
 }
+/* 
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::::::::::::THE FOLLOWING METHODS WILL BE USED IN THE FUTURE -- NOT PART OF ASSIGNMENT 1::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 //tells you if two countries are connected (whether over land or sea)
 typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
@@ -180,7 +208,7 @@ bool Country::isAdjacent(Graph g, Country c2) {
 	}
 	return confirm;
 }
-
+*/
 
 
 
