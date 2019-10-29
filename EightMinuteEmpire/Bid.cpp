@@ -16,7 +16,6 @@ Bid::Bid(int bidAmount) {
 }
 
 Bid::~Bid() {
-	
 }
 
 void Bid::setBid(int playerId) {
@@ -52,7 +51,8 @@ int Bid::calculateBid(std::vector<int> bidList) {
 	maxBid = *max_element(bidList.begin(), bidList.end());
 
 	//Looking for the index
-	for(int i = 0; i < bidList.size(); i++) {
+
+	for (int i = 0; i < bidList.size(); i++) {
 		if (maxBid == bidList.at(i)) {
 			if (isFirstFindBid) {
 				isTied = true;
@@ -61,9 +61,7 @@ int Bid::calculateBid(std::vector<int> bidList) {
 				isFirstFindBid = true;
 				maxBidIndex = i;
 			}
-
 		}		
-			
 	}
 
 	if (isTied) {

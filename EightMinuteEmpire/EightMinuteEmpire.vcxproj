@@ -145,11 +145,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bid.h" />
-    <ClInclude Include="Card.h" />
+    <ClInclude Include="..\..\Card.h" />
     <ClInclude Include="Continent.h" />
     <ClInclude Include="Country.h" />
-    <ClInclude Include="Card.cpp" />
-    <ClInclude Include="Deck.h" />
+    <ClInclude Include="Bid.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="stdafx.h" />
@@ -157,12 +156,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bid.cpp" />
+    <ClCompile Include="..\..\Card.cpp" />
+    <ClCompile Include="..\..\Deck.cpp" />
+    <ClCompile Include="..\..\Hand.cpp" />
+    <ClCompile Include="BidDriver.cpp" />
     <ClCompile Include="Continent.cpp" />
     <ClCompile Include="Country.cpp" />
-    <ClCompile Include="Deck.cpp" />
     <ClCompile Include="EightMinuteEmpire.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Bid.cpp" />
+    <ClCompile Include="PlayerDriver.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

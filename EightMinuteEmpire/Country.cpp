@@ -57,6 +57,10 @@ void Country::setArmiesPerPlayer(vector<int> newArmies) {
 	_armiesPerPlayer = newArmies;
 }
 
+//Checks if the country is the starting city
+bool Country::isStartingCountry() {
+	return _isStart;
+}
 
 
 //----Other Functionality----//
@@ -160,7 +164,6 @@ bool Country::isAdjacent(Graph g, Country c2) {
 	for (boost::tie(ai, a_end) = adjacent_vertices(_countryId, g); ai != a_end; ++ai) {
 
 		int e;
-		std::cout << vertex_idMap[*ai];
 		e = vertex_idMap[*ai];
 		checker[baditerator] = e;
 		baditerator++;
