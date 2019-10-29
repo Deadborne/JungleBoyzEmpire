@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Card.h"
 #include <iostream>
 #include <random>
