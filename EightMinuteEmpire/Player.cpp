@@ -8,10 +8,7 @@
 using namespace std;
 
 
-
-
 //----Mutators and Accessors----//
-
 
 void Player::setPlayerID(int x) {
 	playerID = new int(x);
@@ -45,7 +42,9 @@ int Player::getAvailableCoins() {
 	return *availableCoins;
 }
 
-
+void Player::initializeHand() {
+	hand = new Hand();
+}
 
 //Bid functionality
 void Player::setBid() {
@@ -246,7 +245,7 @@ Player::~Player() {
 	delete[] playerBid;
 	delete[] continentsOwned;
 	delete[] countriesOwned;
-	delete[] HandOfCards;
+	delete[] hand;
 }
 
 

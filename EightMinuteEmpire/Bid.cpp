@@ -61,7 +61,7 @@ int Bid::calculateBid(std::vector<int> bidList) {
 				isFirstFindBid = true;
 				maxBidIndex = i;
 			}
-		}		
+		}
 	}
 
 	if (isTied) {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "stdafx.h"
+/*
 #include <string>
 #include <iostream>
 #include "Map.h"
@@ -104,4 +105,4 @@ int main()
 	
 	getline(cin, name);
 	return 0;
-}
+}*/
