@@ -4,6 +4,7 @@
 #ifndef Player_h
 #define Player_h
 #include "Bid.h"
+#include "Card.h"
 
 #include <string>
 #include "Country.h"
@@ -17,11 +18,11 @@ typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 class Player {
 private:
 	int* playerID;
+	Hand *hand;
 
 	//The following vectors are dummies for future use
 	vector<int>* continentsOwned;
 	vector<int>* countriesOwned;
-	vector<int>* HandOfCards;
 
 	int *availableArmies;					//Armies in player's bank [should be 14 at game start]
 	int *availableCities;					//Cities in player's bank [should be 3 at game start]
@@ -30,8 +31,6 @@ private:
 
 	Bid *playerBid;
 	
-	//----TODO----//
-	//Player needs to own a hand of cards
 
 	
 public:
@@ -67,9 +66,11 @@ public:
 	int getAvailableArmies();
 	void setAvailableArmies(int x);
 
-
 	int getAvailableCoins();
 	void setAvailableCoins(int x);
+
+	//must add: void getHand(); to print the hand
+	void initializeHand();
 
 	bool hasCityIn(Country& country);
 

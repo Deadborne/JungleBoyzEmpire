@@ -8,10 +8,7 @@
 using namespace std;
 
 
-
-
 //----Mutators and Accessors----//
-
 
 void Player::setPlayerID(int x) {
 	playerID = new int(x);
@@ -45,7 +42,9 @@ int Player::getAvailableCoins() {
 	return *availableCoins;
 }
 
-
+void Player::initializeHand() {
+	hand = new Hand();
+}
 
 //Bid functionality
 void Player::setBid() {
@@ -83,12 +82,17 @@ void Player::placeNewArmies(int numArmies, Country& country) {
 	if ((*availableArmies - numArmies) >= 0) {
 		vector<int*> armies = country.getArmiesPerPlayer();
 
+		int *extraArmies;
+		extraArmies = new int(numArmies);
+
 		//Change armies in player's slot
-		armies.at(*playerID - 1) += numArmies;
+		*armies.at((*playerID) - 1) += *extraArmies;
 
 		//Push to country object
 		country.setArmiesPerPlayer(armies);
 		
+		delete extraArmies;
+
 	}else {
 		//If the player has too few armies
 		cerr << "\nOperation blocked. You only have " << *availableArmies << " armies available to you.";
@@ -106,18 +110,21 @@ void Player::moveArmies(int numArmies, Country& origin, Country& destination) {
 
 	//Avoid moving more armies than exist in the vector 
 	if (*originArmies.at(*playerID - 1) >= numArmies) {
+
+		//int *movedArmies;
+		//movedArmies = new int(numArmies);
 		
 		//Move from origin
-		originArmies.at(*playerID - 1) -= numArmies;
+		*originArmies.at(*playerID - 1) -= numArmies;
 		origin.setArmiesPerPlayer(originArmies);
 
 		//Move to destination
-		destinationArmies.at(*playerID - 1) += numArmies;
+		*destinationArmies.at(*playerID - 1) += numArmies;
 		destination.setArmiesPerPlayer(destinationArmies);
 
 	}
 	else {
-		cout << "\nThere are only " << originArmies.at(*playerID - 1)
+		cout << "\nThere are only " << *originArmies.at(*playerID - 1)
 			<< " armies in Country " << origin.getCountryId()
 			<< ". You cannot move more than that.";
 	}
@@ -147,10 +154,10 @@ void Player::destroyArmy(Country& armyLocation, Player armyOwner) {
 	int armyOwnerID = armyOwner.getPlayerID();
 
 	//As long as the armyOwner has armies in the specified country, we are good to go
-	if (armies.at(armyOwnerID - 1) > 0) {
+	if (*armies.at(armyOwnerID - 1) > 0) {
 		
 		//decrement the number of armies in the given country for the given player
-		armies.at(armyOwnerID - 1) -= 1;
+		*armies.at(armyOwnerID - 1) -= 1;
 
 		//push to country
 		armyLocation.setArmiesPerPlayer(armies);
@@ -238,7 +245,7 @@ Player::~Player() {
 	delete[] playerBid;
 	delete[] continentsOwned;
 	delete[] countriesOwned;
-	delete[] HandOfCards;
+	delete[] hand;
 }
 
 

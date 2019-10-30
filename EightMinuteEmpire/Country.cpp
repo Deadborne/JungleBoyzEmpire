@@ -56,7 +56,6 @@ int Country::getContinentId() {
 //Public accessor for armiesPerPlayer
 vector<int*> Country::getArmiesPerPlayer() {
 	return _armiesPerPlayer;
-
 }
 
 //Setter for armiesPerPlayer
@@ -134,9 +133,11 @@ bool Country::hasCity(int playerId) {
 //Prints the armies in the country from which this function is called - W
 void Country::printArmies() {
 	for (int i = 0; i < _armiesPerPlayer.size(); i++) {
-		cout << _armiesPerPlayer.at(i) << " ";
+		cout << *_armiesPerPlayer.at(i) << " ";
 	}
-
+	/*vector<int*>::iterator iter;
+	for (iter = _armiesPerPlayer.begin(); iter != _armiesPerPlayer.end(); ++iter)
+		std::cout << **iter;*/
 }
 
 
@@ -153,10 +154,8 @@ bool Country::isConnected(Graph g, Country c2) {
 	bool confirm = false;
 
 	//store adjacencies in checker vector
-	for (boost::tie(ai, a_end) = adjacent_vertices(*_countryId, g); ai != a_end; ++ai) { 
-
+	for (boost::tie(ai, a_end) = adjacent_vertices(*_countryId, g); ai != a_end; ++ai) {
 		int e;
-		std::cout << vertex_idMap[*ai];
 		e = vertex_idMap[*ai];
 		checker[baditerator] = e;
 		baditerator++;
@@ -187,7 +186,6 @@ bool Country::isAdjacent(Graph g, Country c2) {
 
 	//store adjacencies in checker vector
 	for (boost::tie(ai, a_end) = adjacent_vertices(*_countryId, g); ai != a_end; ++ai) {
-
 		int e;
 		e = vertex_idMap[*ai];
 		checker[baditerator] = e;

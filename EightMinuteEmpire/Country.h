@@ -15,8 +15,8 @@ private:
 	int* _continentId;
 	int* _countryOwner;
 	bool* _isStart = false;
-	vector<int*> _armiesPerPlayer{0, 0, 0, 0, 0};
-	vector<bool*> _cities{false, false, false, false, false};
+	vector<int*> _armiesPerPlayer{ new int(0), new int(0), new int(0), new int(0), new int(0) };
+	vector<bool*> _cities{ new bool (false), new bool(false), new bool(false), new bool(false), new bool(false) };
 
 public:
 	Country();
