@@ -4,29 +4,29 @@
 
 class Card {
 private:
-	std::string* good;
-	int* amount;
-	std::string* action1;
-	int* num1;
-	std::string* action2;
-	int* num2;
-	std::string* operate;
-	bool* isFive;
+	std::string good;
+	int amount;
+	std::string action1;
+	int num1;
+	std::string action2;
+	int num2;
+	std::string operate;
+	bool isFive;
 
 public:
 	Card();
 	Card(std::string gd, int num, std::string act1, int n1, std::string act2, int n2, std::string op, bool n5);
 	Card(const Card& c);
 	~Card();
-	std::string getGood() const { return *good; }
-	int getGoodAmount() const { return *amount; }
-	std::string getAction1() const { return *action1; }
-	int getNumA1() const { return *num1; }
-	std::string getAction2() const { return *action2; }
-	int getNumA2() const { return *num2; }
-	std::string getOperator() const { return *operate; }
-	bool getIsFive() const { return *isFive; }
-	void printCard();
+	std::string getGood() const;
+	int getGoodAmount() const;
+	std::string getAction1() const;
+	int getNumA1() const;
+	std::string getAction2() const;
+	int getNumA2() const;
+	std::string getOperator() const;
+	bool getIsFive() const;
+	std::string printCard();
 };
 
 class Deck {
@@ -40,13 +40,13 @@ private:
 
 public:
 	Deck();
-	~Deck();
 	Deck(int players);
-	Deck(const Deck &d);
-	Card draw(int i);
-	std::vector<Card> getDeck();
+	void draw();
+	std::vector<Card> getDeck() const;
+	std::vector<Card> getSpace() const;
+	int getDeckSize() const;
 	void printDeck();
-	std::vector<Card> getSpace();
+	void eraseBack();
 };
 
 class Hand {
@@ -55,7 +55,6 @@ private:
 public:
 	Hand();
 	~Hand();
-	void setHand(Card c);
 	std::vector<Card> getHand() const;
 	void printHand();
 };

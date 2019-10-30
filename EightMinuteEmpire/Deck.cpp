@@ -7,29 +7,23 @@
 #include <stdlib.h>
 using namespace std;
 
-Deck::Deck() : deck(42), space(6), players(2) {
-	initializeDeck(players),
-		shuffleDeck(),
-		initializeSpace();
+Deck::Deck() : deck(42), space(6), players(5) {
+	initializeDeck(5),
+	shuffleDeck(),
+	initializeSpace();
 };
 
 Deck::Deck(int num) : deck(42), space(6), players(num) {
-	initializeDeck(players),
-		shuffleDeck(),
-		initializeSpace();
+	initializeDeck(num),
+	shuffleDeck(),
+	initializeSpace();
 };
-
-Deck::~Deck() {}
-
-Deck::Deck(const Deck& d) :
-	players(d.players),
-	deck(d.deck)
-{}
 
 // Created deck object with 42 cards
 void Deck::initializeDeck(int players) {
 	cout << "DECK SIZE: " << deck.size() << endl;
-	cout << "SPACE SIZE: " << space.size() << endl;
+	cout << "FRONT CARDS SIZE: " << space.size() << endl;
+
 	deck[0] = Card("tree", 1, "move", 3, "", 0, "", false);
 	deck[1] = Card("anvil", 1, "place", 3, "", 0, "", false);
 	deck[2] = Card("anvil", 1, "place", 3, "move", 3, "or", false);
@@ -81,7 +75,6 @@ void Deck::initializeSpace() {
 	for (int i = 0; i < space.size(); i++) {
 		space[i] = deck[0];
 		deck.erase(deck.begin());
-		deck.size();
 	}
 }
 
@@ -95,22 +88,34 @@ void Deck::shuffleDeck() {
 
 void Deck::printDeck() {
 	int j = 0;
-	cout << "TEST" << endl;
 	for (auto& i : space) {
-		i.printCard();
+		cout << "[" << j << "] " << i.printCard() << endl;
+		j++;
 	}
 }
 
-std::vector<Card> Deck::getDeck() {
+std::vector<Card> Deck::getDeck() const {
 	return deck;
 }
 
-std::vector<Card> Deck::getSpace() {
+std::vector<Card> Deck::getSpace() const {
 	return space;
 }
 
-Card Deck::draw(int i) {
-	Card card = space[i];
-	space.erase(space.begin() + i);
-	return card;
+int Deck::getDeckSize() const {
+	return deck.size();
+}
+
+void Deck::draw() {
+	if (!space.empty()) {
+		Card card = deck[0];
+		deck.erase(deck.begin());
+		space.push_back(card);
+	}
+	else
+		cout << "Card Space is full. Can't add card from deck." << endl;
+}
+
+void Deck::eraseBack() {
+	space.pop_back();
 }

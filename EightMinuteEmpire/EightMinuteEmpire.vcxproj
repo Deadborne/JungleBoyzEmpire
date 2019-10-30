@@ -145,7 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bid.h" />
-    <ClInclude Include="..\..\Card.h" />
+    <ClInclude Include="Card.h" />
     <ClInclude Include="Continent.h" />
     <ClInclude Include="Country.h" />
     <ClInclude Include="Bid.h" />
@@ -156,13 +156,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bid.cpp" />
-    <ClCompile Include="..\..\Card.cpp" />
-    <ClCompile Include="..\..\Deck.cpp" />
-    <ClCompile Include="..\..\Hand.cpp" />
     <ClCompile Include="BidDriver.cpp" />
+    <ClCompile Include="Card.cpp" />
     <ClCompile Include="Continent.cpp" />
     <ClCompile Include="Country.cpp" />
+    <ClCompile Include="Deck.cpp" />
     <ClCompile Include="EightMinuteEmpire.cpp" />
+    <ClCompile Include="Hand.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Bid.cpp" />

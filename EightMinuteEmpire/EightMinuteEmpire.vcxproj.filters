@@ -69,11 +69,14 @@
     <ClInclude Include="Bid.h">
       <Filter>Header Files\Bid</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Card.h">
-      <Filter>Header Files\Card</Filter>
-    </ClInclude>
     <ClInclude Include="Bid.h">
       <Filter>Header Files\Bid</Filter>
+    </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Card.h">
+      <Filter>Header Files\Card</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -104,17 +107,20 @@
     <ClCompile Include="BidDriver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Hand.cpp">
-      <Filter>Source Files\Card</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Deck.cpp">
-      <Filter>Source Files\Card</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Card.cpp">
-      <Filter>Source Files\Card</Filter>
-    </ClCompile>
     <ClCompile Include="Bid.cpp">
       <Filter>Source Files\Bid</Filter>
+    </ClCompile>
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Card.cpp">
+      <Filter>Source Files\Card</Filter>
+    </ClCompile>
+    <ClCompile Include="Deck.cpp">
+      <Filter>Source Files\Card</Filter>
+    </ClCompile>
+    <ClCompile Include="Hand.cpp">
+      <Filter>Source Files\Card</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
