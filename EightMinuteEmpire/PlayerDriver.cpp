@@ -20,7 +20,7 @@ int main()
 	cout << "Please Enter Map Name: ";
 	getline(cin, name);
 	Map m = Map();
-	m.ReadMap(name);
+	Graph gamemap = m.ReadMap(name);
 
 
 	//START OF ACTUAL DRIVER -- DO NOT DELETE PLEASE -- WILL MOVE
@@ -70,10 +70,10 @@ int main()
 
 	getline(cin, name);
 	cout << "\n\n=====Add a city to Country 1=====\n";
-	cout << "Player 1 has " << c1.getCities().at(0) << " cities in Country 1";
+	cout << "Player 1 has " << *(c1.getCities().at(0)) << " cities in Country 1";
 	cout << "\n     player 1 building city in c1...";
 	player1.buildCity(c1);
-	cout << "\nPlayer 1 now has " << c1.getCities().at(0) << " city in Country 1";
+	cout << "\nPlayer 1 now has " << *(c1.getCities().at(0)) << " city in Country 1";
 
 	getline(cin, name);
 	cout << "\n\n=====Destroy another player's army=====\n";
@@ -87,7 +87,7 @@ int main()
 	getline(cin, name);
 	cout << "\n\n=====Move Over Land=====\n";
 	cout << "Recall Player 1 had 3 armies remaining in Country 1\n      let's move one to the adjacent Country, 2...\n";
-	player1.moveOverLand(1, c1, c2, m.g);
+	player1.moveOverLand(1, c1, c2, gamemap);
 	c2.printArmies();
 
 	getline(cin, name);
