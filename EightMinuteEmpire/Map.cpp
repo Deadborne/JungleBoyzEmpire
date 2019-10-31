@@ -172,10 +172,6 @@ Graph Map::ReadMap(string f)
 
 //Map has a vector of country objects
 std::vector<Country> Map::getCountries() {
-	for (int i = 0; i < mappedCountries.size(); i++) {
-		cout << "Country ID: " << mappedCountries.at(i).getCountryId() << endl;
-		cout << "Continent ID: " << mappedCountries.at(i).getContinentId() << endl;
-	}
 	return mappedCountries;
 }
 //deletes the vector of countries and all its contents
