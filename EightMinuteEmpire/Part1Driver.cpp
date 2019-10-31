@@ -12,6 +12,7 @@
 using namespace std;
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graphviz.hpp>
+#include <boost/graph/graph_utility.hpp>
 using namespace boost;
 
 int main()
@@ -84,5 +85,7 @@ int main()
 	for (int i = 0; i < numberOfPlayers; i++) {
 		players[i].initializeHand();
 	}
+	cout << "" << endl;
+	m.showEverything();
 
 }

@@ -190,11 +190,16 @@ void Map::purge() {
 
 void Map::showEverything() {
 
-	for (std::vector<int>::size_type i = 0; i != mappedCountries.size(); i++) {
+	for (std::vector<int>::size_type i = 0; i < mappedCountries.size(); i++) {
 		cout << "Region " << mappedCountries[i].getCountryId() << " [Continent " << mappedCountries[i].getContinentId() << "] Armies: [";
 		mappedCountries[i].printArmies();
+		cout << "] Cities: [";
+		for (int i = 0; i < 5; i++) {
+			cout << *mappedCountries[i].getCities().at(i) << " ";
+		}
 		cout << "] Connected to: ";
 		mappedCountries[i].showAdjacencies(GameMap);
+		cout << "" << endl;
 	}
 
 }

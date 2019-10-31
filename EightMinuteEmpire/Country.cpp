@@ -146,7 +146,7 @@ typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 bool Country::isConnected(Graph g, Country c2) {
 
 	//stuff we need
-	vector<int> checker = { -1, -1, -1, -1, -1, -1, -1 };
+	vector<int> checker = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
 	typedef boost::graph_traits<Graph>::adjacency_iterator AdjacencyIterator;
 	AdjacencyIterator ai, a_end;
 	auto vertex_idMap = get(boost::vertex_index, g);
@@ -162,7 +162,7 @@ bool Country::isConnected(Graph g, Country c2) {
 	}
 
 	//checker is now a vector of all adjacencies. Now we check if c2 is within that vector.
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 11; i++) {
 		if (checker[i] != *c2._countryId)
 			confirm = false;
 		else {
@@ -177,7 +177,7 @@ bool Country::isConnected(Graph g, Country c2) {
 bool Country::isAdjacent(Graph g, Country c2) {
 
 	//stuff we need
-	vector<int> checker = { -1, -1, -1, -1, -1, -1, -1 };
+	vector<int> checker = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
 	typedef boost::graph_traits<Graph>::adjacency_iterator AdjacencyIterator;
 	AdjacencyIterator ai, a_end;
 	auto vertex_idMap = get(boost::vertex_index, g);
@@ -193,7 +193,7 @@ bool Country::isAdjacent(Graph g, Country c2) {
 	}
 
 	//checker is now a vector of all adjacencies. Now we check if c2 is within that vector.
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 11; i++) {
 		if ((checker[i] != *c2._countryId) && (_continentId != c2._continentId))
 			confirm = false;
 		else {
@@ -204,10 +204,12 @@ bool Country::isAdjacent(Graph g, Country c2) {
 	return confirm;
 }
 
+
+
 void Country::showAdjacencies(Graph g) {
 
 	//stuff we need
-	vector<int> checker = { -1, -1, -1, -1, -1, -1, -1 };
+	vector<int> checker = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
 	typedef boost::graph_traits<Graph>::adjacency_iterator AdjacencyIterator;
 	AdjacencyIterator ai, a_end;
 	auto vertex_idMap = get(boost::vertex_index, g);
@@ -222,12 +224,16 @@ void Country::showAdjacencies(Graph g) {
 		baditerator++;
 	}
 
-	for (int i = 0; i < 8; i++) {
-		if (checker[i] != 0)
-			cout << ", ";
-		if (checker[i] != -1) {
+	//sort the adjacencies, and don't show duplicates
+	sort(checker.begin(), checker.end());
+	checker.erase(unique(checker.begin(), checker.end()), checker.end());
+
+	//show adjacencies, and don't show -1 or redundant info
+	for (int i = 0; i < checker.size(); i++) {
+		if (i != 0)
+			cout << " ";
+		if (checker[i] != -1)
 			cout << checker[i];
-		}
 	}
 }
 
