@@ -88,7 +88,7 @@ int main()
 	cout << "" << endl;
 	m.showEverything();
 
-
+	cout << endl;
 	//:::::::::::::::::::::::::::::::::::PART 2::::::::::::::::::::::::::::::::::::::::::::::
 
 	//[Requirement 1: Shuffling Deck]
@@ -96,11 +96,18 @@ int main()
 	deck.printDeck();
 
 	//[Requirement 2: Give Armies to players]
-
+	cout << "test" << endl;
 	for (int i = 0; i < numberOfPlayers; i++) {
 		players[i].setAvailableArmies(14);
 		players[i].setAvailableCities(3);
-		//players[i].placeNewArmies(3, GameMap.);
+		players[i].placeNewArmies(3, m.getCountries()[0]);
 	}
+
+	cout << "test" << endl;
+	for (int i = 0; i < numberOfPlayers; i++) {
+		cout << "Player " << players[i].getPlayerID() << " has " << players[i].getAvailableArmies() << ", " << players[i].getAvailableCities() << " and placed 3 at country 1" << endl;
+	}
+
+	//[Requirement 3: Give coins to players (done above at line 54)]
 
 }
