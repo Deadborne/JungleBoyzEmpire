@@ -46,6 +46,10 @@ void Player::initializeHand() {
 	hand = new Hand();
 }
 
+Hand Player::getHand() {
+	return *hand;
+}
+
 //Bid functionality
 void Player::setBid() {
 	playerBid = new Bid();

@@ -70,7 +70,7 @@ public:
 	int getAvailableCoins();
 	void setAvailableCoins(int x);
 
-	//must add: void getHand(); to print the hand
+	Hand getHand();
 	void initializeHand();
 
 	bool hasCityIn(Country& country);
