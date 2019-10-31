@@ -165,6 +165,7 @@
     <ClCompile Include="Hand.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Part1Driver.cpp" />
+    <ClCompile Include="Part2Driver.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Bid.cpp" />
     <ClCompile Include="PlayerDriver.cpp" />

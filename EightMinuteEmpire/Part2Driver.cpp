@@ -15,7 +15,6 @@ using namespace std;
 #include <boost/graph/graph_utility.hpp>
 using namespace boost;
 
-/*
 int main()
 {
 
@@ -67,7 +66,7 @@ int main()
 		startingCoins = 8;
 		break;
 	}
-	
+
 	vector<Player> players; //The players
 
 	//Insert a number of players depending on the selected number, give them starting coins, set their ID, give them a "bidding facility"
@@ -89,5 +88,19 @@ int main()
 	cout << "" << endl;
 	m.showEverything();
 
+
+	//:::::::::::::::::::::::::::::::::::PART 2::::::::::::::::::::::::::::::::::::::::::::::
+
+	//[Requirement 1: Shuffling Deck]
+	// The shuffling already appears on the Deck Constructor. To verify, we are printing the card space. Each time we get different amount of cards.
+	deck.printDeck();
+
+	//[Requirement 2: Give Armies to players]
+
+	for (int i = 0; i < numberOfPlayers; i++) {
+		players[i].setAvailableArmies(14);
+		players[i].setAvailableCities(3);
+		//players[i].placeNewArmies(3, GameMap.);
+	}
+
 }
-*/
