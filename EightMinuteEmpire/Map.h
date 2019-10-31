@@ -20,5 +20,5 @@ public:
 	void purge();
 	std::vector<Country> getCountries();
 
-	Graph g;
+	void showEverything();
 };

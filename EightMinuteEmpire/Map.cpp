@@ -176,8 +176,6 @@ std::vector<Country> Map::getCountries() {
 		cout << "Country ID: " << mappedCountries.at(i).getCountryId() << endl;
 		cout << "Continent ID: " << mappedCountries.at(i).getContinentId() << endl;
 	}
-	string test = "";
-	getline(cin, test);
 	return mappedCountries;
 }
 //deletes the vector of countries and all its contents
@@ -190,4 +188,13 @@ void Map::purge() {
 	}
 }
 
+void Map::showEverything() {
 
+	for (std::vector<int>::size_type i = 0; i != mappedCountries.size(); i++) {
+		cout << "Region " << mappedCountries[i].getCountryId() << " [Continent " << mappedCountries[i].getContinentId() << "] Armies: [";
+		mappedCountries[i].printArmies();
+		cout << "] Connected to: ";
+		mappedCountries[i].showAdjacencies(GameMap);
+	}
+
+}

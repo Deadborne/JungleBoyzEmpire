@@ -245,7 +245,7 @@ Player::~Player() {
 	delete[] playerBid;
 	delete[] continentsOwned;
 	delete[] countriesOwned;
-	delete[] hand;
+	delete hand;
 }
 
 

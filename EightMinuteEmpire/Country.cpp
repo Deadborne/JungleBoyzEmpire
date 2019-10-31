@@ -173,7 +173,7 @@ bool Country::isConnected(Graph g, Country c2) {
 	return confirm;
 }
 
-//tells you if two countries are conneected over land only
+//tells you if two countries are connected over land only
 bool Country::isAdjacent(Graph g, Country c2) {
 
 	//stuff we need
@@ -204,7 +204,32 @@ bool Country::isAdjacent(Graph g, Country c2) {
 	return confirm;
 }
 
+void Country::showAdjacencies(Graph g) {
 
+	//stuff we need
+	vector<int> checker = { -1, -1, -1, -1, -1, -1, -1 };
+	typedef boost::graph_traits<Graph>::adjacency_iterator AdjacencyIterator;
+	AdjacencyIterator ai, a_end;
+	auto vertex_idMap = get(boost::vertex_index, g);
+	int baditerator = 0;
+	bool confirm = false;
+
+	//store adjacencies in checker vector
+	for (boost::tie(ai, a_end) = adjacent_vertices(*_countryId, g); ai != a_end; ++ai) {
+		int e;
+		e = vertex_idMap[*ai];
+		checker[baditerator] = e;
+		baditerator++;
+	}
+
+	for (int i = 0; i < 8; i++) {
+		if (checker[i] != 0)
+			cout << ", ";
+		if (checker[i] != -1) {
+			cout << checker[i];
+		}
+	}
+}
 
 
 

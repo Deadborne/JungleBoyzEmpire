@@ -35,6 +35,7 @@ private:
 	
 public:
 
+	//Player();
 	
 	//--- Bidding --- //
 

@@ -29,6 +29,7 @@ int main()
 	//Selecting a map to read. M1, M5, M6, M8, M9, M10, M14 are all valid maps.
 	cout << "Select the Map to load (Proper format is M#)" << endl;
 	getline(cin, in);
+
 	Graph GameMap = (m.ReadMap(in));
 
 	//[Requirement 2: Selecting the number of Players]
@@ -78,14 +79,10 @@ int main()
 	//[Requirement 3: Initializing Deck]
 
 	Deck deck = Deck(numberOfPlayers); //We now have a shuffled deck, with a correct number of cards
-
 	//[Requirement 4: Initializing Hands]
+
 	for (int i = 0; i < numberOfPlayers; i++) {
 		players[i].initializeHand();
-		players[i].
 	}
-
-
-
 
 }
