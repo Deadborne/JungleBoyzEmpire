@@ -7,6 +7,7 @@
 #include "Card.h"
 
 #include <string>
+#include "Map.h"
 #include "Country.h"
 #include <vector>
 #include <string>
@@ -81,6 +82,8 @@ public:
 
 	void setBid();
 	Bid getBid();
+
+	vector<int> armyLocations(Map m);
 
 	
 };
