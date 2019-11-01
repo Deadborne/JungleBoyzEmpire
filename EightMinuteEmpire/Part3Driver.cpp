@@ -15,7 +15,7 @@ using namespace std;
 #include <boost/graph/graph_utility.hpp>
 using namespace boost;
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 //int main()
 //{
 //
@@ -241,7 +241,7 @@ using namespace boost;
 //
 //
 //}
-=======
+//=======
 int main()
 {
 
@@ -491,4 +491,4 @@ int main()
 
 
 }
->>>>>>> 7506b13fabd794bf17adcabd95a7b8bb4e61e3c9
+//>>>>>>> 7506b13fabd794bf17adcabd95a7b8bb4e61e3c9

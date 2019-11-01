@@ -222,4 +222,4 @@ int main()
 	//[Requirement 3: Give coins to players (done above at line 54)]
 
 }*/
->>>>>>> 7506b13fabd794bf17adcabd95a7b8bb4e61e3c9
+//>>>>>>> 7506b13fabd794bf17adcabd95a7b8bb4e61e3c9

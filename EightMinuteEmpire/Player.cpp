@@ -266,6 +266,11 @@ Player::~Player() {
 }
 
 
+void Player::computeScore() {
+}
+
+
+
 
 //FUNTIONALITY NOT REQUIRED --- TO BE IMPLEMENTED IN A2//
 
