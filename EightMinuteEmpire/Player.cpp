@@ -50,6 +50,10 @@ Hand Player::getHand() {
 	return *hand;
 }
 
+void Player::printHand() {
+	hand->printHand();
+}
+
 //Bid functionality
 void Player::setBid() {
 	playerBid = new Bid();

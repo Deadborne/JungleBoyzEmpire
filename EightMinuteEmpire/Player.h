@@ -73,6 +73,7 @@ public:
 
 	Hand getHand();
 	void initializeHand();
+	void printHand();
 
 	bool hasCityIn(Country& country);
 

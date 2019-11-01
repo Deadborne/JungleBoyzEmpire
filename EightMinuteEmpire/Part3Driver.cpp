@@ -148,14 +148,17 @@ int main()
 			//Giving the player a choice of actions
 			while (1) {
 
+				Card chosenCard = Card(); //This will be used to determine what action to take.
+
 				int choice = 0;
 				cout << "\nWhat would you like to do: " << endl;
 				cout << "1: View Map." << endl;
 				cout << "2: See available cards again." << endl;
 				cout << "3: See my hand." << endl;
 				cout << "4: Pick a card." << endl;
+				cout << "You are: " << currentPlayer << endl; //tracing
 				cin >> choice;
-
+			
 				if (choice == 1) //display the map
 					m.showEverything();
 				else if (choice == 2) { //show what cards they can pick
@@ -163,7 +166,8 @@ int main()
 					cout << "You have " << players[currentPlayer].getAvailableCoins() << " coins." << endl;
 				}
 				else if (choice == 3) { //show what cards they already picked
-					players[currentPlayer].getHand().printHand(); 
+					players[currentPlayer].getHand().printHand();
+
 				}
 				else if (choice == 4) { //pick a card
 					deck.printDeck();
@@ -175,7 +179,10 @@ int main()
 						cin >> cardChoice;
 
 						if (cardChoice == 1) {
-							players[currentPlayer].getHand().setHand(deck.getSpace()[cardChoice - 1]);
+							chosenCard = deck.getSpace()[cardChoice - 1];
+							cout << "You chose: " << chosenCard.printCard() << endl;
+							players[currentPlayer].getHand().setHand(chosenCard);
+							players[currentPlayer].getHand().setHand(chosenCard);
 							//deck.getSpace().erase(deck.getSpace().begin() + cardChoice);
 							break;
 						}
