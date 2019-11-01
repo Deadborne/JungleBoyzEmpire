@@ -58,4 +58,5 @@ public:
 	std::vector<Card> getHand() const;
 	void printHand();
 	void setHand(Card c);
+	void swapHand(std::vector<Card> v);
 };

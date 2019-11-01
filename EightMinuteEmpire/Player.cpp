@@ -46,8 +46,12 @@ void Player::initializeHand() {
 	hand = new Hand();
 }
 
-Hand Player::getHand() {
-	return *hand;
+vector<Card> Player::getHand() {
+	return hand->getHand();
+}
+
+void Player::setHand(vector<Card> v) {
+	hand->swapHand(v);
 }
 
 void Player::printHand() {
