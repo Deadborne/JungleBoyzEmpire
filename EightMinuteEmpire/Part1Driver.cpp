@@ -102,8 +102,4 @@ int main()
 }
 =======
 */
-<<<<<<< HEAD
-//>>>>>>> 7506b13fabd794bf17adcabd95a7b8bb4e61e3c9
-=======
 
->>>>>>> 8fa74236f2728ee3bd4d2eaf27ec7dbf418616fa
