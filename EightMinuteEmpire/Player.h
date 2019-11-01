@@ -5,9 +5,9 @@
 #define Player_h
 #include "Bid.h"
 #include "Card.h"
-
 #include <string>
 #include "Country.h"
+#include "Map.h"
 #include <vector>
 #include <string>
 
@@ -78,6 +78,7 @@ public:
 	void printHand();
 
 	bool hasCityIn(Country& country);
+	vector<int> armyLocations(Map m);
 
 	void setBid();
 	Bid getBid();

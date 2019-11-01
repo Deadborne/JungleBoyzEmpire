@@ -257,6 +257,22 @@ bool Player::hasCityIn(Country& country) {
 	}
 }
 
+//returns a vector of country Ids where the player has at least one army.
+vector<int> Player::armyLocations(Map m) {
+
+	vector<Country> v = m.getCountries();
+	vector<int> locations = {};
+
+	int me = *playerID;
+
+	for (int i = 0; i < v.size(); i++) {
+		if ((*v[i].getArmiesPerPlayer()[me]) > 0) {
+			locations.push_back(v[i].getCountryId());
+		}
+	}
+	return locations;
+}
+
 Player::~Player() {
 	delete[] availableArmies;
 	delete[] playerBid;
@@ -264,11 +280,6 @@ Player::~Player() {
 	delete[] countriesOwned;
 	delete hand;
 }
-
-
-void Player::computeScore() {
-}
-
 
 
 
