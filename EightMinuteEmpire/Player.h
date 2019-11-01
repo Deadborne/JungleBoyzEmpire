@@ -51,6 +51,7 @@ public:
 
 	//----Required Functions----//
 	void PayCoin();
+	void PayCoin(int numCoins);
 	void placeNewArmies(int numArmies, Country& country);
 	void moveArmies(int numArmies, Country& origin, Country& destination);
 	void moveOverLand(int numArmies, Country& origin, Country& destination, Graph gameGraph);

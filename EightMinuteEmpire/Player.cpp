@@ -69,6 +69,10 @@ Bid Player::getBid() {
 void Player::PayCoin() {
 	setAvailableCoins(getAvailableCoins()-1);
 }
+//Pays multiple coins
+void Player::PayCoin(int numCoins) {
+	setAvailableCoins(getAvailableCoins() - numCoins);
+}
 
 //This function will allow you to place any given number of new armies in any country
 //As such, it ignores game rules:

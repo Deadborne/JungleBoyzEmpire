@@ -89,7 +89,7 @@ void Deck::shuffleDeck() {
 void Deck::printDeck() {
 	int j = 0;
 	for (auto& i : space) {
-		cout << "[" << j << "] " << i.printCard() << endl;
+		cout << "[" << j+1 << "] " << i.printCard() << endl;
 		j++;
 	}
 	cout << "Card 1: Free, Card 2: 1 Coin, Card 3: 1 Coin, Card 4: 2 Coins, Card 5: 2 Coins, Card 6: 3 Coins." << endl;

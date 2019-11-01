@@ -1,6 +1,6 @@
 #pragma once
 
-#include "stdafx.h"/*
+#include "stdafx.h"
 #include <string>
 #include <iostream>
 #include "Map.h"
@@ -104,7 +104,7 @@ int main()
 	deck.printDeck();
 
 
-	//m.showEverything();
+	m.showEverything();
 
 
 	
@@ -138,12 +138,16 @@ int main()
 		//This loop ensures that each player goes once before the turn goes up by 1
 		for (int numberOfPlayersWhoWent = 0; numberOfPlayersWhoWent < numberOfPlayers; numberOfPlayersWhoWent++) {
 
-			cout << "It is currently Player " << currentPlayer + 1 << "'s turn." << endl;
+			cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::" << endl;
+			cout << "::::::::::::It is currently Player " << currentPlayer + 1 << "'s turn::::::::::::" << endl;
+			cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::\n" << endl;
+
 			deck.printDeck();
 			cout << "You have " << players[currentPlayer].getAvailableCoins() << " coins." << endl;
 
 			//Giving the player a choice of actions
 			while (1) {
+
 				int choice = 0;
 				cout << "\nWhat would you like to do: " << endl;
 				cout << "1: View Map." << endl;
@@ -151,6 +155,7 @@ int main()
 				cout << "3: See my hand." << endl;
 				cout << "4: Pick a card." << endl;
 				cin >> choice;
+
 				if (choice == 1) //display the map
 					m.showEverything();
 				else if (choice == 2) { //show what cards they can pick
@@ -158,20 +163,23 @@ int main()
 					cout << "You have " << players[currentPlayer].getAvailableCoins() << " coins." << endl;
 				}
 				else if (choice == 3) { //show what cards they already picked
-					players[currentPlayer].getHand().printHand();
+					players[currentPlayer].getHand().printHand(); 
 				}
 				else if (choice == 4) { //pick a card
 					deck.printDeck();
 					cout << "You have " << players[currentPlayer].getAvailableCoins() << " coins." << endl;
 					while (1) {
+
 						int cardChoice = 0;
 						cout << "Select your card (1-6):" << endl;
 						cin >> cardChoice;
 
-						if (choice == 1) {
-
+						if (cardChoice == 1) {
+							players[currentPlayer].getHand().setHand(deck.getSpace()[cardChoice - 1]);
+							//deck.getSpace().erase(deck.getSpace().begin() + cardChoice);
+							break;
 						}
-						else if (choice == 2 || 3) {
+						else if (cardChoice == 2 || 3) {
 
 							if (players[currentPlayer].getAvailableCoins() < 1)
 								cout << "You don't have enough coins." << endl;
@@ -180,39 +188,28 @@ int main()
 								break;
 							}
 						}
-						else if (choice == 4 || 5) {
+						else if (cardChoice == 4 || 5) {
 							if (players[currentPlayer].getAvailableCoins() < 2)
 								cout << "You don't have enough coins." << endl;
 							else {
-								players[currentPlayer].PayCoin();
-								players[currentPlayer].PayCoin();
+								players[currentPlayer].PayCoin(2);
 								break;
 							}
 						}
-						else if (choice == 6) {
+						else if (cardChoice == 6) {
 							if (players[currentPlayer].getAvailableCoins() < 3)
 								cout << "You don't have enough coins." << endl;
 							else {
-								players[currentPlayer].PayCoin();
-								players[currentPlayer].PayCoin();
-								players[currentPlayer].PayCoin();
+								players[currentPlayer].PayCoin(3);
 								break;
 							}
 						}
 						else { //entered something invalid
-							cin.clear();
-							cin.ignore();
 							cout << "Pick a valid card." << endl;
 						}
-
-						//adds the chosen card to hand, removes appropriate number of coins.
-
+						cin.clear();
+						cin.ignore();
 					}
-
-
-
-					//add methods to pick a card, and to update the available cards.
-
 					break;
 				}
 				else { //entered something invalid
@@ -222,6 +219,7 @@ int main()
 				}
 			}
 
+			//:::::::::::::::::::::::::::::::::::PART 4::::::::::::::::::::::::::::::::::::::::::::::
 
 
 			//THIS GOES AT THE VERY END OF THE LOOP
@@ -234,4 +232,4 @@ int main()
 	}
 
 
-}*/
+}

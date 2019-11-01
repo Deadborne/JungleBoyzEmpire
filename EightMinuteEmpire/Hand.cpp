@@ -18,9 +18,14 @@ void Hand::printHand() {
 	int j = 0;
 	string str;
 	for (auto& i : cards) {
-		cout << "[" << j << "] " << i.printCard() << endl;
+		cout << "[" << j+1 << "] " << i.printCard() << endl;
 		j++;
 	}
+}
+
+// Inserts card on hand space
+void Hand::setHand(Card c) {
+	Hand::cards.insert(cards.begin(), c);
 }
 
 
