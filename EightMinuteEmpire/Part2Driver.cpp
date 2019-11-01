@@ -71,10 +71,13 @@ int main()
 
 	//Insert a number of players depending on the selected number, give them starting coins, set their ID, give them a "bidding facility"
 	for (int i = 0; i < numberOfPlayers; i++) {
-		players.insert(players.begin(), Player()); //inserting players
-		players[i].setAvailableCoins(startingCoins); //give starting coins 
-		players[i].setPlayerID(i);
-		cout << "Player " << players[i].getPlayerID() + 1 << " is ready, and has " << players[i].getAvailableCoins() << " coins!" << endl;
+		Player p = Player();
+		p.setAvailableCoins(startingCoins);
+		p.setPlayerID(i);
+
+		players.push_back(p); //inserting players
+
+		cout << "Player " << p.getPlayerID() + 1 << " is ready, and has " << p.getAvailableCoins() << " coins!" << endl;
 	}
 
 	//[Requirement 3: Initializing Deck]
@@ -100,8 +103,10 @@ int main()
 	for (int i = 0; i < numberOfPlayers; i++) {
 		players[i].setAvailableArmies(14);
 		players[i].setAvailableCities(3);
-		players[i].placeNewArmies(3, m.getCountries()[0]);
+		players[i].placeNewArmies(3, m.getStartingCountry());
 	}
+
+	m.showEverything();
 
 	cout << "test" << endl;
 	for (int i = 0; i < numberOfPlayers; i++) {

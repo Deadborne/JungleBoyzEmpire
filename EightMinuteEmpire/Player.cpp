@@ -83,6 +83,7 @@ void Player::placeNewArmies(int numArmies, Country& country) {
 	//if ((country.isStartingCountry())||(hasCityIn(country)  == true)){}
 	
 	//Check army availability. Can't place an army if theyre all already deployed
+
 	if ((*availableArmies - numArmies) >= 0) {
 		vector<int*> armies = country.getArmiesPerPlayer();
 
@@ -90,11 +91,11 @@ void Player::placeNewArmies(int numArmies, Country& country) {
 		extraArmies = new int(numArmies);
 
 		//Change armies in player's slot
-		*armies.at((*playerID) - 1) += *extraArmies;
+		*armies.at((*playerID) /*- 1*/) += *extraArmies;
 
 		//Push to country object
 		country.setArmiesPerPlayer(armies);
-		
+
 		delete extraArmies;
 
 	}else {

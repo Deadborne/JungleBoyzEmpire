@@ -15,7 +15,7 @@ Country::Country()
 {
 }
 //constructor, takes countryID and continentId
-Country::Country(int* countryId, int* continentId) : _countryId(countryId), _continentId(continentId)
+Country::Country(int* countryId, int* continentId) : _countryId(countryId), _continentId(continentId), _isStart(false)
 {
 }
 //constructor, takes countryID, continentId, and a boolean for starting country or not
@@ -23,7 +23,7 @@ Country::Country(int* countryId, int* continentId, bool* isStart) : _countryId(c
 {
 }
 //constructor, takes countryID, continentId, and the armies vector
-Country::Country(int* countryId, int* continentId, vector<int*> armiesPerPlayer) : _countryId(countryId), _continentId(continentId), _armiesPerPlayer(armiesPerPlayer)
+Country::Country(int* countryId, int* continentId, vector<int*> armiesPerPlayer) : _countryId(countryId), _continentId(continentId), _armiesPerPlayer(armiesPerPlayer),_isStart(false)
 {
 }
 //constructor, takes countryID, continentId, the armies vector and whether it's a starting country or not
@@ -140,7 +140,6 @@ void Country::printArmies() {
 		std::cout << **iter;*/
 }
 
-
 //tells you if two countries are connected (whether over land or sea)
 typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 bool Country::isConnected(Graph g, Country c2) {
@@ -204,8 +203,7 @@ bool Country::isAdjacent(Graph g, Country c2) {
 	return confirm;
 }
 
-
-
+//prints a country's adjacencies
 void Country::showAdjacencies(Graph g) {
 
 	//stuff we need

@@ -14,7 +14,7 @@ private:
 	int* _countryId;
 	int* _continentId;
 	int* _countryOwner;
-	bool* _isStart = false;
+	bool* _isStart;
 	vector<int*> _armiesPerPlayer{ new int(0), new int(0), new int(0), new int(0), new int(0) };
 	vector<bool*> _cities{ new bool (false), new bool(false), new bool(false), new bool(false), new bool(false) };
 
@@ -46,7 +46,6 @@ public:
 
 	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 
-	
 	bool Country::isConnected(Graph _g, Country _c2);
 	bool Country::isAdjacent(Graph _g, Country _c2);
 	void showAdjacencies(Graph _g);

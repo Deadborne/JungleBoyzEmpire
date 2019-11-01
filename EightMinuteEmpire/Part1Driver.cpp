@@ -21,7 +21,7 @@ int main()
 
 	//:::::::::::::::::::::::::::::::::::PART 1::::::::::::::::::::::::::::::::::::::::::::::
 
-	//[Requirement 1: Reading the Map] 
+	//[Requirement 1: Reading the Map]
 
 	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 
@@ -67,15 +67,18 @@ int main()
 		startingCoins = 8;
 		break;
 	}
-	
+
 	vector<Player> players; //The players
 
 	//Insert a number of players depending on the selected number, give them starting coins, set their ID, give them a "bidding facility"
 	for (int i = 0; i < numberOfPlayers; i++) {
-		players.insert(players.begin(), Player()); //inserting players
-		players[i].setAvailableCoins(startingCoins); //give starting coins 
-		players[i].setPlayerID(i);
-		cout << "Player " << players[i].getPlayerID() + 1 << " is ready, and has " << players[i].getAvailableCoins() << " coins!" << endl;
+		Player p = Player();
+		p.setAvailableCoins(startingCoins);
+		p.setPlayerID(i);
+
+		players.push_back(p); //inserting players
+
+		cout << "Player " << p.getPlayerID() + 1 << " is ready, and has " << p.getAvailableCoins() << " coins!" << endl;
 	}
 
 	//[Requirement 3: Initializing Deck]

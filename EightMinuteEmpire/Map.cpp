@@ -76,7 +76,7 @@ Graph Map::ReadMap(string f)
 
 		countryNumber = new int;
 		continentNumber = new int;
-		starter = new bool;
+		starter = new bool(false);
 		connectingContinent = new int;
 		connectsAcrossSea = new bool;
 
@@ -93,8 +93,10 @@ Graph Map::ReadMap(string f)
 		}
 		//check if that's the starting country. If the find returns npos, that would mean nothing was found.
 		if (line.find("S") != std::string::npos) {
+			//cout << *countryNumber << " is starter" << endl;
 			hasStarter = true;
 			*starter = true;
+			startingCountry = countryNumber; //stores this value
 		}
 		//check if the country connects to a different continent. If the find returns npos, that would mean nothing was found.
 		if (line.find("C") != std::string::npos) {
@@ -148,7 +150,9 @@ Graph Map::ReadMap(string f)
 
 		//create a country, store it in the vector of countries
 		Country c = Country(countryNumber, continentNumber, starter);
+		// cout << "Pushed Ctry " << *countryNumber << " ctnt " << *continentNumber << "Starter: " << *starter << " to map." << endl; //uncomment to see what goes in map
 		mappedCountries.push_back(c);
+		
 		iss3.clear();
 	}
 
@@ -174,6 +178,18 @@ Graph Map::ReadMap(string f)
 std::vector<Country> Map::getCountries() {
 	return mappedCountries;
 }
+
+//returns the starting country
+Country Map::getStartingCountry() {
+
+	return mappedCountries.at(*startingCountry - 1);
+}
+
+//gives whatever country in the map that is asked
+Country Map::giveMeCountry(int id) {
+	return mappedCountries.at(id - 1);
+}
+
 //deletes the vector of countries and all its contents
 void Map::purge() {
 
@@ -190,8 +206,8 @@ void Map::showEverything() {
 		cout << "Region " << mappedCountries[i].getCountryId() << " [Continent " << mappedCountries[i].getContinentId() << "] Armies: [";
 		mappedCountries[i].printArmies();
 		cout << "] Cities: [";
-		for (int i = 0; i < 5; i++) {
-			cout << *mappedCountries[i].getCities().at(i) << " ";
+		for (int j = 0; j < 5; j++) {
+			cout << *mappedCountries[i].getCities().at(j) << " ";
 		}
 		cout << "] Connected to: ";
 		mappedCountries[i].showAdjacencies(GameMap);

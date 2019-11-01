@@ -11,6 +11,10 @@ typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 class Map
 {
 
+private:
+	int* startingCountry;
+
+
 public:
 	Map();
 	std::vector<std::string> split(std::string _stringToBeSplit, std::string _delimeter);
@@ -21,4 +25,6 @@ public:
 	std::vector<Country> getCountries();
 
 	void showEverything();
+	Country getStartingCountry();
+	Country giveMeCountry(int id);
 };

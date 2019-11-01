@@ -92,6 +92,7 @@ void Deck::printDeck() {
 		cout << "[" << j << "] " << i.printCard() << endl;
 		j++;
 	}
+	cout << "Card 1: Free, Card 2: 1 Coin, Card 3: 1 Coin, Card 4: 2 Coins, Card 5: 2 Coins, Card 6: 3 Coins." << endl;
 }
 
 std::vector<Card> Deck::getDeck() const {
