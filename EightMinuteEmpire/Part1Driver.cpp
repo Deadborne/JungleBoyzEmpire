@@ -95,4 +95,11 @@ int main()
 		players[i].printHand(); //Displaying the hand. Look, ma, there's nothing in my hands! (should show nothing)
 	}
 	cout << "" << endl;
+<<<<<<< HEAD
+	m.showEverything();
+
+	
+}
+=======
 */
+>>>>>>> 7506b13fabd794bf17adcabd95a7b8bb4e61e3c9
