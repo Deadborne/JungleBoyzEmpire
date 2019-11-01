@@ -5,7 +5,7 @@
 using namespace std;
 
 Hand::Hand() :
-	cards(0)
+	cards()
 {}
 
 Hand::~Hand() {}
@@ -32,9 +32,11 @@ void Hand::printHand() {
 void Hand::setHand(Card c) {
 	Card *insertedCard;
 	insertedCard = new Card(c);
-
-	Hand::cards.push_back(*insertedCard);
+	cards.push_back(*insertedCard);
 	cout << "Top card is now: " << cards[0].printCard() << endl;
 }
 
 
+void Hand::swapHand(vector<Card> v) {
+	cards = v;
+}

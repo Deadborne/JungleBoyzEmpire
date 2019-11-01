@@ -1,6 +1,6 @@
 #pragma once
 
-#include "stdafx.h"
+#include "stdafx.h"/*
 #include <string>
 #include <iostream>
 #include "Map.h"
@@ -20,7 +20,9 @@ int main()
 
 	//:::::::::::::::::::::::::::::::::::PART 1::::::::::::::::::::::::::::::::::::::::::::::
 
-	//[Requirement 1: Reading the Map] 
+	//[Requirement 1: Reading the Map]
+
+	cout << "[PART 1: GAME START]" << endl;
 
 	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 
@@ -75,23 +77,24 @@ int main()
 		p.setAvailableCoins(startingCoins);
 		p.setPlayerID(i);
 
-		players.push_back(p); //inserting players
+		players.insert(players.begin(), p); //inserting players
 
 		cout << "Player " << p.getPlayerID() + 1 << " is ready, and has " << p.getAvailableCoins() << " coins!" << endl;
 	}
 
 	//[Requirement 3: Initializing Deck]
 
-	Deck deck = Deck(numberOfPlayers); //We now have a shuffled deck, with a correct number of cards
+	Deck deck = Deck(numberOfPlayers); //Note: this automatically shuffles the deck
+
 	//[Requirement 4: Initializing Hands]
 
 	for (int i = 0; i < numberOfPlayers; i++) {
-		players[i].initializeHand();
+		cout << "Player " << i + 1 << ": ";
+		players[i].initializeHand(); //giving each player an empty hand with 0 cards
+		players[i].printHand(); //Displaying the hand. Look, ma, there's nothing in my hands! (should show nothing)
 	}
 	cout << "" << endl;
-	m.showEverything();
 
-	cout << endl;
 	//:::::::::::::::::::::::::::::::::::PART 2::::::::::::::::::::::::::::::::::::::::::::::
 
 	//[Requirement 1: Shuffling Deck]
@@ -115,4 +118,4 @@ int main()
 
 	//[Requirement 3: Give coins to players (done above at line 54)]
 
-}
+}*/

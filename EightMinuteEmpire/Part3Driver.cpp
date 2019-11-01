@@ -89,8 +89,9 @@ int main()
 	//[Requirement 4: Initializing Hands]
 
 	for (int i = 0; i < numberOfPlayers; i++) {
+		cout << "Player " << i + 1 << ": ";
 		players[i].initializeHand(); //giving each player an empty hand with 0 cards
-		players[i].getHand().printHand(); //Displaying the hand. Look, ma, there's nothing in my hands! (should show nothing)
+		players[i].printHand(); //Displaying the hand. Look, ma, there's nothing in my hands! (should show nothing)
 	}
 	cout << "" << endl;
 
@@ -166,7 +167,7 @@ int main()
 					cout << "You have " << players[currentPlayer].getAvailableCoins() << " coins." << endl;
 				}
 				else if (choice == 3) { //show what cards they already picked
-					players[currentPlayer].getHand().printHand();
+					players[currentPlayer].printHand();
 
 				}
 				else if (choice == 4) { //pick a card
@@ -180,10 +181,12 @@ int main()
 
 						if (cardChoice == 1) {
 							chosenCard = deck.getSpace()[cardChoice - 1];
-							cout << "You chose: " << chosenCard.printCard() << endl;
-							players[currentPlayer].getHand().setHand(chosenCard);
-							players[currentPlayer].getHand().setHand(chosenCard);
-							//deck.getSpace().erase(deck.getSpace().begin() + cardChoice);
+
+							vector<Card> v = players[currentPlayer].getHand();
+							v.push_back(chosenCard);
+
+							players[currentPlayer].setHand(v);
+							//deck.getSpace().erase(deck.getSpace().begin() + cardChoice); //we'll be able to do this after step 5 is coded
 							break;
 						}
 						else if (cardChoice == 2 || 3) {
@@ -192,6 +195,13 @@ int main()
 								cout << "You don't have enough coins." << endl;
 							else {
 								players[currentPlayer].PayCoin();
+								chosenCard = deck.getSpace()[cardChoice - 1];
+
+								vector<Card> v = players[currentPlayer].getHand();
+								v.push_back(chosenCard);
+
+								players[currentPlayer].setHand(v);
+								//deck.getSpace().erase(deck.getSpace().begin() + cardChoice); //we'll be able to do this after step 5 is coded
 								break;
 							}
 						}
@@ -200,6 +210,13 @@ int main()
 								cout << "You don't have enough coins." << endl;
 							else {
 								players[currentPlayer].PayCoin(2);
+								chosenCard = deck.getSpace()[cardChoice - 1];
+
+								vector<Card> v = players[currentPlayer].getHand();
+								v.push_back(chosenCard);
+
+								players[currentPlayer].setHand(v);
+								//deck.getSpace().erase(deck.getSpace().begin() + cardChoice); //we'll be able to do this after step 5 is coded
 								break;
 							}
 						}
@@ -208,6 +225,13 @@ int main()
 								cout << "You don't have enough coins." << endl;
 							else {
 								players[currentPlayer].PayCoin(3);
+								chosenCard = deck.getSpace()[cardChoice - 1];
+
+								vector<Card> v = players[currentPlayer].getHand();
+								v.push_back(chosenCard);
+
+								players[currentPlayer].setHand(v);
+								//deck.getSpace().erase(deck.getSpace().begin() + cardChoice); //we'll be able to do this after step 5 is coded
 								break;
 							}
 						}

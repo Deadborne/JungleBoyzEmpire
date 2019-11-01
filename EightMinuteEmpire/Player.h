@@ -71,7 +71,9 @@ public:
 	int getAvailableCoins();
 	void setAvailableCoins(int x);
 
-	Hand getHand();
+	vector<Card> getHand();
+	void setHand(vector<Card> v);
+
 	void initializeHand();
 	void printHand();
 
