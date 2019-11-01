@@ -203,7 +203,7 @@ void Map::purge() {
 void Map::showEverything() {
 
 	for (std::vector<int>::size_type i = 0; i < mappedCountries.size(); i++) {
-		cout << "Region " << mappedCountries[i].getCountryId() << " [Continent " << mappedCountries[i].getContinentId() << "] Armies: [";
+		cout << "Region\t" << mappedCountries[i].getCountryId() << "\t [Continent " << mappedCountries[i].getContinentId() << "] Armies: [";
 		mappedCountries[i].printArmies();
 		cout << "] Cities: [";
 		for (int j = 0; j < 5; j++) {

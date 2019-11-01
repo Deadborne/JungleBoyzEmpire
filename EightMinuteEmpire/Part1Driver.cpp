@@ -15,7 +15,7 @@ using namespace std;
 #include <boost/graph/graph_utility.hpp>
 using namespace boost;
 
-/*
+
 int main()
 {
 
@@ -92,5 +92,5 @@ int main()
 	cout << "" << endl;
 	m.showEverything();
 
+	
 }
-*/
