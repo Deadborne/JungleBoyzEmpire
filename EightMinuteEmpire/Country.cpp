@@ -235,7 +235,28 @@ void Country::showAdjacencies(Graph g) {
 	}
 }
 
+//returns the country's adjacencies as a vector of countryID's
+vector<int> Country::returnAdjacencies(Graph g) {
 
+	//stuff we need
+	vector<int> checker = {};
+	typedef boost::graph_traits<Graph>::adjacency_iterator AdjacencyIterator;
+	AdjacencyIterator ai, a_end;
+	auto vertex_idMap = get(boost::vertex_index, g);
+	bool confirm = false;
+
+	//store adjacencies in checker vector
+	for (boost::tie(ai, a_end) = adjacent_vertices(*_countryId, g); ai != a_end; ++ai) {
+		int e;
+		e = vertex_idMap[*ai];
+		checker.push_back(e);
+	}
+
+	//sort the adjacencies, and don't show duplicates
+	sort(checker.begin(), checker.end());
+	checker.erase(unique(checker.begin(), checker.end()), checker.end());
+	return checker;
+}
 
 
 

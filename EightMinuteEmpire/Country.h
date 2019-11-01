@@ -49,6 +49,7 @@ public:
 	bool Country::isConnected(Graph _g, Country _c2);
 	bool Country::isAdjacent(Graph _g, Country _c2);
 	void showAdjacencies(Graph _g);
+	vector<int> returnAdjacencies(Graph _g);
 
 	void setArmiesPerPlayer(vector<int*> newArmies);
 };
