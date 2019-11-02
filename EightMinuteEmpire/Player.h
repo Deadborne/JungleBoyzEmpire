@@ -10,6 +10,7 @@
 #include "Map.h"
 #include <vector>
 #include <string>
+#include <algorithm>
 
 
 using namespace std;
@@ -83,7 +84,11 @@ public:
 	void setBid();
 	Bid getBid();
 
-	
+	bool isCountryOwner(Country country);
+
+
+
+
 };
 
 

@@ -281,6 +281,22 @@ Player::~Player() {
 	delete hand;
 }
 
+bool Player::isCountryOwner(Country country) {
+
+	vector<int*> armies = country.getArmiesPerPlayer();
+
+	int indexOfMax = std::distance(armies.begin(), max_element(armies.begin(), armies.end()));
+
+	if (find(armies.begin() + indexOfMax + 1, armies.end(), *max_element(armies.begin(), armies.end())) != armies.end()) {
+		return false;
+	}
+	else if (indexOfMax == *playerID - 1)	//Is this playerID shit correct??
+		return true;
+
+}
+
+
+
 
 
 //FUNTIONALITY NOT REQUIRED --- TO BE IMPLEMENTED IN A2//
