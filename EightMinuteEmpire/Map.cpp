@@ -187,7 +187,7 @@ Country Map::getStartingCountry() {
 
 //gives whatever country in the map that is asked
 Country Map::giveMeCountry(int id) {
-	return mappedCountries.at(id - 1);
+	return mappedCountries[id-1];
 }
 
 //deletes the vector of countries and all its contents

@@ -7,11 +7,16 @@ public:
 	Bid();
 	Bid(int bidAmount);
 	~Bid();
-	int* _bidAmount;
+	int getBidAmount();
+	int* getBidAmountPointer();
+	int getDate();
 	void setBid(int playerId);
+	void setDate(int playerId);
 	int calculateBid(vector<int> bidList);
+	int calculateDate(vector<int> dateList);
 private:
-
+	int* _bidAmount;
+	int* birthdate; // YYYYMMDD
 
 
 

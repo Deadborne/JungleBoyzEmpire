@@ -1,6 +1,6 @@
 #pragma once
 
-#include "stdafx.h"
+#include "stdafx.h"/*
 #include <string>
 #include <iostream>
 #include "Map.h"
@@ -157,7 +157,7 @@ int main()
 				cout << "2: See available cards again." << endl;
 				cout << "3: See my hand." << endl;
 				cout << "4: Pick a card." << endl;
-				cout << "You are: " << currentPlayer << endl; //tracing
+				cout << "You are Player: " << currentPlayer+1 << endl; //tracing
 				cin >> choice;
 			
 				if (choice == 1) //display the map
@@ -264,4 +264,5 @@ int main()
 
 
 }
+*/
 

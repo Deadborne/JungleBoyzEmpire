@@ -1,12 +1,13 @@
 #pragma once
 
-#include "stdafx.h"/*
+#include "stdafx.h"
 #include <string>
 #include <iostream>
 #include "Map.h"
 #include "Country.h"
 #include "Player.h" 
 #include "Card.h"
+#include "Bid.h"
 #include <ostream>
 #include <vector>
 using namespace std;
@@ -117,7 +118,7 @@ using namespace boost;
 //	//[Requirement 3: Give coins to players (done above at line 54)]
 //
 //}
-=======
+
 int main()
 {
 
@@ -180,8 +181,7 @@ int main()
 		p.setAvailableCoins(startingCoins);
 		p.setPlayerID(i);
 
-		players.insert(players.begin(), p); //inserting players
-
+		players.insert(players.begin()+i, p); //inserting players
 		cout << "Player " << p.getPlayerID() + 1 << " is ready, and has " << p.getAvailableCoins() << " coins!" << endl;
 	}
 
@@ -205,20 +205,61 @@ int main()
 	deck.printDeck();
 
 	//[Requirement 2: Give Armies to players]
-	cout << "test" << endl;
+
+	cout << endl;
+
 	for (int i = 0; i < numberOfPlayers; i++) {
 		players[i].setAvailableArmies(14);
 		players[i].setAvailableCities(3);
 		players[i].placeNewArmies(3, m.getStartingCountry());
 	}
 
-	m.showEverything();
+	if (numberOfPlayers == 2) {
+		Player npc = Player();
+		npc.setAvailableArmies(10);
+		int selectCountry = 0;
+		for (int i = 0; i < npc.getAvailableArmies(); i++) {
+			cout << "Enter countryID to place non-player army: ";
+			cin >> selectCountry;
 
-	cout << "test" << endl;
-	for (int i = 0; i < numberOfPlayers; i++) {
+			while (selectCountry > m.getCountries().size() || selectCountry < 1) {
+				cout << "Invalid Country ID. Try again: ";
+				cin >> selectCountry;
+			}
+			npc.placeNewArmies(1, m.giveMeCountry(selectCountry)); // PROBLEM
+		}
+	}
+
+	m.showEverything();
+	cout << endl;
+
+	for (int i = 0; i < numberOfPlayers; i++) { // Display and verify initial army placement
 		cout << "Player " << players[i].getPlayerID() << " has " << players[i].getAvailableArmies() << ", " << players[i].getAvailableCities() << " and placed 3 at country 1" << endl;
 	}
 
-	//[Requirement 3: Give coins to players (done above at line 54)]
+	//[Requirement 3: Give coins to players (done above at line 54 or 160)]
 
-}*/
+	//[Requirement 4: Bidding System]
+
+	// Step 1: Prompt each player to enter their bidding coins and their birthdate in the form of YYYYMMDD
+	for (int i = 0; i < numberOfPlayers; i++) {
+		players[i].getBid().setBid(players[i].getPlayerID());
+		players[i].getBid().setDate(players[i].getPlayerID());
+	}
+
+	// Create vectors and enter their values to be compared after. The appropriate values match with the appropriate player index
+	vector<int> bids(numberOfPlayers);
+	vector<int> dates(numberOfPlayers);
+	for (int i = 0; i < numberOfPlayers; i++) {
+		bids[i] = players[i].getBid().getBidAmount();
+		dates[i] = players[i].getBid().getDate();
+	}
+	Bid calculator = Bid();
+	int maxIndex = calculator.calculateBid(bids);
+
+	// If no maximum bidding cost was found, which may happen often, the players' dates are compared.
+	// The younger player (meaning the one with the biggest integer date) will start first
+	if (maxIndex == -1)
+		maxIndex = calculator.calculateDate(dates);
+
+}

@@ -62,7 +62,7 @@ void Player::printHand() {
 void Player::setBid() {
 	playerBid = new Bid();
 	playerBid->setBid(*playerID);
-	availableCoins -= *playerBid->_bidAmount;
+	availableCoins -= *playerBid->getBidAmountPointer();
 	//cout << "Available Coins: " << availableCoins << "\n";
 }
 

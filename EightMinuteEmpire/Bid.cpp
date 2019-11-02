@@ -18,6 +18,17 @@ Bid::Bid(int bidAmount) {
 Bid::~Bid() {
 }
 
+int Bid::getBidAmount() {
+	return *_bidAmount;
+}
+int* Bid::getBidAmountPointer() {
+	return _bidAmount;
+}
+
+int Bid::getDate() {
+	return *birthdate;
+}
+
 void Bid::setBid(int playerId) {
 	bool validInput = false;
 	while (!validInput) {
@@ -35,7 +46,29 @@ void Bid::setBid(int playerId) {
 
 		}
 		catch (exception e) {
+			cout << "Invalid bid amount. Try again: ";
+		}
+	}
+}
 
+void Bid::setDate(int playerId) {
+	bool validInput = false;
+	while (!validInput) {
+		cout << "Player " << playerId + 1 << " set birthdate in YYYYMMDD format: \n";
+		string inputValue = "0";
+
+		try {
+			getline(cin, inputValue);
+			int playerDate = stoi(inputValue);
+
+			if (playerDate > 0) {
+				birthdate = new int(playerDate);
+				validInput = true;
+			}
+
+		}
+		catch (exception e) {
+			cout << "Invalid bid amount. Try again: ";
 		}
 	}
 }
@@ -71,3 +104,34 @@ int Bid::calculateBid(std::vector<int> bidList) {
 		return maxBidIndex;
 	}
 }
+
+int Bid::calculateDate(std::vector<int> dateList) {
+	cout << "Calculating Bids: ";
+	int maxBid = 0;
+	int maxBidIndex = -1;
+	bool isFirstFindBid = false;
+	bool isTied = false;
+	maxBid = *max_element(dateList.begin(), dateList.end());
+
+	//Looking for the index
+
+	for (int i = 0; i < dateList.size(); i++) {
+		if (maxBid == dateList.at(i)) {
+			if (isFirstFindBid) {
+				isTied = true;
+			}
+			else {
+				isFirstFindBid = true;
+				maxBidIndex = i;
+			}
+		}
+	}
+
+	if (isTied) {
+		return -1;
+	}
+	else {
+		return maxBidIndex;
+	}
+}
+
