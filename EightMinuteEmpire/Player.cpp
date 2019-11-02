@@ -281,8 +281,8 @@ Player::~Player() {
 	delete hand;
 }
 
-bool Player::isCountryOwner(Country country) {
-
+bool Player::isCountryOwner(Country& country) {
+	
 	vector<int*> armies = country.getArmiesPerPlayer();
 
 	int indexOfMax = std::distance(armies.begin(), max_element(armies.begin(), armies.end()));
@@ -292,10 +292,22 @@ bool Player::isCountryOwner(Country country) {
 	}
 	else if (indexOfMax == *playerID - 1)	//Is this playerID shit correct??
 		return true;
-
 }
 
+vector<Country> Player::getCountriesOwned(Map m) {
+	//Cut the searchable arrays down from all countries to just the ones where he player has troops stationed
+	vector<int> armyLocs = armyLocations(m);
 
+	for (int i = 0; i < armyLocs.size(); i++) {
+		//Get the first country where the player has at least 1 army present
+		Country country = m.getCountries().at(armyLocs.at(i));
+
+		if (isCountryOwner(country)) {
+			countriesOwned->push_back(country);
+		}
+	}
+	
+}
 
 
 

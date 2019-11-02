@@ -23,7 +23,7 @@ private:
 
 	//The following vectors are dummies for future use
 	vector<int>* continentsOwned;
-	vector<int>* countriesOwned;
+	vector<Country>* countriesOwned;
 
 	int *availableArmies;					//Armies in player's bank [should be 14 at game start]
 	int *availableCities;					//Cities in player's bank [should be 3 at game start]
@@ -59,6 +59,13 @@ public:
 	void buildCity(Country& cityLocation);
 	void destroyArmy(Country& armyLocation, Player armyOwner);
 
+
+	bool isCountryOwner(Country& country);
+
+	vector<Country> getCountriesOwned(Map m);
+
+
+
 	//----Mutators & Accessors----//
 	int getAvailableCities();
 	void setAvailableCities(int x);
@@ -84,7 +91,7 @@ public:
 	void setBid();
 	Bid getBid();
 
-	bool isCountryOwner(Country country);
+	
 
 
 
