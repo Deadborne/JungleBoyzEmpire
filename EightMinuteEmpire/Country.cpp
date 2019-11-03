@@ -30,6 +30,10 @@ Country::Country(int* countryId, int* continentId, vector<int*> armiesPerPlayer)
 Country::Country(int* countryId, int* continentId, vector<int*> armiesPerPlayer, bool* isStart) : _countryId(countryId), _continentId(continentId), _armiesPerPlayer(armiesPerPlayer), _isStart(isStart)
 {
 }
+//constructor, takes countryID, continentId, the armies vector, cities and whether it's a starting country or not
+Country::Country(int* countryId, int* continentId, vector<int*> armiesPerPlayer, vector<bool*> cities, bool* isStart) : _countryId(countryId), _continentId(continentId), _armiesPerPlayer(armiesPerPlayer), _cities(cities), _isStart(isStart)
+{
+}
 
 //----Mutators & Accessors----//
 
@@ -65,7 +69,8 @@ void Country::setArmiesPerPlayer(vector<int*> newArmies) {
 
 //Checks if the country is the starting city
 bool Country::isStartingCountry() {
-	return _isStart;
+	//cout << _isStart << endl;
+	return *_isStart;
 }
 
 

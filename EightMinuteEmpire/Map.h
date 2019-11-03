@@ -20,10 +20,10 @@ public:
 	std::vector<std::string> split(std::string _stringToBeSplit, std::string _delimeter);
 
 	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
-	Graph ReadMap(std::string _Filename);
+	Graph ReadMap(std::string _Filename, int _amountOfPlayers);
 	void purge();
 	std::vector<Country> getCountries();
-
+	void setCountry(std::vector<Country> countries);
 	void showEverything();
 	Country getStartingCountry();
 	Country giveMeCountry(int id);

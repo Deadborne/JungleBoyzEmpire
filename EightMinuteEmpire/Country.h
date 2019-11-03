@@ -24,6 +24,8 @@ public:
 	Country(int* _countryId, int* _continentId, bool* _isStart);
 	Country(int* _countryId, int* _continentId, vector<int*> _armiesPerPlayer);
 	Country(int* _countryId, int* _continentId, vector<int*> _armiesPerPlayer, bool* _isStart);
+	Country(int* countryId, int* continentId, vector<int*> armiesPerPlayer, vector<bool*> cities, bool* isStart);
+
 
 	int getCountryId();
 	int getContinentId();

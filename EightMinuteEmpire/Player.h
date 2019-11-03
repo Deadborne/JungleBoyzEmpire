@@ -5,12 +5,11 @@
 #define Player_h
 #include "Bid.h"
 #include "Card.h"
+#include "Map.h"
 #include <string>
 #include "Country.h"
-#include "Map.h"
 #include <vector>
 #include <string>
-#include <algorithm>
 
 
 using namespace std;
@@ -35,6 +34,12 @@ private:
 
 	
 public:
+	//Player locations
+	vector<int> getArmyLocations(Map m);
+	vector<int> getArmyLocationsForCity(Map m);
+
+	std::vector<int> getArmySpawnLocations(Map m);
+
 
 	//Player();
 	
@@ -79,16 +84,13 @@ public:
 	void printHand();
 
 	bool hasCityIn(Country& country);
-	vector<int> armyLocations(Map m);
 
 	void setBid();
 	Bid getBid();
 
-	bool isCountryOwner(Country country);
-
-
-
-
+	int andOrAction(int actionNumber);
+	void ignore();
+	
 };
 
 

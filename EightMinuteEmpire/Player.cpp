@@ -62,7 +62,7 @@ void Player::printHand() {
 void Player::setBid() {
 	playerBid = new Bid();
 	playerBid->setBid(*playerID);
-	availableCoins -= *playerBid->getBidAmountPointer();
+	availableCoins -= *playerBid->_bidAmount;
 	//cout << "Available Coins: " << availableCoins << "\n";
 }
 
@@ -205,7 +205,9 @@ void Player::buildCity(Country& cityLocation) {
 			if (*cities.at(*playerID - 1) != true) {
 				*cities.at(*playerID - 1) = true;
 				cityLocation.setCities(cities);
-				*availableCities--;
+				int avCity = *availableCities;
+				avCity--;
+				*availableCities = avCity;
 			}
 			else {
 				cout << "\nCity already exists in country. Build one somewhere else.";
@@ -257,22 +259,6 @@ bool Player::hasCityIn(Country& country) {
 	}
 }
 
-//returns a vector of country Ids where the player has at least one army.
-vector<int> Player::armyLocations(Map m) {
-
-	vector<Country> v = m.getCountries();
-	vector<int> locations = {};
-
-	int me = *playerID;
-
-	for (int i = 0; i < v.size(); i++) {
-		if ((*v[i].getArmiesPerPlayer()[me]) > 0) {
-			locations.push_back(v[i].getCountryId());
-		}
-	}
-	return locations;
-}
-
 Player::~Player() {
 	delete[] availableArmies;
 	delete[] playerBid;
@@ -281,20 +267,66 @@ Player::~Player() {
 	delete hand;
 }
 
-bool Player::isCountryOwner(Country country) {
-
-	vector<int*> armies = country.getArmiesPerPlayer();
-
-	int indexOfMax = std::distance(armies.begin(), max_element(armies.begin(), armies.end()));
-
-	if (find(armies.begin() + indexOfMax + 1, armies.end(), *max_element(armies.begin(), armies.end())) != armies.end()) {
-		return false;
-	}
-	else if (indexOfMax == *playerID - 1)	//Is this playerID shit correct??
-		return true;
-
+int Player::andOrAction(int actionNum) {
+	return actionNum;
 }
 
+void Player::ignore() {
+	cout << "You have chosen to ignore your action!" << endl;
+}
+
+//returns a vector of country Ids where the player has at least one army.
+std::vector<int> Player::getArmyLocations(Map m) {
+
+	vector<Country> v = m.getCountries();
+	vector<int> locations = {};
+
+	int me = *playerID;
+
+	for (int i = 0; i < v.size(); i++) {
+		if ((*v[i].getArmiesPerPlayer()[me - 1]) > 0) {
+			locations.push_back(v[i].getCountryId());
+		}
+	}
+	return locations;
+}
+//returns a vector of country Ids where the player has at least one army.
+std::vector<int> Player::getArmyLocationsForCity(Map m) {
+
+	vector<Country> v = m.getCountries();
+	vector<int> locations = {};
+	int me = *playerID;
+	
+	for (int i = 0; i < v.size(); i++) {
+		if ((*v[i].getArmiesPerPlayer()[me - 1]) > 0) {
+			bool containsCity = false;
+			for (int j = 0; j < v[i].getCities().size(); j++) {
+				if (*v[i].getCities().at(j) == true) {
+					containsCity = true;
+				}
+			}
+
+			if (!containsCity) {
+				locations.push_back(v[i].getCountryId());
+			}
+
+		}
+	}
+	return locations;
+}
+
+std::vector<int> Player::getArmySpawnLocations(Map m) {
+
+	vector<Country> v = m.getCountries();
+	vector<int> locations = {};
+	int me = *playerID;
+	for (int i = 0; i < v.size(); i++) {
+		if (v[i].isStartingCountry() == true || *v[i].getCities()[me - 1] == true) {
+			locations.push_back(v[i].getCountryId());
+		}
+	}
+	return locations;
+}
 
 
 

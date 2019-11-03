@@ -48,7 +48,7 @@ vector<string> Map::split(string _stringToBeSplit, string _delimeter)
 }
 
 
-Graph Map::ReadMap(string f)
+Graph Map::ReadMap(string f, int amountOfPlayers)
 {
 	bool hasStarter = false; //a map is invalid if it has no starting point
 
@@ -97,6 +97,7 @@ Graph Map::ReadMap(string f)
 			hasStarter = true;
 			*starter = true;
 			startingCountry = countryNumber; //stores this value
+			
 		}
 		//check if the country connects to a different continent. If the find returns npos, that would mean nothing was found.
 		if (line.find("C") != std::string::npos) {
@@ -149,13 +150,31 @@ Graph Map::ReadMap(string f)
 		}
 
 		//create a country, store it in the vector of countries
-		Country c = Country(countryNumber, continentNumber, starter);
+		vector<bool*> city;
+		vector<int*> defaultArmies;
+		for (int i = 0; i < amountOfPlayers; i++) {
+			city.push_back(new bool(false));
+		}
+		
+		if (*starter) {
+			for (int i = 0; i < amountOfPlayers; i++) {
+				defaultArmies.push_back(new int(3));
+			}
+		}
+		else {
+			for (int i = 0; i < amountOfPlayers; i++) {
+				defaultArmies.push_back(new int(0));
+			}
+		}
+		Country c = Country(countryNumber, continentNumber, defaultArmies, city, starter);
+		cout << "starter: " << *starter << endl;
 		// cout << "Pushed Ctry " << *countryNumber << " ctnt " << *continentNumber << "Starter: " << *starter << " to map." << endl; //uncomment to see what goes in map
 		mappedCountries.push_back(c);
 		
 		iss3.clear();
 	}
-
+	//Setting available armies for the starting country
+	
 	infile.close();
 	if (hasStarter == true) { //checks if the map also has a starting point. Won't create a map without one.
 		//output the map
@@ -179,6 +198,10 @@ std::vector<Country> Map::getCountries() {
 	return mappedCountries;
 }
 
+void Map::setCountry(std::vector<Country> countries) {
+	mappedCountries = countries;
+}
+
 //returns the starting country
 Country Map::getStartingCountry() {
 
@@ -187,7 +210,7 @@ Country Map::getStartingCountry() {
 
 //gives whatever country in the map that is asked
 Country Map::giveMeCountry(int id) {
-	return mappedCountries[id-1];
+	return mappedCountries.at(id - 1);
 }
 
 //deletes the vector of countries and all its contents
@@ -206,7 +229,7 @@ void Map::showEverything() {
 		cout << "Region\t" << mappedCountries[i].getCountryId() << "\t [Continent " << mappedCountries[i].getContinentId() << "] Armies: [";
 		mappedCountries[i].printArmies();
 		cout << "] Cities: [";
-		for (int j = 0; j < 5; j++) {
+		for (int j = 0; j < mappedCountries[i].getCities().size(); j++) {
 			cout << *mappedCountries[i].getCities().at(j) << " ";
 		}
 		cout << "] Connected to: ";
