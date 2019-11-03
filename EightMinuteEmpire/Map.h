@@ -27,4 +27,6 @@ public:
 	void showEverything();
 	Country getStartingCountry();
 	Country giveMeCountry(int id);
+
+	vector<int> getContinents();
 };

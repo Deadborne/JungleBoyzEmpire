@@ -215,3 +215,27 @@ void Map::showEverything() {
 	}
 
 }
+
+vector<int> Map::getContinents() {
+
+	//Intermediary vector
+	vector<int> c;
+	//What we will return
+	vector<int> continents;
+
+	//Get all the countries
+	vector<Country> countries = getCountries();
+
+	//Get all the country's continent id's
+	for (int i = 0; i < getCountries().size(); i++)
+		c.push_back(countries.at(i).getContinentId);
+
+	//Trim it back to get just a list of all the continent id's on the map
+	c.erase(unique(c.begin(), c.end()), c.end());
+
+	//Move them to a readable vector
+	for (auto it = c.cbegin(); it != c.cend(); ++it)
+		continents.push_back(*it);
+
+	return continents;
+}

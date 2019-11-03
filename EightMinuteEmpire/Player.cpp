@@ -306,6 +306,8 @@ vector<Country> Player::getCountriesOwned(Map m) {
 			countriesOwned->push_back(country);
 		}
 	}
+
+	return *countriesOwned;
 	
 }
 
