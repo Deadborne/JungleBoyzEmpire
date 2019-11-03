@@ -64,6 +64,7 @@ public:
 
 	vector<Country> getCountriesOwned(Map m);
 
+	vector<int> getContinentsOwned(Map m);
 
 
 	//----Mutators & Accessors----//

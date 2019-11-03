@@ -196,7 +196,7 @@ void Player::buildCity(Country& cityLocation) {
 	Map m = Map();
 	
 	//1
-	if (availableCities != 0) {
+	if (availableCities > 0) {
 		vector<int*> armies = cityLocation.getArmiesPerPlayer();
 		//2
 		if (armies.at(*playerID - 1) > 0) {
@@ -309,6 +309,50 @@ vector<Country> Player::getCountriesOwned(Map m) {
 
 	return *countriesOwned;
 	
+}
+
+
+vector<int> Player::getContinentsOwned(Map m) {
+
+	//For each continent that exists
+	for (int i = 0; i < m.getContinents().size(); i++) {
+		//Get # of countries in this continet
+		vector<Country> countries = m.getCountries();
+
+		int countriesInContinent;
+
+		//COUNT TOTAL COUNTRIES IN A CONTINENT
+		//For every country
+		for (int j = 0; j < countries.size(); j++) {
+			//if that country's continent matches our current continent then we need to count it
+			if (countries.at(j).getContinentId() == m.getContinents().at(i)) {
+				//increment some variable, which will track the number of countries in a continent
+				countriesInContinent++;
+			}
+		}
+
+		//COUNT # COUNTRIES OWNED FROM THAT SAME CONTINENT
+		int countriesOwnedInContinent;
+
+		//For each country we OWN
+		for (int k = 0; k < getCountriesOwned(m).size(); k++) {
+			//if that country's continent mateches our current continent,
+			if (getCountriesOwned(m).at(k).getContinentId == m.getContinents().at(i)) {
+				countriesOwnedInContinent++;
+			}
+		}
+
+		//COMPARE THE 2 VALUES
+		if (countriesInContinent == countriesOwnedInContinent) {
+			//Then add the current continent to those that we own, adding its ID to a vector.
+			continentsOwned->push_back(m.getContinents().at(i));
+		}
+
+	}
+	
+	//The variable will have been changed in the player's data members, but this function will also return that vector for ease of use
+	return *continentsOwned;
+
 }
 
 
