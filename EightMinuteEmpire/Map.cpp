@@ -228,7 +228,7 @@ vector<int> Map::getContinents() {
 
 	//Get all the country's continent id's
 	for (int i = 0; i < getCountries().size(); i++)
-		c.push_back(countries.at(i).getContinentId);
+		c.push_back(countries.at(i).getContinentId());
 
 	//Trim it back to get just a list of all the continent id's on the map
 	c.erase(unique(c.begin(), c.end()), c.end());

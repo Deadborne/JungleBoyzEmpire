@@ -337,7 +337,7 @@ vector<int> Player::getContinentsOwned(Map m) {
 		//For each country we OWN
 		for (int k = 0; k < getCountriesOwned(m).size(); k++) {
 			//if that country's continent mateches our current continent,
-			if (getCountriesOwned(m).at(k).getContinentId == m.getContinents().at(i)) {
+			if (getCountriesOwned(m).at(k).getContinentId() == m.getContinents().at(i)) {
 				countriesOwnedInContinent++;
 			}
 		}
