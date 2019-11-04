@@ -68,6 +68,9 @@ public:
 	vector<int> getContinentsOwned(Map m);
 
 
+	int PointsFromCards();
+
+
 	//----Mutators & Accessors----//
 	int getAvailableCities();
 	void setAvailableCities(int x);
