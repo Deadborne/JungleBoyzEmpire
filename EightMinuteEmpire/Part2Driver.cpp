@@ -17,7 +17,7 @@ using namespace std;
 using namespace boost;
 
 
-
+/*
 int main()
 {
 
@@ -166,4 +166,4 @@ int main()
 
 	cout << "The winner of the bid is Player " << maxIndex + 1 << endl;
 
-}
+}*/

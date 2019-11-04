@@ -91,6 +91,13 @@ void Player::setBid() {
 	//cout << "Available Coins: " << availableCoins << "\n";
 }
 
+void Player::setBid(int maxBid) {
+	playerBid = new Bid();
+	playerBid->setBid(*playerID, maxBid);
+	availableCoins -= *playerBid->getBidAmountPointer();
+	//cout << "Available Coins: " << availableCoins << "\n";
+}
+
 Bid Player::getBid() {
 	return *playerBid;
 }
@@ -378,6 +385,127 @@ vector<int> Player::getContinentsOwned(Map m) {
 	//The variable will have been changed in the player's data members, but this function will also return that vector for ease of use
 	return *continentsOwned;
 
+}
+
+int Player::PointsFromCards() {
+	//Get the player's hand
+	vector<Card> hand = getHand();
+	
+	//Shitty way to store the number of goods
+	int carrots;
+	int anvils;
+	int shards;
+	int coals;
+	int trees;
+	int wildcards;
+
+
+	//Loop through the hand and count goods of each type
+	for (int i = 0; i < hand.size(); i++) {
+		//Aight lets count trees
+		if (hand.at(i).getGood() == "tree")
+			carrots += hand.at(i).getGoodAmount();
+		else if (hand.at(i).getGood() == "anvil")
+			anvils += hand.at(i).getGoodAmount();
+		else if (hand.at(i).getGood() == "shard")
+			shards += hand.at(i).getGoodAmount();
+		else if (hand.at(i).getGood() == "coal")
+			coals += hand.at(i).getGoodAmount();
+		else if (hand.at(i).getGood() == "carrot")
+			carrots += hand.at(i).getGoodAmount();
+		else if (hand.at(i).getGood() == "wildcard")
+			wildcards+= hand.at(i).getGoodAmount();
+	}
+	
+	//Display current count for other cards, so as to make the right decision
+	cout << "You currently have:"
+		<< "\n\t- "<< trees <<" trees"
+		<< "\n\t- "<< anvils <<" anvils"
+		<< "\n\t- "<< shards <<" shards"
+		<< "\n\t- "<< coals <<" coals"
+		<< "\n\t- "<< carrots <<" carrots"
+		;
+
+	//If we have have any wildcards to handle
+	if (wildcards > 0) {
+		cout << "You also have " << wildcards << " wildcards\n";
+		cout << "As such, you may assign it to be either:"
+			<< "\n\t- tree"
+			<< "\n\t- anvil"
+			<< "\n\t- shard"
+			<< "\n\t- coal"
+			<< "\n\t- carrot"
+			;
+		//Assign values to each of our wild cards
+		for (int j = 1; j <= wildcards; j++) {
+			string chosenGood;
+			cout << "Choose a value for wildcard " << j << endl;
+			cin >> chosenGood;
+
+			//Add the chosen value
+			if (chosenGood == "tree")
+				trees++;
+			else if (chosenGood == "anvil")
+				anvils++;
+			else if (chosenGood == "shard")
+				shards++;
+			else if (chosenGood == "coal")
+				coals++;
+			else if (chosenGood == "carrot")
+				carrots++;
+			else
+				cout << "Good type unrecognized. Please enter either tree, anvil, shard, coal, or carrot.";
+		}
+	}
+
+	//Now assign victory Points
+	int vp;
+
+	//For trees:
+	switch (trees){
+	case 2: vp++; break;
+	case 4: vp += 2; break;
+	case 5: vp += 3; break;
+	case 6: vp += 5; break;
+	default: break;
+	}
+
+	//For anvils
+	switch (anvils){
+	case 2: vp++; break;
+	case 4: vp += 2; break;
+	case 6: vp += 3; break;
+	case 7: vp += 5; break;
+	default: break;
+	}
+
+	//For shards
+	switch (shards){
+	case 1: vp++; break;
+	case 2: vp += 2; break;
+	case 3: vp += 3; break;
+	case 4: vp += 5; break;
+	default: break;
+	}
+
+	//For coals
+	switch (coals){
+	case 2: vp++; break;
+	case 3: vp += 2; break;
+	case 4: vp += 3; break;
+	case 5: vp += 5; break;
+	default: break;
+	}
+
+	//For carrots
+	switch (carrots){
+	case 3: vp++; break;
+	case 5: vp += 2; break;
+	case 7: vp += 3; break;
+	case 8: vp += 5; break;
+	default: break;
+	}
+	 return vp;
 }
 
 
