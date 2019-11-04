@@ -14,8 +14,33 @@ void Player::setPlayerID(int x) {
 	playerID = new int(x);
 }
 
+void Player::setBirthday() {
+	bool validInput = false;
+	while (!validInput) {
+		cout << "Player " << *playerID + 1 << " set birthdate in YYYYMMDD format: \n";
+		string inputValue = "0";
+
+		getline(cin, inputValue);
+		int playerDate = stoi(inputValue);
+
+		if (playerDate > 9999999 && playerDate < 20200000) {
+			birthday = new int(playerDate);
+			validInput = true;
+		}
+		else {
+			cin.clear();
+			cin.ignore();
+		}
+
+	}
+}
+
 int Player::getPlayerID() {
 	return *playerID;
+}
+
+int Player::getBirthday() {
+	return *birthday;
 }
 
 int Player::getAvailableCities() {

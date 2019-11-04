@@ -19,6 +19,7 @@ typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 class Player {
 private:
 	int* playerID;
+	int* birthday;
 	Hand *hand;
 
 	//The following vectors are dummies for future use
@@ -73,6 +74,9 @@ public:
 	
 	void setPlayerID(int x);
 	int getPlayerID();
+
+	void setBirthday();
+	int getBirthday();
 
 	int getAvailableArmies();
 	void setAvailableArmies(int x);

@@ -76,7 +76,7 @@ void Bid::setDate(int playerId) {
 
 //This is going to be the laziest C++ code, sorry :( 
 int Bid::calculateBid(std::vector<int> bidList) {
-	cout << "Calculating Bids: ";
+	cout << "Calculating Bids: " << endl;
 	int maxBid = 0;
 	int maxBidIndex = -1;
 	bool isFirstFindBid = false;
