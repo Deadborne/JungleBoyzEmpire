@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Map">
-      <UniqueIdentifier>{8fd955bf-9fa6-4e20-a7d6-7565eac370ac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Map">
       <UniqueIdentifier>{a92f6702-07f5-4a61-961e-34fc1b75c911}</UniqueIdentifier>
     </Filter>
@@ -42,6 +39,9 @@
     </Filter>
     <Filter Include="Source Files\Bid">
       <UniqueIdentifier>{6ffe4986-0100-40d2-b189-6db242706b42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Bid\Map">
+      <UniqueIdentifier>{8fd955bf-9fa6-4e20-a7d6-7565eac370ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -105,13 +105,13 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>Source Files\Map</Filter>
+      <Filter>Source Files\Bid\Map</Filter>
     </ClCompile>
     <ClCompile Include="Country.cpp">
-      <Filter>Source Files\Map</Filter>
+      <Filter>Source Files\Bid\Map</Filter>
     </ClCompile>
     <ClCompile Include="Continent.cpp">
-      <Filter>Source Files\Map</Filter>
+      <Filter>Source Files\Bid\Map</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Player</Filter>

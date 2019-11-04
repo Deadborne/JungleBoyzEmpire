@@ -317,9 +317,9 @@ bool Player::isCountryOwner(Country& country) {
 	
 	vector<int*> armies = country.getArmiesPerPlayer();
 
-	cout << endl;
+	/*cout << endl;
 	country.printArmies();
-	cout << endl;
+	cout << endl;*/
 
 	int maxArmies = 0;
 	int maxArmiesIndex = 0;
@@ -334,11 +334,11 @@ bool Player::isCountryOwner(Country& country) {
 		}
 	}
 
-	cout << "Max element " << maxArmies << endl;
+	//cout << "Max element " << maxArmies << endl;
 
-	//int indexOfMax = std::distance(armies.begin(), max_element(armies.begin(), armies.end()));
-
-	cout << "Index of max element at " << country.getCountryId() << " is: " << maxArmiesIndex << endl;
+	//cout << "Index of max element at " << country.getCountryId() << " is: " << maxArmiesIndex << endl;
+	
+	
 	int dupe = 0;
 	//Count duplicates
 	for (int i = 0; i < armies.size(); i++) {
@@ -350,39 +350,33 @@ bool Player::isCountryOwner(Country& country) {
 		return false;
 	else if (maxArmiesIndex == *playerID) //check that the max is at the same index as our current player.
 		return true;
-	else
+	else {
+		cerr << "Something might have gone wrong. You might be fine, but also maybe not.../n Check isCountryOwner() in Player.cpp";
 		return false;
-		
-		
-
-
-	//if we have duplicates
-	//if (find(armies.begin() + maxArmiesIndex + 1, armies.end(), maxArmies) != armies.end()) {
-	//	cout << "You fucked uo\n";
-	//	return false;
-	//}
-	//else if (maxArmiesIndex == *playerID - 1) {	//Is this playerID shit correct??
-	//	cout << "You else fucked\n";
-	//		return true;
-	//}
-	//else {
-	//	cout << "Yeet so bad\n";
-	//	return false;
-	//}
+	}	
+	
 }
 
 vector<Country> Player::getCountriesOwned(Map m) {
-	//Cut the searchable arrays down from all countries to just the ones where he player has troops stationed
-	vector<int> armyLocs = armyLocations(m);
-
-	for (int i = 0; i < armyLocs.size(); i++) {
-		//Get the first country where the player has at least 1 army present
-		Country country = m.getCountries().at(armyLocs.at(i));
-
-		if (isCountryOwner(country)) {
-			countriesOwned->push_back(country);
+	
+	for (int i = 0; i < m.getCountries().size(); i++) {
+		if (isCountryOwner(m.getCountries().at(i))) {
+			cout << "Reach";
+			countriesOwned->push_back(m.getCountries().at(i));
 		}
 	}
+	
+	////Cut the searchable arrays down from all countries to just the ones where he player has troops stationed
+	//vector<int> armyLocs = armyLocations(m);
+	//
+	//for (int i = 0; i < armyLocs.size(); i++) {
+	//	//Get the first country where the player has at least 1 army present
+	//	Country country = m.getCountries().at(armyLocs.at(i));
+
+	//	if (isCountryOwner(country)) {
+	//		countriesOwned->push_back(country);
+	//	}
+	//}
 
 	return *countriesOwned;
 	

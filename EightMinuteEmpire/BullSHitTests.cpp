@@ -45,13 +45,20 @@ int main()
 	player1.placeNewArmies(5, m.getCountries().at(10));
 	player2.placeNewArmies(4, m.getCountries().at(9));
 	player2.placeNewArmies(5, m.getCountries().at(10));
-
+	player2.placeNewArmies(3, m.getCountries().at(12));
 	cout << endl;
 	m.showEverything();
 
 	cout << "Player 2 ownership: " << player2.isCountryOwner(m.getCountries().at(9)) << endl;
 	cout << "Player 2 ownership: " << player2.isCountryOwner(m.getCountries().at(10)) << endl;
 	cout << "Player 1 ownership: " << player1.isCountryOwner(m.getCountries().at(10)) << endl;
+
+	
+	cout << "Player 2 owns the following countries";
+	for (int i = 0; i < player2.getCountriesOwned(m).size(); i++) {
+		cout << player2.getCountriesOwned(m).at(i).getCountryId() << " ";
+	}
+
 
 
 }
