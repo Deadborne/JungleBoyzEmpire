@@ -1,6 +1,6 @@
 #pragma once
 
-#include "stdafx.h"
+#include "stdafx.h"/*
 #include <string>
 #include <iostream>
 #include "Map.h"
@@ -187,7 +187,6 @@ int main()
 
 							players[currentPlayer].setHand(v);
 							//deck.getSpace().erase(deck.getSpace().begin() + cardChoice); //we'll be able to do this after step 5 is coded
-
 							break;
 						}
 						else if (cardChoice == 2 || 3) {
@@ -242,10 +241,6 @@ int main()
 						cin.clear();
 						cin.ignore();
 					}
-					//:::::::::::::::::::::::::::::::::::PART 5::::::::::::::::::::::::::::::::::::::::::::::
-					// After a player has made a valid card choice and the card has been pulled from card space,
-					// a new card from the deck is drawn and placed again in card space (at the right-most space)
-					deck.draw();
 					break;
 				}
 				else { //entered something invalid
@@ -265,10 +260,9 @@ int main()
 		}
 
 
-
-
 	}
 
 
 }
+*/
 

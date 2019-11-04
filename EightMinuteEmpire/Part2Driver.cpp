@@ -119,7 +119,6 @@ using namespace boost;
 //
 //}
 
-/*
 int main()
 {
 
@@ -263,4 +262,4 @@ int main()
 	if (maxIndex == -1)
 		maxIndex = calculator.calculateDate(dates);
 
-}*/
+}
