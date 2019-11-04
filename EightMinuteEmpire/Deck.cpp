@@ -122,3 +122,7 @@ void Deck::draw() {
 void Deck::eraseBack() {
 	space.pop_back();
 }
+
+void Deck::removeCard(int i) {
+	space.erase(space.begin() + i - 1);
+}

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "stdafx.h"/*
+#include "stdafx.h"
 #include <string>
 #include <iostream>
 #include "Map.h"
@@ -186,7 +186,7 @@ int main()
 							v.push_back(chosenCard);
 
 							players[currentPlayer].setHand(v);
-							//deck.getSpace().erase(deck.getSpace().begin() + cardChoice); //we'll be able to do this after step 5 is coded
+							deck.removeCard(cardChoice); //we'll be able to do this after step 5 is coded
 							break;
 						}
 						else if (cardChoice == 2 || 3) {
@@ -201,7 +201,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								//deck.getSpace().erase(deck.getSpace().begin() + cardChoice); //we'll be able to do this after step 5 is coded
+								deck.removeCard(cardChoice); //we'll be able to do this after step 5 is coded
 								break;
 							}
 						}
@@ -216,7 +216,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								//deck.getSpace().erase(deck.getSpace().begin() + cardChoice); //we'll be able to do this after step 5 is coded
+								deck.removeCard(cardChoice); //we'll be able to do this after step 5 is coded
 								break;
 							}
 						}
@@ -231,7 +231,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								//deck.getSpace().erase(deck.getSpace().begin() + cardChoice); //we'll be able to do this after step 5 is coded
+								deck.removeCard(cardChoice); //we'll be able to do this after step 5 is coded
 								break;
 							}
 						}
@@ -253,6 +253,14 @@ int main()
 			//:::::::::::::::::::::::::::::::::::PART 4::::::::::::::::::::::::::::::::::::::::::::::
 
 
+			//:::::::::::::::::::::::::::::::::::PART 5::::::::::::::::::::::::::::::::::::::::::::::
+			// After a player has made a valid card choice and the card has been pulled from card space,
+			// a new card from the deck is drawn and placed again in card space (at the right-most space)
+			deck.draw();
+			cout << "CARD SPACE AFTER DRAW()" << endl;
+			deck.printDeck();
+
+
 			//THIS GOES AT THE VERY END OF THE LOOP
 			currentPlayer++; //Passes the turn to the next player
 			if (currentPlayer > (numberOfPlayers - 1)) //Example: if there are 3 players and currentPlayer is 4, sets it to player[0]'s turn
@@ -264,5 +272,4 @@ int main()
 
 
 }
-*/
 
