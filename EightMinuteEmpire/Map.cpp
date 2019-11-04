@@ -46,22 +46,25 @@ vector<string> Map::split(string _stringToBeSplit, string _delimeter)
 		splittedString.push_back(val);
 	}
 	return splittedString;
-
 }
 
 
 Graph Map::ReadMap(string f)
 {
 	bool hasStarter = false; //a map is invalid if it has no starting point
-	
 
 	while (1){
 		std::ifstream infile;
 		infile.open("./Maps/" + f + ".txt");
 		std::string str;
 
-		if (!infile) {
+		while (!infile) {
 			cout << "That file is not valid.\n";
+			cout << "Select the Map to load (Proper format is M#)" << endl;
+			getline(cin, f);
+			infile.open("./Maps/" + f + ".txt");
+			cin.clear();
+			cin.ignore();
 		}
 
 		vector<string> temp;
@@ -162,9 +165,10 @@ Graph Map::ReadMap(string f)
 
 		infile.close();
 		//check if the graph is connected
-		bool connected = false;
+
 		std::vector<int> component(num_vertices(GameMap));
 		int connectedComponents = connected_components(GameMap, &component[0]);
+		bool connected = false;
 
 		if (connectedComponents == 2) {
 			connected = true;
