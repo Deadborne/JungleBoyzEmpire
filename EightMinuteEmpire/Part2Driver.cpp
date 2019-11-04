@@ -216,7 +216,6 @@ int main()
 
 	if (numberOfPlayers == 2) {
 		Player npc = Player();
-		npc.setPlayerID(2);
 		npc.setAvailableArmies(10);
 		int selectCountry = 0;
 		for (int i = 0; i < npc.getAvailableArmies(); i++) {
