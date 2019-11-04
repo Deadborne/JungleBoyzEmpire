@@ -47,6 +47,7 @@ public:
 	int getDeckSize() const;
 	void printDeck();
 	void eraseBack();
+	void removeCard(int i);
 };
 
 class Hand {

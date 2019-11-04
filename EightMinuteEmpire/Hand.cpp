@@ -36,7 +36,6 @@ void Hand::setHand(Card c) {
 	cout << "Top card is now: " << cards[0].printCard() << endl;
 }
 
-
 void Hand::swapHand(vector<Card> v) {
 	cards = v;
 }
