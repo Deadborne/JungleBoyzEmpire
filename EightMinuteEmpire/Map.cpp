@@ -54,6 +54,9 @@ Graph Map::ReadMap(string f)
 	bool hasStarter = false; //a map is invalid if it has no starting point
 
 	while (1){
+
+		GameMap = NULL;
+
 		std::ifstream infile;
 		infile.open("./Maps/" + f + ".txt");
 		std::string str;
@@ -63,8 +66,8 @@ Graph Map::ReadMap(string f)
 			cout << "Select the Map to load (Proper format is M#)" << endl;
 			getline(cin, f);
 			infile.open("./Maps/" + f + ".txt");
-			cin.clear();
-			cin.ignore();
+			//cin.clear();
+			//cin.ignore();
 		}
 
 		vector<string> temp;
