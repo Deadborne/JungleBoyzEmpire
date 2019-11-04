@@ -91,6 +91,13 @@ void Player::setBid() {
 	//cout << "Available Coins: " << availableCoins << "\n";
 }
 
+void Player::setBid(int maxBid) {
+	playerBid = new Bid();
+	playerBid->setBid(*playerID, maxBid);
+	availableCoins -= *playerBid->getBidAmountPointer();
+	//cout << "Available Coins: " << availableCoins << "\n";
+}
+
 Bid Player::getBid() {
 	return *playerBid;
 }

@@ -18,6 +18,21 @@ using namespace boost;
 int main()
 {
 
+
+	cout << "		    __ _____ _____ _____ __    _____	" << endl;
+	cout << "		 __|  |  |  |   | |   __|  |  |   __|	" << endl;
+	cout << "		|  |  |  |  | | | |  |  |  |__|   __|	" << endl;
+	cout << "		|_____|_____|_|___|_____|_____|_____|	" << endl;
+	cout << "		 ____  _____ __ __ _____				" << endl;
+	cout << "		| __  |     |  |  |__   |				" << endl;
+	cout << "		| __ -|  |  |_   _|   __|				" << endl;
+	cout << "		|_____|_____| |_| |_____|				" << endl;
+	cout << "		 _____ _____ _____ _____ _____ _____	" << endl; 
+	cout << "		|   __|     |  _  |     | __  |   __|	" << endl;
+	cout << "		|   __| | | |   __|-   -|    -|   __|	" << endl;
+	cout << "		|_____|_|_|_|__|  |_____|__|__|_____|	" << endl;
+	cout << endl;
+
 	//:::::::::::::::::::::::::::::::::::PART 1::::::::::::::::::::::::::::::::::::::::::::::
 
 	//[Requirement 1: Reading the Map] 
@@ -77,7 +92,7 @@ int main()
 		p.setAvailableCoins(startingCoins);
 		p.setPlayerID(i);
 
-		players.insert(players.begin(), p); //inserting players
+		players.push_back(p); //inserting players
 
 		cout << "Player " << p.getPlayerID() + 1 << " is ready, and has " << p.getAvailableCoins() << " coins!" << endl;
 	}
@@ -108,36 +123,47 @@ int main()
 
 	cout << endl;
 
+	//initializing starting info.
 	for (int i = 0; i < numberOfPlayers; i++) {
 		players[i].setAvailableArmies(14);
 		players[i].setAvailableCities(3);
 		players[i].placeNewArmies(3, m.getStartingCountry());
 	}
 
+	for (int i = 0; i < numberOfPlayers; i++) { // Display and verify initial army placement
+		cout << "Player " << players[i].getPlayerID() + 1 << " starts with " << players[i].getAvailableArmies() << " armies and ";
+		cout << players[i].getAvailableCities() << " cities, and placed 3 armies at the starting region, " << m.getStartingCountry().getCountryId() << endl;
+	}
+
+	//this loop is for placing NPCs in a 2 player game.
 	if (numberOfPlayers == 2) {
+		cout << endl;
 		Player npc = Player();
 		npc.setAvailableArmies(10);
+		npc.setPlayerID(2); //NPC is effectively player 3
 		int selectCountry = 0;
+		int placingPlayer = 1; //The player who gets to choose where to place the army
 		for (int i = 0; i < npc.getAvailableArmies(); i++) {
-			cout << "Enter countryID to place non-player army: ";
+			m.showEverything(); //show the map so players can decide where to put NPC armies
+			cout << "Player " << placingPlayer << ", choose a region to place non-player army: ";
 			cin >> selectCountry;
-
 			while (selectCountry > m.getCountries().size() || selectCountry < 1) {
 				cout << "Invalid Country ID. Try again: ";
 				cin >> selectCountry;
 			}
-			npc.placeNewArmies(1, m.giveMeCountry(selectCountry)); // PROBLEM
+			npc.placeNewArmies(1, m.giveMeCountry(selectCountry));
+			//It's the next player's turn to place NPC armies
+			if (placingPlayer == 1)
+				placingPlayer = 2;
+			else
+				placingPlayer = 1;
 		}
 	}
 
 	m.showEverything();
 	cout << endl;
 
-	for (int i = 0; i < numberOfPlayers; i++) { // Display and verify initial army placement
-		cout << "Player " << players[i].getPlayerID() << " has " << players[i].getAvailableArmies() << ", " << players[i].getAvailableCities() << " and placed 3 at country 1" << endl;
-	}
-
-	//[Requirement 3: Give coins to players (done above at line 54 or 160)]
+	//[Requirement 3: Give coins to players - we did this in part 1. Sorry!
 
 	//[Requirement 4: Bidding System]
 
@@ -145,7 +171,7 @@ int main()
 	for (int i = 0; i < numberOfPlayers; i++) {
 		cin.clear(); //removing bad values from cin.
 		cin.ignore();
-		players[i].setBid();
+		players[i].setBid(startingCoins);
 		players[i].setBirthday();
 	}
 
@@ -243,7 +269,7 @@ int main()
 							v.push_back(chosenCard);
 
 							players[currentPlayer].setHand(v);
-							deck.removeCard(cardChoice); //we'll be able to do this after step 5 is coded
+							deck.removeCard(cardChoice); 
 							break;
 						}
 						else if (cardChoice == 2 || 3) {
@@ -258,7 +284,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								deck.removeCard(cardChoice); //we'll be able to do this after step 5 is coded
+								deck.removeCard(cardChoice); 
 								break;
 							}
 						}
@@ -273,7 +299,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								deck.removeCard(cardChoice); //we'll be able to do this after step 5 is coded
+								deck.removeCard(cardChoice); 
 								break;
 							}
 						}
@@ -288,7 +314,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								deck.removeCard(cardChoice); //we'll be able to do this after step 5 is coded
+								deck.removeCard(cardChoice); 
 								break;
 							}
 						}

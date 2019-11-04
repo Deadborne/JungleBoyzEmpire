@@ -94,6 +94,7 @@ public:
 	vector<int> armyLocations(Map m);
 
 	void setBid();
+	void setBid(int maxBid);
 	Bid getBid();
 
 	
