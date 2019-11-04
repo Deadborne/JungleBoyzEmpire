@@ -4,14 +4,14 @@
 
 class Card {
 private:
-	std::string good;
-	int amount;
-	std::string action1;
-	int num1;
-	std::string action2;
-	int num2;
-	std::string operate;
-	bool isFive;
+	std::string* good;
+	int* amount;
+	std::string* action1;
+	int* num1;
+	std::string* action2;
+	int* num2;
+	std::string* operate;
+	bool* isFive;
 
 public:
 	Card();
