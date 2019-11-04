@@ -14,7 +14,7 @@ using namespace std;
 #include <boost/graph/graphviz.hpp>
 #include <boost/graph/graph_utility.hpp>
 using namespace boost;
-/*
+
 int main()
 {
 
@@ -100,20 +100,77 @@ int main()
 
 	cout << "\n[PART 2: STARTUP PHASE]\n" << endl;
 
-	//[Requirement 1: Shuffling the deck and drawing cards]
-	cout << "Displaying available cards:" << endl;
+	//[Requirement 1: Shuffling Deck]
+	// The shuffling already appears on the Deck Constructor. To verify, we are printing the card space. Each time we get different amount of cards.
 	deck.printDeck();
 
+	//[Requirement 2: Give Armies to players]
+
+	cout << endl;
+
+	for (int i = 0; i < numberOfPlayers; i++) {
+		players[i].setAvailableArmies(14);
+		players[i].setAvailableCities(3);
+		players[i].placeNewArmies(3, m.getStartingCountry());
+	}
+
+	if (numberOfPlayers == 2) {
+		Player npc = Player();
+		npc.setAvailableArmies(10);
+		int selectCountry = 0;
+		for (int i = 0; i < npc.getAvailableArmies(); i++) {
+			cout << "Enter countryID to place non-player army: ";
+			cin >> selectCountry;
+
+			while (selectCountry > m.getCountries().size() || selectCountry < 1) {
+				cout << "Invalid Country ID. Try again: ";
+				cin >> selectCountry;
+			}
+			npc.placeNewArmies(1, m.giveMeCountry(selectCountry)); // PROBLEM
+		}
+	}
 
 	m.showEverything();
+	cout << endl;
 
+	for (int i = 0; i < numberOfPlayers; i++) { // Display and verify initial army placement
+		cout << "Player " << players[i].getPlayerID() << " has " << players[i].getAvailableArmies() << ", " << players[i].getAvailableCities() << " and placed 3 at country 1" << endl;
+	}
 
+	//[Requirement 3: Give coins to players (done above at line 54 or 160)]
+
+	//[Requirement 4: Bidding System]
+
+	// Step 1: Prompt each player to enter their bidding coins and their birthdate in the form of YYYYMMDD
+	for (int i = 0; i < numberOfPlayers; i++) {
+		cin.clear(); //removing bad values from cin.
+		cin.ignore();
+		players[i].setBid();
+		players[i].setBirthday();
+	}
+
+	// Create vectors and enter their values to be compared after. The appropriate values match with the appropriate player index
+	vector<int> bids(numberOfPlayers);
+	vector<int> dates(numberOfPlayers);
+	for (int i = 0; i < numberOfPlayers; i++) {
+		bids[i] = players[i].getBid().getBidAmount();
+		dates[i] = players[i].getBirthday();
+	}
+	Bid calculator = Bid();
+	int maxIndex = calculator.calculateBid(bids);
+	// If no maximum bidding cost was found, which may happen often, the players' dates are compared.
+	// The younger player (meaning the one with the biggest integer date) will start first
+	if (maxIndex == -1)
+		maxIndex = calculator.calculateDate(dates);
+
+	cout << "The winner of the bid is Player " << maxIndex + 1 << endl;
+	cout << "\n" << endl;
 	
 	//:::::::::::::::::::::::::::::::::::PART 3::::::::::::::::::::::::::::::::::::::::::::::
 	cout << "[PART 3: MAIN GAME LOOP]\n" << endl;
 	
-	//UNTIL PART 2 GETS DONE, we assume starting player is player 1 [aka players[0]]
-	int startingPlayer = 0; 
+	//setting the first player to the bid winner
+	int startingPlayer = maxIndex; 
 
 	int currentPlayer = startingPlayer; //Makes it so that starting player is the first "current player"
 	int numberOfTurns; //At what turn the game ends
@@ -257,7 +314,6 @@ int main()
 			// After a player has made a valid card choice and the card has been pulled from card space,
 			// a new card from the deck is drawn and placed again in card space (at the right-most space)
 			deck.draw();
-			cout << "CARD SPACE AFTER DRAW()" << endl;
 			deck.printDeck();
 
 
@@ -272,5 +328,3 @@ int main()
 
 
 }
-
-*/
