@@ -9,6 +9,8 @@
 using namespace std;
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graphviz.hpp>
+#include <boost/graph/depth_first_search.hpp>
+#include <boost/graph/connected_components.hpp>
 using namespace boost;
 
 //Hard code for the size, fixing later
@@ -51,126 +53,143 @@ vector<string> Map::split(string _stringToBeSplit, string _delimeter)
 Graph Map::ReadMap(string f)
 {
 	bool hasStarter = false; //a map is invalid if it has no starting point
+	
 
-	std::ifstream infile;
-	infile.open("./Maps/" + f + ".txt");
-	std::string str;
+	while (1){
+		std::ifstream infile;
+		infile.open("./Maps/" + f + ".txt");
+		std::string str;
 
-	if (!infile) {
-		cout << "That file is not valid.\n";
-	}
-
-	vector<string> temp;
-
-	while (std::getline(infile, str)) {
-
-		std::string line; //the line we grabbed
-
-		line = str;
-
-		int* countryNumber;
-		int* continentNumber;
-		int* connectingContinent;
-		bool* starter = false;
-		bool* connectsAcrossSea = false;
-
-		countryNumber = new int;
-		continentNumber = new int;
-		starter = new bool(false);
-		connectingContinent = new int;
-		connectsAcrossSea = new bool;
-
-
-		std::string allAdjacent;
-
-		//grabs first number (country number)
-		std::size_t pos = line.find(":");
-		std::istringstream iss(line.substr(0, pos));
-		iss >> *countryNumber;
-		if (*countryNumber == -1) { 
-			cout << "Found a territory with no number. Map not created." << endl;
-			return NULL;
-		}
-		//check if that's the starting country. If the find returns npos, that would mean nothing was found.
-		if (line.find("S") != std::string::npos) {
-			//cout << *countryNumber << " is starter" << endl;
-			hasStarter = true;
-			*starter = true;
-			startingCountry = countryNumber; //stores this value
-		}
-		//check if the country connects to a different continent. If the find returns npos, that would mean nothing was found.
-		if (line.find("C") != std::string::npos) {
-			std::size_t posC = line.find("C");
-			std::istringstream issC(line.substr(posC + 1, posC+2));
-			issC >> *connectingContinent;
-			*connectsAcrossSea = true;
-			issC.clear();
-		}
-		iss.clear();
-
-		//grab the continent number
-		std::size_t pos2 = line.find("-");
-		std::istringstream iss2(line.substr(pos+1, pos2));
-		iss2 >> *continentNumber;
-		if (*continentNumber == -1) { //check if there is a map without a continent.
-			cout << "Found a territory with no continent. Map not created." << endl;
-			return NULL;
-		}
-		iss2.clear();
-		
-		//grab adjacencies
-		std::istringstream iss3(line.substr(pos2 + 1));
-		iss3 >> allAdjacent;
-		temp = split(allAdjacent, ",");
-
-		if (temp.size() == 0) { //make sure there is no country with no adjacencies.
-			cout << "Found a country with no adjacencies. This is invalid. Map not created." << endl;
-			return NULL;
+		if (!infile) {
+			cout << "That file is not valid.\n";
 		}
 
-		//store all adjacencies in map
-		for (int i = 0; i < temp.size(); i++) {
-			
-			int box;
-			std::istringstream intvertex(temp.at(i));
-			intvertex >> box;
-			try {
-				add_edge(*countryNumber, box, GameMap);
-			}
-			catch (const std::exception&) {
-				cout << "Invalid country identifier. Map not created" << endl; //this would happen if a country has no identifier
+		vector<string> temp;
+
+		while (std::getline(infile, str)) {
+
+			std::string line; //the line we grabbed
+
+			line = str;
+
+			int* countryNumber;
+			int* continentNumber;
+			int* connectingContinent;
+			bool* starter = false;
+			bool* connectsAcrossSea = false;
+
+			countryNumber = new int;
+			continentNumber = new int;
+			starter = new bool(false);
+			connectingContinent = new int;
+			connectsAcrossSea = new bool;
+
+
+			std::string allAdjacent;
+
+			//grabs first number (country number)
+			std::size_t pos = line.find(":");
+			std::istringstream iss(line.substr(0, pos));
+			iss >> *countryNumber;
+			if (*countryNumber == -1) {
+				cout << "Found a territory with no number. Map not created." << endl;
 				return NULL;
 			}
+			//check if that's the starting country. If the find returns npos, that would mean nothing was found.
+			if (line.find("S") != std::string::npos) {
+				//cout << *countryNumber << " is starter" << endl;
+				hasStarter = true;
+				*starter = true;
+				startingCountry = countryNumber; //stores this value
+			}
+			//check if the country connects to a different continent. If the find returns npos, that would mean nothing was found.
+			if (line.find("C") != std::string::npos) {
+				std::size_t posC = line.find("C");
+				std::istringstream issC(line.substr(posC + 1, posC + 2));
+				issC >> *connectingContinent;
+				*connectsAcrossSea = true;
+				issC.clear();
+			}
+			iss.clear();
+
+			//grab the continent number
+			std::size_t pos2 = line.find("-");
+			std::istringstream iss2(line.substr(pos + 1, pos2));
+			iss2 >> *continentNumber;
+			if (*continentNumber == -1) { //check if there is a map without a continent.
+				cout << "Found a territory with no continent. Map not created." << endl;
+				return NULL;
+			}
+			iss2.clear();
+
+			//grab adjacencies
+			std::istringstream iss3(line.substr(pos2 + 1));
+			iss3 >> allAdjacent;
+			temp = split(allAdjacent, ",");
+
+			if (temp.size() == 0) { //make sure there is no country with no adjacencies.
+				cout << "Found a country with no adjacencies. This is invalid. Map not created." << endl;
+				return NULL;
+			}
+
+			//store all adjacencies in map
+			for (int i = 0; i < temp.size(); i++) {
+
+				int box;
+				std::istringstream intvertex(temp.at(i));
+				intvertex >> box;
+				try {
+					add_edge(*countryNumber, box, GameMap);
+				}
+				catch (const std::exception&) {
+					cout << "Invalid country identifier. Map not created" << endl; //this would happen if a country has no identifier
+					return NULL;
+				}
+			}
+
+			//store continent adjacencies in subgraph, if continents were found to be connected
+			if (*connectsAcrossSea == true) {
+				add_edge(*continentNumber, *connectingContinent, ContinentMap);
+			}
+
+			//create a country, store it in the vector of countries
+			Country c = Country(countryNumber, continentNumber, starter);
+			// cout << "Pushed Ctry " << *countryNumber << " ctnt " << *continentNumber << "Starter: " << *starter << " to map." << endl; //uncomment to see what goes in map
+			mappedCountries.push_back(c);
+
+			iss3.clear();
 		}
 
-		//store continent adjacencies in subgraph, if continents were found to be connected
-		if (*connectsAcrossSea == true) {
-			add_edge(*continentNumber, *connectingContinent, ContinentMap);
+		infile.close();
+		//check if the graph is connected
+		bool connected = false;
+		std::vector<int> component(num_vertices(GameMap));
+		int connectedComponents = connected_components(GameMap, &component[0]);
+
+		if (connectedComponents == 2) {
+			connected = true;
 		}
 
-		//create a country, store it in the vector of countries
-		Country c = Country(countryNumber, continentNumber, starter);
-		// cout << "Pushed Ctry " << *countryNumber << " ctnt " << *continentNumber << "Starter: " << *starter << " to map." << endl; //uncomment to see what goes in map
-		mappedCountries.push_back(c);
-		
-		iss3.clear();
+		if (hasStarter && connected) { //checks if the map also has a starting point. Won't create a map without one.
+			//output the map
+			cout << "This is your current game map!" << endl;
+			write_graphviz(cout, GameMap);
+			//output continent subgraph
+			cout << "\nThis is continent subgraph!" << endl;
+			write_graphviz(cout, ContinentMap);
+			return GameMap;
+		}
+		else if (!connected) {
+			cout << "This map is not connected. Map not created." << endl;
+			cout << "Select the Map to load (Proper format is M#)" << endl;
+			getline(cin, f);
+		}
+		else {
+			cout << "This map has no starting point, or is otherwise completely invalid. Map not created." << endl;
+			cout << "Select the Map to load (Proper format is M#)" << endl;
+			getline(cin, f);
+		}
 	}
-
-	infile.close();
-	if (hasStarter == true) { //checks if the map also has a starting point. Won't create a map without one.
-		//output the map
-		cout << "This is your current game map!" << endl;
-		write_graphviz(cout, GameMap);
-		//output continent subgraph
-		cout << "\nThis is continent subgraph!" << endl;
-		write_graphviz(cout, ContinentMap);
-		return GameMap;
-	}
-	else {
-		cout << "This map has no starting point, or is otherwise completely invalid. Map not created." << endl;
-		return NULL;
-	}
-		
 }
 
 
