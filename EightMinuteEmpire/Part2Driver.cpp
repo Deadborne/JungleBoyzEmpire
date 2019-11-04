@@ -125,7 +125,7 @@ int main()
 				cout << "Invalid Country ID. Try again: ";
 				cin >> selectCountry;
 			}
-			npc.placeNewArmies(1, m.giveMeCountry(selectCountry));
+			npc.placeNewArmies(1, m.giveMeCountry(selectCountry)); // PROBLEM
 		}
 	}
 
