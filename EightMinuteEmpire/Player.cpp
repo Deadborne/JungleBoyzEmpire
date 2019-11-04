@@ -7,6 +7,13 @@
 
 using namespace std;
 
+Player::Player() {
+	availableArmies = new int(11);
+	playerBid = 0;
+	continentsOwned = 0;
+	countriesOwned = 0;
+	hand = 0;
+}
 
 //----Mutators and Accessors----//
 
@@ -95,17 +102,18 @@ void Player::placeNewArmies(int numArmies, Country& country) {
 	//if ((country.isStartingCountry())||(hasCityIn(country)  == true)){}
 	
 	//Check army availability. Can't place an army if theyre all already deployed
-
+		
 	if ((*availableArmies - numArmies) >= 0) {
 		vector<int*> armies = country.getArmiesPerPlayer();
 
 		int *extraArmies;
 		extraArmies = new int(numArmies);
-
+		*availableArmies -= numArmies;
 		//Change armies in player's slot
-		*armies.at((*playerID) /*- 1*/) += *extraArmies;
+		*armies.at((*playerID - 1) /*- 1*/) += *extraArmies;
 
 		//Push to country object
+
 		country.setArmiesPerPlayer(armies);
 
 		delete extraArmies;

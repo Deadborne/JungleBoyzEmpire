@@ -41,7 +41,7 @@ public:
 	std::vector<int> getArmySpawnLocations(Map m);
 
 
-	//Player();
+	Player();
 	
 	//--- Bidding --- //
 
