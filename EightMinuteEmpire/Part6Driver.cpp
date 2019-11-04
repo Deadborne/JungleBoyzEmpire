@@ -27,7 +27,7 @@ int main()
 	cout << "		| __  |     |  |  |__   |				" << endl;
 	cout << "		| __ -|  |  |_   _|   __|				" << endl;
 	cout << "		|_____|_____| |_| |_____|				" << endl;
-	cout << "		 _____ _____ _____ _____ _____ _____	" << endl; 
+	cout << "		 _____ _____ _____ _____ _____ _____	" << endl;
 	cout << "		|   __|     |  _  |     | __  |   __|	" << endl;
 	cout << "		|   __| | | |   __|-   -|    -|   __|	" << endl;
 	cout << "		|_____|_|_|_|__|  |_____|__|__|_____|	" << endl;
@@ -191,12 +191,12 @@ int main()
 
 	cout << "The winner of the bid is Player " << maxIndex + 1 << endl;
 	cout << "\n" << endl;
-	
+
 	//:::::::::::::::::::::::::::::::::::PART 3::::::::::::::::::::::::::::::::::::::::::::::
 	cout << "[PART 3: MAIN GAME LOOP]\n" << endl;
-	
+
 	//setting the first player to the bid winner
-	int startingPlayer = maxIndex; 
+	int startingPlayer = maxIndex;
 
 	int currentPlayer = startingPlayer; //Makes it so that starting player is the first "current player"
 	int numberOfTurns; //At what turn the game ends
@@ -240,9 +240,9 @@ int main()
 				cout << "2: See available cards again." << endl;
 				cout << "3: See my hand." << endl;
 				cout << "4: Pick a card." << endl;
-				cout << "You are Player: " << currentPlayer+1 << endl; //tracing
+				cout << "You are Player: " << currentPlayer + 1 << endl; //tracing
 				cin >> choice;
-			
+
 				if (choice == 1) //display the map
 					m.showEverything();
 				else if (choice == 2) { //show what cards they can pick
@@ -269,7 +269,7 @@ int main()
 							v.push_back(chosenCard);
 
 							players[currentPlayer].setHand(v);
-							deck.removeCard(cardChoice); 
+							deck.removeCard(cardChoice);
 							break;
 						}
 						else if (cardChoice == 2 || 3) {
@@ -284,7 +284,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								deck.removeCard(cardChoice); 
+								deck.removeCard(cardChoice);
 								break;
 							}
 						}
@@ -299,7 +299,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								deck.removeCard(cardChoice); 
+								deck.removeCard(cardChoice);
 								break;
 							}
 						}
@@ -314,7 +314,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								deck.removeCard(cardChoice); 
+								deck.removeCard(cardChoice);
 								break;
 							}
 						}
@@ -351,6 +351,34 @@ int main()
 
 
 	}
+
+
+	//THIS IS OUTSIDE OF THE MAIN GAME LOOP. THIS IS WHERE WE WILL BE CALCULATING SCORES FOR RESPECTIVE PLAYERS
+
+	//Player scores		i0 == p1's score
+	//					i1 == p2's score
+	//					i4 == p5's score
+	//					in ==p (n+1)'s score
+	cout << "\nProof of Concept\n";
+	cout << players.at(2).isCountryOwner(m.getCountries().at(2));
+
+
+
+
+
+	//for each player, we need to calculate a score
+	//for (int p = 0; p < players.size(); p++) {
+
+
+
+
+		//cout << "Player " << p + 1 << " owns "<< players.at(p).getCountriesOwned(m).size() << " countries\n";
+
+		//cout << "Player " << p + 1 << " owns " << players.at(p).getContinentsOwned(m).size() << " continents\n";
+
+		//cout << "Player " << p + 1 << " owns " << players.at(p).PointsFromCards() << " points from cards\n";
+
+	//}
 
 
 }*/

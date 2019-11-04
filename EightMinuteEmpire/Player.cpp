@@ -317,13 +317,29 @@ bool Player::isCountryOwner(Country& country) {
 	
 	vector<int*> armies = country.getArmiesPerPlayer();
 
+	cout << endl;
+	country.printArmies();
+	cout << endl;
+
+	cout << "Max element " << **max_element(armies.begin(), armies.end()) << endl;
+
+
 	int indexOfMax = std::distance(armies.begin(), max_element(armies.begin(), armies.end()));
 
+	cout << "Index of max element at " << country.getCountryId() << " is: " << indexOfMax << endl;
+
 	if (find(armies.begin() + indexOfMax + 1, armies.end(), *max_element(armies.begin(), armies.end())) != armies.end()) {
+		cout << "You fucked uo\n";
 		return false;
 	}
-	else if (indexOfMax == *playerID - 1)	//Is this playerID shit correct??
-		return true;
+	else if (indexOfMax == *playerID - 1) {	//Is this playerID shit correct??
+		cout << "You else fucked\n";
+			return true;
+	}
+	else {
+		cout << "Yeet so bad\n";
+		return false;
+	}
 }
 
 vector<Country> Player::getCountriesOwned(Map m) {
