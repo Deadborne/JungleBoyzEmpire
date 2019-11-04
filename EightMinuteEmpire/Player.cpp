@@ -321,7 +321,6 @@ bool Player::isCountryOwner(Country& country) {
 	country.printArmies();
 	cout << endl;
 
-
 	int maxArmies = 0;
 	int maxArmiesIndex = 0;
 	maxArmies = *armies[0];
@@ -340,19 +339,36 @@ bool Player::isCountryOwner(Country& country) {
 	//int indexOfMax = std::distance(armies.begin(), max_element(armies.begin(), armies.end()));
 
 	cout << "Index of max element at " << country.getCountryId() << " is: " << maxArmiesIndex << endl;
+	int dupe = 0;
+	//Count duplicates
+	for (int i = 0; i < armies.size(); i++) {
+		if (*armies.at(i) == maxArmies)
+			dupe++;
+	}
 
-	if (find(armies.begin() + maxArmiesIndex + 1, armies.end(), *max_element(armies.begin(), armies.end())) != armies.end()) {
-		cout << "You fucked uo\n";
+	if (dupe > 1) //duplicates present --> nobody owns it
 		return false;
-	}
-	else if (maxArmiesIndex == *playerID - 1) {	//Is this playerID shit correct??
-		cout << "You else fucked\n";
-			return true;
-	}
-	else {
-		cout << "Yeet so bad\n";
+	else if (maxArmiesIndex == *playerID) //check that the max is at the same index as our current player.
+		return true;
+	else
 		return false;
-	}
+		
+		
+
+
+	//if we have duplicates
+	//if (find(armies.begin() + maxArmiesIndex + 1, armies.end(), maxArmies) != armies.end()) {
+	//	cout << "You fucked uo\n";
+	//	return false;
+	//}
+	//else if (maxArmiesIndex == *playerID - 1) {	//Is this playerID shit correct??
+	//	cout << "You else fucked\n";
+	//		return true;
+	//}
+	//else {
+	//	cout << "Yeet so bad\n";
+	//	return false;
+	//}
 }
 
 vector<Country> Player::getCountriesOwned(Map m) {
