@@ -17,7 +17,4 @@ public:
 private:
 	int* _bidAmount;
 	int* birthdate; // YYYYMMDD
-
-
-
 };

@@ -89,14 +89,8 @@ public:
 	bool hasCityIn(Country& country);
 	vector<int> armyLocations(Map m);
 
-	void setBid();
+	void setPlayerBid(int amount);
 	Bid getBid();
-
-	
-
-
-
-
 };
 
 
