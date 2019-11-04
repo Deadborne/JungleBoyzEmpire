@@ -7,13 +7,13 @@
 #include <stdlib.h>
 using namespace std;
 
-Deck::Deck() : deck(42), space(6), players(5) {
+Deck::Deck() : deck(38), space(6), players(5) {
 	initializeDeck(5),
 	shuffleDeck(),
 	initializeSpace();
 };
 
-Deck::Deck(int num) : deck(42), space(6), players(num) {
+Deck::Deck(int num) : deck(38), space(6), players(num) {
 	initializeDeck(num),
 	shuffleDeck(),
 	initializeSpace();
@@ -65,10 +65,10 @@ void Deck::initializeDeck(int players) {
 
 
 	if (players == 5) { // only insert these cards if the amount of players is 5
-		deck[38] = Card("anvil", 2, "move", 4, "", 0, "", true);
-		deck[39] = Card("shard", 1, "place", 2, "", 0, "", true);
-		deck[40] = Card("carrot", 1, "place", 4, "move", 2, "or", true);
-		deck[41] = Card("coal", 1, "moveOver", 2, "", 0, "", true);
+		deck.push_back(Card("anvil", 2, "move", 4, "", 0, "", true));
+		deck.push_back(Card("shard", 1, "place", 2, "", 0, "", true));
+		deck.push_back(Card("carrot", 1, "place", 4, "move", 2, "or", true));
+		deck.push_back(Card("coal", 1, "moveOver", 2, "", 0, "", true));
 	}
 	deck.shrink_to_fit();
 }
