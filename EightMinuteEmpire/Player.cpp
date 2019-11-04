@@ -59,14 +59,17 @@ void Player::printHand() {
 }
 
 //Bid functionality
-void Player::setPlayerBid(int amount) {
-	playerBid->setBid(amount);
+void Player::setBid() {
+	playerBid = new Bid();
+	playerBid->setBid(*playerID);
 	availableCoins -= *playerBid->getBidAmountPointer();
+	//cout << "Available Coins: " << availableCoins << "\n";
 }
 
 Bid Player::getBid() {
 	return *playerBid;
 }
+
 
 //----Required Functionality----//
 

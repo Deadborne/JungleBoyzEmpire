@@ -8,7 +8,6 @@
 #include "Player.h" 
 #include "Card.h"
 #include "Bid.h"
-#include <math.h>
 #include <ostream>
 #include <vector>
 using namespace std;
@@ -120,6 +119,7 @@ using namespace boost;
 //
 //}
 
+/*
 int main()
 {
 
@@ -244,51 +244,8 @@ int main()
 
 	// Step 1: Prompt each player to enter their bidding coins and their birthdate in the form of YYYYMMDD
 	for (int i = 0; i < numberOfPlayers; i++) {
-		bool validInput = false;
-		cin.clear();
-		cin.ignore();
-		while (validInput == false) {
-			cout << "Player " << i + 1 << " select bid amount between 0 and 8: ";
-			int playerBet = 0;
-			string inputValue = "0";
-
-			try {
-				getline(cin, inputValue);
-				int playerBet = stoi(inputValue);
-
-				if (playerBet >= 0 && playerBet <= 8) {
-					players[i].setPlayerBid(playerBet);
-					validInput = true;
-				}
-				else {
-					cout << "Invalid bid amount. Try again." << endl;
-				}
-			}
-			catch (std::exception e) {
-				cout << "Invalid syntax. Try again." << endl;
-			}
-		};
-	}
-
-	for (int i = 0; i < numberOfPlayers; i++) {
-		bool validInput = false;
-		while (validInput == false) {
-			cout << "Player " << i + 1 << " set birthdate in YYYYMMDD format: ";
-			string inputValue = "0";
-
-			try {
-				getline(cin, inputValue);
-				int playerDate = stoi(inputValue);
-
-				if (playerDate > 0) {
-					players[i].getBid().setDate(playerDate);
-					validInput = true;
-				}
-			}
-			catch (std::exception e) {
-				cout << "Invalid bid amount. Try again: ";
-			}
-		}
+		players[i].getBid().setBid(players[i].getPlayerID());
+		players[i].getBid().setDate(players[i].getPlayerID());
 	}
 
 	// Create vectors and enter their values to be compared after. The appropriate values match with the appropriate player index
@@ -306,5 +263,4 @@ int main()
 	if (maxIndex == -1)
 		maxIndex = calculator.calculateDate(dates);
 
-	cout << "Player " << maxIndex << "starts first!" << endl;
-}
+}*/

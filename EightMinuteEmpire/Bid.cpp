@@ -29,12 +29,48 @@ int Bid::getDate() {
 	return *birthdate;
 }
 
-void Bid::setBid(int amount) {
-	*_bidAmount = amount;
+void Bid::setBid(int playerId) {
+	bool validInput = false;
+	while (!validInput) {
+		cout << "Player " << playerId + 1 << " select bid amount between 0 and 8: \n";
+		string inputValue = "0";
+
+		try {
+			getline(cin, inputValue);
+			int playerBet = stoi(inputValue);
+
+			if (playerBet >= 0 && playerBet <= 8) {
+				_bidAmount = new int(playerBet);
+				validInput = true;
+			}
+
+		}
+		catch (exception e) {
+			cout << "Invalid bid amount. Try again: ";
+		}
+	}
 }
 
-void Bid::setDate(int date) {
-	*birthdate = date;
+void Bid::setDate(int playerId) {
+	bool validInput = false;
+	while (!validInput) {
+		cout << "Player " << playerId + 1 << " set birthdate in YYYYMMDD format: \n";
+		string inputValue = "0";
+
+		try {
+			getline(cin, inputValue);
+			int playerDate = stoi(inputValue);
+
+			if (playerDate > 0) {
+				birthdate = new int(playerDate);
+				validInput = true;
+			}
+
+		}
+		catch (exception e) {
+			cout << "Invalid bid amount. Try again: ";
+		}
+	}
 }
 
 
