@@ -51,30 +51,6 @@ void Bid::setBid(int playerId) {
 	}
 }
 
-void Bid::setBid(int playerId, int maxBid) {
-	bool validInput = false;
-	while (!validInput) {
-		cout << "Player " << playerId + 1 << " select bid amount between 0 and " << maxBid << ": \n";
-		string inputValue = "0";
-
-		try {
-			getline(cin, inputValue);
-			int playerBet = stoi(inputValue);
-
-			if (playerBet >= 0 && playerBet <= maxBid) {
-				_bidAmount = new int(playerBet);
-				validInput = true;
-			}
-
-		}
-		catch (exception e) {
-			cout << "Invalid bid amount. Try again: ";
-		}
-	}
-}
-
-
-
 void Bid::setDate(int playerId) {
 	bool validInput = false;
 	while (!validInput) {

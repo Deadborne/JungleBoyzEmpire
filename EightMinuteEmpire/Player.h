@@ -68,9 +68,6 @@ public:
 	vector<int> getContinentsOwned(Map m);
 
 
-	int PointsFromCards();
-
-
 	//----Mutators & Accessors----//
 	int getAvailableCities();
 	void setAvailableCities(int x);
@@ -97,7 +94,6 @@ public:
 	vector<int> armyLocations(Map m);
 
 	void setBid();
-	void setBid(int maxBid);
 	Bid getBid();
 
 	

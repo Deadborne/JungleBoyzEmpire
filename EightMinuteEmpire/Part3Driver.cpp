@@ -14,24 +14,9 @@ using namespace std;
 #include <boost/graph/graphviz.hpp>
 #include <boost/graph/graph_utility.hpp>
 using namespace boost;
-
+/*
 int main()
 {
-
-
-	cout << "		    __ _____ _____ _____ __    _____	" << endl;
-	cout << "		 __|  |  |  |   | |   __|  |  |   __|	" << endl;
-	cout << "		|  |  |  |  | | | |  |  |  |__|   __|	" << endl;
-	cout << "		|_____|_____|_|___|_____|_____|_____|	" << endl;
-	cout << "		 ____  _____ __ __ _____				" << endl;
-	cout << "		| __  |     |  |  |__   |				" << endl;
-	cout << "		| __ -|  |  |_   _|   __|				" << endl;
-	cout << "		|_____|_____| |_| |_____|				" << endl;
-	cout << "		 _____ _____ _____ _____ _____ _____	" << endl; 
-	cout << "		|   __|     |  _  |     | __  |   __|	" << endl;
-	cout << "		|   __| | | |   __|-   -|    -|   __|	" << endl;
-	cout << "		|_____|_|_|_|__|  |_____|__|__|_____|	" << endl;
-	cout << endl;
 
 	//:::::::::::::::::::::::::::::::::::PART 1::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -92,7 +77,7 @@ int main()
 		p.setAvailableCoins(startingCoins);
 		p.setPlayerID(i);
 
-		players.push_back(p); //inserting players
+		players.insert(players.begin(), p); //inserting players
 
 		cout << "Player " << p.getPlayerID() + 1 << " is ready, and has " << p.getAvailableCoins() << " coins!" << endl;
 	}
@@ -115,88 +100,20 @@ int main()
 
 	cout << "\n[PART 2: STARTUP PHASE]\n" << endl;
 
-	//[Requirement 1: Shuffling Deck]
-	// The shuffling already appears on the Deck Constructor. To verify, we are printing the card space. Each time we get different amount of cards.
+	//[Requirement 1: Shuffling the deck and drawing cards]
+	cout << "Displaying available cards:" << endl;
 	deck.printDeck();
 
-	//[Requirement 2: Give Armies to players]
-
-	cout << endl;
-
-	//initializing starting info.
-	for (int i = 0; i < numberOfPlayers; i++) {
-		players[i].setAvailableArmies(14);
-		players[i].setAvailableCities(3);
-		players[i].placeNewArmies(3, m.getStartingCountry());
-	}
-
-	for (int i = 0; i < numberOfPlayers; i++) { // Display and verify initial army placement
-		cout << "Player " << players[i].getPlayerID() + 1 << " starts with " << players[i].getAvailableArmies() << " armies and ";
-		cout << players[i].getAvailableCities() << " cities, and placed 3 armies at the starting region, " << m.getStartingCountry().getCountryId() << endl;
-	}
-
-	//this loop is for placing NPCs in a 2 player game.
-	if (numberOfPlayers == 2) {
-		cout << endl;
-		Player npc = Player();
-		npc.setAvailableArmies(10);
-		npc.setPlayerID(2); //NPC is effectively player 3
-		int selectCountry = 0;
-		int placingPlayer = 1; //The player who gets to choose where to place the army
-		for (int i = 0; i < npc.getAvailableArmies(); i++) {
-			m.showEverything(); //show the map so players can decide where to put NPC armies
-			cout << "Player " << placingPlayer << ", choose a region to place non-player army: ";
-			cin >> selectCountry;
-			while (selectCountry > m.getCountries().size() || selectCountry < 1) {
-				cout << "Invalid Country ID. Try again: ";
-				cin >> selectCountry;
-			}
-			npc.placeNewArmies(1, m.giveMeCountry(selectCountry));
-			//It's the next player's turn to place NPC armies
-			if (placingPlayer == 1)
-				placingPlayer = 2;
-			else
-				placingPlayer = 1;
-		}
-	}
 
 	m.showEverything();
-	cout << endl;
 
-	//[Requirement 3: Give coins to players - we did this in part 1. Sorry!
 
-	//[Requirement 4: Bidding System]
-
-	// Step 1: Prompt each player to enter their bidding coins and their birthdate in the form of YYYYMMDD
-	for (int i = 0; i < numberOfPlayers; i++) {
-		cin.clear(); //removing bad values from cin.
-		cin.ignore();
-		players[i].setBid(startingCoins);
-		players[i].setBirthday();
-	}
-
-	// Create vectors and enter their values to be compared after. The appropriate values match with the appropriate player index
-	vector<int> bids(numberOfPlayers);
-	vector<int> dates(numberOfPlayers);
-	for (int i = 0; i < numberOfPlayers; i++) {
-		bids[i] = players[i].getBid().getBidAmount();
-		dates[i] = players[i].getBirthday();
-	}
-	Bid calculator = Bid();
-	int maxIndex = calculator.calculateBid(bids);
-	// If no maximum bidding cost was found, which may happen often, the players' dates are compared.
-	// The younger player (meaning the one with the biggest integer date) will start first
-	if (maxIndex == -1)
-		maxIndex = calculator.calculateDate(dates);
-
-	cout << "The winner of the bid is Player " << maxIndex + 1 << endl;
-	cout << "\n" << endl;
 	
 	//:::::::::::::::::::::::::::::::::::PART 3::::::::::::::::::::::::::::::::::::::::::::::
 	cout << "[PART 3: MAIN GAME LOOP]\n" << endl;
 	
-	//setting the first player to the bid winner
-	int startingPlayer = maxIndex; 
+	//UNTIL PART 2 GETS DONE, we assume starting player is player 1 [aka players[0]]
+	int startingPlayer = 0; 
 
 	int currentPlayer = startingPlayer; //Makes it so that starting player is the first "current player"
 	int numberOfTurns; //At what turn the game ends
@@ -269,7 +186,7 @@ int main()
 							v.push_back(chosenCard);
 
 							players[currentPlayer].setHand(v);
-							deck.removeCard(cardChoice); 
+							deck.removeCard(cardChoice); //we'll be able to do this after step 5 is coded
 							break;
 						}
 						else if (cardChoice == 2 || 3) {
@@ -284,7 +201,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								deck.removeCard(cardChoice); 
+								deck.removeCard(cardChoice); //we'll be able to do this after step 5 is coded
 								break;
 							}
 						}
@@ -299,7 +216,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								deck.removeCard(cardChoice); 
+								deck.removeCard(cardChoice); //we'll be able to do this after step 5 is coded
 								break;
 							}
 						}
@@ -314,7 +231,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								deck.removeCard(cardChoice); 
+								deck.removeCard(cardChoice); //we'll be able to do this after step 5 is coded
 								break;
 							}
 						}
@@ -340,6 +257,7 @@ int main()
 			// After a player has made a valid card choice and the card has been pulled from card space,
 			// a new card from the deck is drawn and placed again in card space (at the right-most space)
 			deck.draw();
+			cout << "CARD SPACE AFTER DRAW()" << endl;
 			deck.printDeck();
 
 
@@ -354,3 +272,5 @@ int main()
 
 
 }
+
+*/
