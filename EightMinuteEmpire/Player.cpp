@@ -321,18 +321,31 @@ bool Player::isCountryOwner(Country& country) {
 	country.printArmies();
 	cout << endl;
 
-	cout << "Max element " << **max_element(armies.begin(), armies.end()) << endl;
 
+	int maxArmies = 0;
+	int maxArmiesIndex = 0;
+	maxArmies = *armies[0];
 
-	int indexOfMax = std::distance(armies.begin(), max_element(armies.begin(), armies.end()));
+	for (int i = 0; i < armies.size(); i++) {
+		for (int j = i + 1; j < armies.size(); j++) {
+			if (*armies[j] > maxArmies) {
+				maxArmies = *armies[j];
+				maxArmiesIndex = j;
+			}
+		}
+	}
 
-	cout << "Index of max element at " << country.getCountryId() << " is: " << indexOfMax << endl;
+	cout << "Max element " << maxArmies << endl;
 
-	if (find(armies.begin() + indexOfMax + 1, armies.end(), *max_element(armies.begin(), armies.end())) != armies.end()) {
+	//int indexOfMax = std::distance(armies.begin(), max_element(armies.begin(), armies.end()));
+
+	cout << "Index of max element at " << country.getCountryId() << " is: " << maxArmiesIndex << endl;
+
+	if (find(armies.begin() + maxArmiesIndex + 1, armies.end(), *max_element(armies.begin(), armies.end())) != armies.end()) {
 		cout << "You fucked uo\n";
 		return false;
 	}
-	else if (indexOfMax == *playerID - 1) {	//Is this playerID shit correct??
+	else if (maxArmiesIndex == *playerID - 1) {	//Is this playerID shit correct??
 		cout << "You else fucked\n";
 			return true;
 	}
