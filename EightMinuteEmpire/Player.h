@@ -24,7 +24,6 @@ private:
 
 	//The following vectors are dummies for future use
 	vector<int>* continentsOwned;
-	vector<Country>* countriesOwned;
 
 	int *availableArmies;					//Armies in player's bank [should be 14 at game start]
 	int *availableCities;					//Cities in player's bank [should be 3 at game start]

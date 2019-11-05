@@ -309,7 +309,6 @@ Player::~Player() {
 	delete[] availableArmies;
 	delete[] playerBid;
 	delete[] continentsOwned;
-	delete[] countriesOwned;
 	delete hand;
 }
 
@@ -359,10 +358,11 @@ bool Player::isCountryOwner(Country& country) {
 
 vector<Country> Player::getCountriesOwned(Map m) {
 	
+	vector<Country> ownedCountries;
+
 	for (int i = 0; i < m.getCountries().size(); i++) {
 		if (isCountryOwner(m.getCountries().at(i))) {
-			cout << "Reach";
-			countriesOwned->push_back(m.getCountries().at(i));
+			ownedCountries.push_back(m.getCountries().at(i));
 		}
 	}
 	
@@ -378,8 +378,7 @@ vector<Country> Player::getCountriesOwned(Map m) {
 	//	}
 	//}
 
-	return *countriesOwned;
-	
+	return ownedCountries;
 }
 
 

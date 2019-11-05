@@ -54,6 +54,7 @@ int main()
 	cout << "Player 1 ownership: " << player1.isCountryOwner(m.getCountries().at(10)) << endl;
 
 	
+
 	cout << "Player 2 owns the following countries";
 	for (int i = 0; i < player2.getCountriesOwned(m).size(); i++) {
 		cout << player2.getCountriesOwned(m).at(i).getCountryId() << " ";
