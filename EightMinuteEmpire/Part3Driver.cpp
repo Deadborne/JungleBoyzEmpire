@@ -352,5 +352,64 @@ int main()
 
 	}
 
+	//:::::::::::::::::::::::::::::::::::PART 6::::::::::::::::::::::::::::::::::::::::::::::
+
+	vector<int> scores;
+
+	cout << "\n\n========================FINAL SCORES========================\n\n";
+	for (int i = 0; i < players.size(); i++) {
+		cout << "Player " << i+1 << ": " << players.at(i).computeScore(m) << endl;
+		scores.push_back(players.at(i).computeScore(m));
+		//i0 = p1 score, i1 = p2 score, i2 = p3 score
+	}
+
+
+	int topScore = *max_element(scores.begin(), scores.end());
+
+	int topIndex = std::distance(scores.begin(), max_element(scores.begin(), scores.end()));
+
+
+	//Place all the tie members in another vector and compare just them
+
+	vector<Player> tied;
+	for (int i = 0; i < scores.size(); i++) {
+		if (scores.at(i) == topScore) {
+			//push the player ID to a new 
+			tied.push_back(players.at(i));
+			//tied should be a vector of players for whom the final score is equivalent
+
+		}
+		else {
+			//then the player at topIndex is the winner
+			cout << "\n\n\nCongrats! Player " << players.at(topIndex).getPlayerID() + 1 << " is the winner\n";
+		}
+	}
+
+
+	if (tied.size() > 1) {
+	
+		int coinsMax = 0;
+		Player coinWinner;
+		//Process the ties.. For each tied player
+		for (int i = 0; i < tied.size(); i++) {
+			//Get most coins left
+			if (tied.at(i).getAvailableCoins() > coinsMax) {
+				coinsMax = tied.at(i).getAvailableCoins();
+				coinWinner = tied.at(i);
+			}
+				
+		}
+		
+		cout << "\n\n\nCongrats! Player " << coinWinner.getPlayerID() + 1 << " is the winner\n";
+
+	}
+	
+
+
+
+
+
+	
+
 
 }*/
