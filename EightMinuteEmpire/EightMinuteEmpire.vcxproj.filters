@@ -96,6 +96,9 @@
     <ClInclude Include="Bid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -170,7 +173,10 @@
     <ClCompile Include="Part6Driver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BullSHitTests.cpp">
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Part6Supplemental.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

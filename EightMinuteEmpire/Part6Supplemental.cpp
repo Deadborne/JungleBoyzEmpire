@@ -13,6 +13,7 @@ using namespace std;
 #include <boost/graph/graph_utility.hpp>
 using namespace boost;
 
+
 int main()
 {
 	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
@@ -27,11 +28,13 @@ int main()
 	Graph GameMap = (m.ReadMap(in));
 	m.showEverything();
 
-	cout << "\nContinents:\n";
+	cout << "\nContinents that exist:\n";
 	//CONTINENT PARSER WORKS
 	for (int i = 0; i < m.getContinents().size(); i++) {
-		cout << m.getContinents().at(i);
+		cout << m.getContinents().at(i) << " ";
 	}
+
+	cout << endl;
 
 	Player player1 = Player();
 	Player player2 = Player();
@@ -49,11 +52,11 @@ int main()
 	cout << endl;
 	m.showEverything();
 
-	cout << "Player 2 ownership: " << player2.isCountryOwner(m.getCountries().at(9)) << endl;
-	cout << "Player 2 ownership: " << player2.isCountryOwner(m.getCountries().at(10)) << endl;
-	cout << "Player 1 ownership: " << player1.isCountryOwner(m.getCountries().at(10)) << endl;
+	cout << "Player 2 ownership of c9: " << player2.isCountryOwner(m.getCountries().at(9)) << endl;
+	cout << "Player 2 ownership of c10: " << player2.isCountryOwner(m.getCountries().at(10)) << endl;
+	cout << "Player 1 ownership of c10: " << player1.isCountryOwner(m.getCountries().at(10)) << endl;
 
-	cout << "Player 2 owns the following countries\n";
+	cout << "Player 2 owns the following countries:\n";
 	for (int i = 0; i < player2.getCountriesOwned(m).size(); i++) {
 		cout << player2.getCountriesOwned(m).at(i).getCountryId() << " ";
 	}
@@ -62,14 +65,9 @@ int main()
 	player2.placeNewArmies(1, m.getCountries().at(22));
 	player2.placeNewArmies(1, m.getCountries().at(23));
 	player2.placeNewArmies(1, m.getCountries().at(24));
-	//player2.placeNewArmies(1, m.getCountries().at(25)); //wont work for some reason
-	
+
 	m.showEverything();
 
-	cout << "Player 2 has dominion over " << player2.getContinentsOwned(m).size() << "countries...\n";
-
-
-
-
+	cout << "\n\nPlayer 2 has dominion over " << player2.getContinentsOwned(m).size() << " countries...\n";
 
 }

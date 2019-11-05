@@ -23,7 +23,7 @@ private:
 	Hand *hand;
 
 	//The following vectors are dummies for future use
-	vector<int>* continentsOwned;
+	//vector<int>* continentsOwned;
 
 	int *availableArmies;					//Armies in player's bank [should be 14 at game start]
 	int *availableCities;					//Cities in player's bank [should be 3 at game start]
@@ -31,6 +31,8 @@ private:
 
 
 	Bid *playerBid;
+
+	int* finalScore;
 	
 
 	
@@ -66,8 +68,9 @@ public:
 
 	vector<int> getContinentsOwned(Map m);
 
+	int pointsFromCards();
 
-	int PointsFromCards();
+	int computeScore(Map m);
 
 
 	//----Mutators & Accessors----//
@@ -94,6 +97,9 @@ public:
 
 	bool hasCityIn(Country& country);
 	vector<int> armyLocations(Map m);
+
+	int getFinalScore();
+	void setFinalScore(int x);
 
 	void setBid();
 	void setBid(int maxBid);

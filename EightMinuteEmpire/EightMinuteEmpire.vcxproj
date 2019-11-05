@@ -157,7 +157,7 @@
   <ItemGroup>
     <ClCompile Include="Bid.cpp" />
     <ClCompile Include="BidDriver.cpp" />
-    <ClCompile Include="BullSHitTests.cpp" />
+    <ClCompile Include="Part6Supplemental.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Continent.cpp" />
     <ClCompile Include="Country.cpp" />

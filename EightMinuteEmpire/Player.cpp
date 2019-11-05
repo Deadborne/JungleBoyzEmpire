@@ -63,6 +63,14 @@ void Player::setAvailableArmies(int x) {
 	availableArmies = new int(x);
 }
 
+int Player::getFinalScore() {
+	return *finalScore;
+}
+
+void Player::setFinalScore(int x) {
+	finalScore = new int(x);
+}
+
 int Player::getAvailableCoins() {
 	return *availableCoins;
 }
@@ -124,7 +132,6 @@ void Player::placeNewArmies(int numArmies, Country& country) {
 
 	//Check that the country is either the starting country or one where the player owns a city
 	//Add following validation later
-	//if ((country.isStartingCountry())||(hasCityIn(country)  == true)){}
 	
 	//Check army availability. Can't place an army if theyre all already deployed
 
@@ -308,22 +315,19 @@ vector<int> Player::armyLocations(Map m) {
 Player::~Player() {
 	delete[] availableArmies;
 	delete[] playerBid;
-	delete[] continentsOwned;
+	//delete[] continentsOwned;
 	delete hand;
 }
 
+//Check if a player is the owner of a particular country
 bool Player::isCountryOwner(Country& country) {
 	
 	vector<int*> armies = country.getArmiesPerPlayer();
 
-	/*cout << endl;
-	country.printArmies();
-	cout << endl;*/
-
 	int maxArmies = 0;
 	int maxArmiesIndex = 0;
 	maxArmies = *armies[0];
-
+	//Get max armies and index of that value
 	for (int i = 0; i < armies.size(); i++) {
 		for (int j = i + 1; j < armies.size(); j++) {
 			if (*armies[j] > maxArmies) {
@@ -332,30 +336,26 @@ bool Player::isCountryOwner(Country& country) {
 			}
 		}
 	}
-
-	//cout << "Max element " << maxArmies << endl;
-
-	//cout << "Index of max element at " << country.getCountryId() << " is: " << maxArmiesIndex << endl;
 	
 	
 	int dupe = 0;
-	//Count duplicates
+
+	//Count duplicates of max
 	for (int i = 0; i < armies.size(); i++) {
 		if (*armies.at(i) == maxArmies)
 			dupe++;
 	}
-
 	if (dupe > 1) //duplicates present --> nobody owns it
 		return false;
 	else if (maxArmiesIndex == *playerID) //check that the max is at the same index as our current player.
 		return true;
 	else {
-		cerr << "Something might have gone wrong. You might be fine, but also maybe not.../n Check isCountryOwner() in Player.cpp";
 		return false;
 	}	
 	
 }
 
+//Get all the countries our current player owns, return a vector of countries
 vector<Country> Player::getCountriesOwned(Map m) {
 	
 	vector<Country> ownedCountries;
@@ -365,31 +365,19 @@ vector<Country> Player::getCountriesOwned(Map m) {
 			ownedCountries.push_back(m.getCountries().at(i));
 		}
 	}
-	
-	////Cut the searchable arrays down from all countries to just the ones where he player has troops stationed
-	//vector<int> armyLocs = armyLocations(m);
-	//
-	//for (int i = 0; i < armyLocs.size(); i++) {
-	//	//Get the first country where the player has at least 1 army present
-	//	Country country = m.getCountries().at(armyLocs.at(i));
-
-	//	if (isCountryOwner(country)) {
-	//		countriesOwned->push_back(country);
-	//	}
-	//}
 
 	return ownedCountries;
 }
 
-
+//Using the country data, determine which countries we have, if any
 vector<int> Player::getContinentsOwned(Map m) {
 
+	vector<int> continentsOwned;
 	//For each continent that exists
 	for (int i = 0; i < m.getContinents().size(); i++) {
 		//Get # of countries in this continet
 		vector<Country> countries = m.getCountries();
-
-		int countriesInContinent;
+		int countriesInContinent = 0;
 
 		//COUNT TOTAL COUNTRIES IN A CONTINENT
 		//For every country
@@ -400,9 +388,8 @@ vector<int> Player::getContinentsOwned(Map m) {
 				countriesInContinent++;
 			}
 		}
-
 		//COUNT # COUNTRIES OWNED FROM THAT SAME CONTINENT
-		int countriesOwnedInContinent;
+		int countriesOwnedInContinent = 0;
 
 		//For each country we OWN
 		for (int k = 0; k < getCountriesOwned(m).size(); k++) {
@@ -411,31 +398,29 @@ vector<int> Player::getContinentsOwned(Map m) {
 				countriesOwnedInContinent++;
 			}
 		}
-
 		//COMPARE THE 2 VALUES
 		if (countriesInContinent == countriesOwnedInContinent) {
 			//Then add the current continent to those that we own, adding its ID to a vector.
-			continentsOwned->push_back(m.getContinents().at(i));
+			continentsOwned.push_back(m.getContinents().at(i));
 		}
 
 	}
 	
 	//The variable will have been changed in the player's data members, but this function will also return that vector for ease of use
-	return *continentsOwned;
-
+	return continentsOwned;
 }
-
-int Player::PointsFromCards() {
+//Calulate all the points from the goods we have collected via cards
+int Player::pointsFromCards() {
 	//Get the player's hand
 	vector<Card> hand = getHand();
-	
+
 	//Shitty way to store the number of goods
-	int carrots;
-	int anvils;
-	int shards;
-	int coals;
-	int trees;
-	int wildcards;
+	int carrots = 0;
+	int anvils = 0;
+	int shards = 0;
+	int coals = 0;
+	int trees = 0;
+	int wildcards = 0;
 
 
 	//Loop through the hand and count goods of each type
@@ -452,21 +437,21 @@ int Player::PointsFromCards() {
 		else if (hand.at(i).getGood() == "carrot")
 			carrots += hand.at(i).getGoodAmount();
 		else if (hand.at(i).getGood() == "wildcard")
-			wildcards+= hand.at(i).getGoodAmount();
+			wildcards += hand.at(i).getGoodAmount();
 	}
-	
+
 	//Display current count for other cards, so as to make the right decision
 	cout << "You currently have:"
-		<< "\n\t- "<< trees <<" trees"
-		<< "\n\t- "<< anvils <<" anvils"
-		<< "\n\t- "<< shards <<" shards"
-		<< "\n\t- "<< coals <<" coals"
-		<< "\n\t- "<< carrots <<" carrots"
+		<< "\n\t- " << trees << " trees"
+		<< "\n\t- " << anvils << " anvils"
+		<< "\n\t- " << shards << " shards"
+		<< "\n\t- " << coals << " coals"
+		<< "\n\t- " << carrots << " carrots"
 		;
 
 	//If we have have any wildcards to handle
 	if (wildcards > 0) {
-		cout << "You also have " << wildcards << " wildcards\n";
+		cout << "\n\nYou also have " << wildcards << " wildcards\n";
 		cout << "As such, you may assign it to be either:"
 			<< "\n\t- tree"
 			<< "\n\t- anvil"
@@ -477,7 +462,7 @@ int Player::PointsFromCards() {
 		//Assign values to each of our wild cards
 		for (int j = 1; j <= wildcards; j++) {
 			string chosenGood;
-			cout << "Choose a value for wildcard " << j << endl;
+			cout << "\n\nChoose a value for wildcard " << j << endl;
 			cin >> chosenGood;
 
 			//Add the chosen value
@@ -492,59 +477,88 @@ int Player::PointsFromCards() {
 			else if (chosenGood == "carrot")
 				carrots++;
 			else
-				cout << "Good type unrecognized. Please enter either tree, anvil, shard, coal, or carrot.";
+				cout << "Good type unrecognized. Please enter either tree, anvil, shard, coal, or carrot.\n";
 		}
 	}
 
 	//Now assign victory Points
-	int vp;
+	int vp = 0;
 
 	//For trees:
-	switch (trees){
+	switch (trees) {
 	case 2: vp++; break;
+	case 3: vp++; break;
 	case 4: vp += 2; break;
 	case 5: vp += 3; break;
 	case 6: vp += 5; break;
-	default: break;
-	}
-
-	//For anvils
-	switch (anvils){
-	case 2: vp++; break;
-	case 4: vp += 2; break;
-	case 6: vp += 3; break;
 	case 7: vp += 5; break;
 	default: break;
 	}
 
+	//For anvils
+	switch (anvils) {
+	case 2: vp++; break;
+	case 3: vp++; break;
+	case 4: vp += 2; break;
+	case 5: vp += 2; break;
+	case 6: vp += 3; break;
+	case 7: vp += 5; break;
+	case 8: vp += 5; break;
+	default: break;
+	}
+
 	//For shards
-	switch (shards){
+	switch (shards) {
 	case 1: vp++; break;
 	case 2: vp += 2; break;
 	case 3: vp += 3; break;
 	case 4: vp += 5; break;
+	case 5: vp += 5; break;
+	case 6: vp += 5; break;
+	case 7: vp += 5; break;
+	case 8: vp += 5; break;
 	default: break;
 	}
 
 	//For coals
-	switch (coals){
+	switch (coals) {
 	case 2: vp++; break;
 	case 3: vp += 2; break;
 	case 4: vp += 3; break;
 	case 5: vp += 5; break;
+	case 6: vp += 5; break;
+	case 7: vp += 5; break;
+	case 8: vp += 5; break;
 	default: break;
 	}
 
 	//For carrots
-	switch (carrots){
+	switch (carrots) {
 	case 3: vp++; break;
+	case 4: vp++; break;
 	case 5: vp += 2; break;
+	case 6: vp += 2; break;
 	case 7: vp += 3; break;
-	case 8: vp += 5; break;
+	case 8:
+	case 9:
+	case 10:
+	case 11:
+	case 12: vp += 5; break;
 	default: break;
 	}
-	 return vp;
+
+	return vp;
 }
+
+//Compute the final score.
+int Player::computeScore(Map m) {
+
+	//Add the length of owned country vector, owned continent vector, and points from card goods
+	
+	return getCountriesOwned(m).size() + getContinentsOwned(m).size() + pointsFromCards();
+}
+
+
 
 
 
