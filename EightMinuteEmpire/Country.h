@@ -20,6 +20,7 @@ private:
 
 public:
 	Country();
+	~Country();
 	Country(int* _countryId, int* _continentId);
 	Country(int* _countryId, int* _continentId, bool* _isStart);
 	Country(int* _countryId, int* _continentId, vector<int*> _armiesPerPlayer);

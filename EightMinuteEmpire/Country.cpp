@@ -68,6 +68,10 @@ bool Country::isStartingCountry() {
 	return _isStart;
 }
 
+//----Deletion----//
+Country::~Country() {
+}
+
 
 //----Other Functionality----//
 
