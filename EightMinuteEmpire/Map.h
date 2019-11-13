@@ -13,10 +13,11 @@ class Map
 
 private:
 	int* startingCountry;
-
+	static Map* mapInstance;
+	Map();
 
 public:
-	Map();
+	
 	std::vector<std::string> split(std::string _stringToBeSplit, std::string _delimeter);
 
 	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
@@ -30,5 +31,8 @@ public:
 
 	vector<int> getContinents();
 	void setCountry(std::vector<Country> countries);
+
+	static Map* instance(); //lazy instantiation
+	static void resetInstance();
 
 };

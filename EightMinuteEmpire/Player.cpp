@@ -158,7 +158,7 @@ void Player::placeNewArmies(int numArmies, Country& country) {
 //Takes a number of armies, an origin country and a destination country. Subtracts armies from
 //the origin and places them in the destination
 void Player::moveArmies(int numArmies, Country& origin, Country& destination) {
-	Map m = Map();
+	//Map m = Map();
 
 	//Build some temporary vectors to hold armies in each country
 	vector<int*> originArmies = origin.getArmiesPerPlayer();
@@ -201,7 +201,7 @@ void Player::moveOverLand(int numArmies, Country& origin, Country& destination, 
 //Allows a player to destroy an army of some other player. Finds the armyOwner's armies in armyLocation
 //and decrements armies in that index
 void Player::destroyArmy(Country& armyLocation, Player armyOwner) {
-	Map m = Map();
+	//Map m = Map();
 
 	//temporary army vector for country's armies
 	vector<int*> armies = armyLocation.getArmiesPerPlayer();
@@ -232,7 +232,7 @@ void Player::destroyArmy(Country& armyLocation, Player armyOwner) {
 //2. They have an army deployed in the country
 //3. They don't have a city already built in that country
 void Player::buildCity(Country& cityLocation) {
-	Map m = Map();
+	//Map m = Map();
 	
 	//1
 	if (availableCities > 0) {
@@ -263,7 +263,7 @@ void Player::buildCity(Country& cityLocation) {
 
 //Not required, but lets us destroy a city in the same manner we destroy an army
 void Player::destroyCity(Country& cityLocation, Player& cityOwner) {
-	Map m = Map();
+	//Map m = Map();
 
 	vector<bool*> cities = cityLocation.getCities();
 
@@ -284,7 +284,7 @@ void Player::destroyCity(Country& cityLocation, Player& cityOwner) {
 
 //Tells us if a player has a city in some given country
 bool Player::hasCityIn(Country& country) {
-	Map m = Map();
+	//Map m = Map();
 
 	//Get the cities for that country
 	vector<bool*> cities = country.getCities();

@@ -26,6 +26,9 @@ Map::Map() {
 	
 }
 
+//Initializing static data member
+Map* Map::mapInstance = 0;
+
 //this method is used to split the strings during file I/O
 vector<string> Map::split(string _stringToBeSplit, string _delimeter)
 {
@@ -199,7 +202,6 @@ Graph Map::ReadMap(string f)
 	}
 }
 
-
 //Map has a vector of country objects
 std::vector<Country> Map::getCountries() {
 	return mappedCountries;
@@ -270,3 +272,13 @@ void Map::setCountry(std::vector<Country> countries) {
 	mappedCountries = countries;
 }
 
+Map* Map::instance() {
+	if (!mapInstance)
+		mapInstance = new Map();
+	return mapInstance;
+}
+
+void Map::resetInstance() {
+	delete mapInstance;
+	mapInstance = NULL;
+}
