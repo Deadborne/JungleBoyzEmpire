@@ -40,7 +40,7 @@
     <Filter Include="Source Files\Bid">
       <UniqueIdentifier>{6ffe4986-0100-40d2-b189-6db242706b42}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Bid\Map">
+    <Filter Include="Source Files\Map">
       <UniqueIdentifier>{8fd955bf-9fa6-4e20-a7d6-7565eac370ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -99,6 +99,9 @@
     <ClInclude Include="Bid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -108,13 +111,13 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>Source Files\Bid\Map</Filter>
+      <Filter>Source Files\Map</Filter>
     </ClCompile>
     <ClCompile Include="Country.cpp">
-      <Filter>Source Files\Bid\Map</Filter>
+      <Filter>Source Files\Map</Filter>
     </ClCompile>
     <ClCompile Include="Continent.cpp">
-      <Filter>Source Files\Bid\Map</Filter>
+      <Filter>Source Files\Map</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Player</Filter>
@@ -177,6 +180,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Part6Supplemental.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AggregateDriver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

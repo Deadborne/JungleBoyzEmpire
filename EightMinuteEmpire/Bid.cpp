@@ -32,7 +32,7 @@ int Bid::getDate() {
 void Bid::setBid(int playerId) {
 	bool validInput = false;
 	while (!validInput) {
-		cout << "Player " << playerId + 1 << " select bid amount between 0 and 8: \n";
+		cout << "Player " << playerId << " select bid amount between 0 and 8: \n";
 		string inputValue = "0";
 
 		try {
@@ -54,7 +54,7 @@ void Bid::setBid(int playerId) {
 void Bid::setBid(int playerId, int maxBid) {
 	bool validInput = false;
 	while (!validInput) {
-		cout << "Player " << playerId + 1 << " select bid amount between 0 and " << maxBid << ": \n";
+		cout << "Player " << playerId << " select bid amount between 0 and " << maxBid << ": \n";
 		string inputValue = "0";
 
 		try {
@@ -78,7 +78,7 @@ void Bid::setBid(int playerId, int maxBid) {
 void Bid::setDate(int playerId) {
 	bool validInput = false;
 	while (!validInput) {
-		cout << "Player " << playerId + 1 << " set birthdate in YYYYMMDD format: \n";
+		cout << "Player " << playerId << " set birthdate in YYYYMMDD format: \n";
 		string inputValue = "0";
 
 		try {

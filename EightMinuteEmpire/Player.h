@@ -37,7 +37,10 @@ private:
 
 	
 public:
+	vector<int> getArmyLocations(Map m);
+	vector<int> getArmyLocationsForCity(Map m);
 
+	vector<int> getArmySpawnLocations(Map m);
 	//Player();
 	
 	//--- Bidding --- //
@@ -104,6 +107,9 @@ public:
 	void setBid();
 	void setBid(int maxBid);
 	Bid getBid();
+
+	int andOrAction(int actionNumber);
+	void ignore();
 
 	
 

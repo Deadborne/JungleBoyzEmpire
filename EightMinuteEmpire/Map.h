@@ -29,4 +29,6 @@ public:
 	Country giveMeCountry(int id);
 
 	vector<int> getContinents();
+	void setCountry(std::vector<Country> countries);
+
 };

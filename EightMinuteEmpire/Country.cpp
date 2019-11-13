@@ -65,7 +65,7 @@ void Country::setArmiesPerPlayer(vector<int*> newArmies) {
 
 //Checks if the country is the starting city
 bool Country::isStartingCountry() {
-	return _isStart;
+	return *_isStart;
 }
 
 //----Deletion----//

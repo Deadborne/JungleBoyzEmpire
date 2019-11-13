@@ -17,7 +17,7 @@ void Player::setPlayerID(int x) {
 void Player::setBirthday() {
 	bool validInput = false;
 	while (!validInput) {
-		cout << "Player " << *playerID + 1 << " set birthdate in YYYYMMDD format: \n";
+		cout << "Player " << *playerID << " set birthdate in YYYYMMDD format: \n";
 		string inputValue = "0";
 
 		getline(cin, inputValue);
@@ -142,7 +142,7 @@ void Player::placeNewArmies(int numArmies, Country& country) {
 		extraArmies = new int(numArmies);
 
 		//Change armies in player's slot
-		*armies.at((*playerID) /*- 1*/) += *extraArmies;
+		*armies.at((*playerID) - 1) += *extraArmies;
 
 		//Push to country object
 		country.setArmiesPerPlayer(armies);
@@ -244,7 +244,9 @@ void Player::buildCity(Country& cityLocation) {
 			if (*cities.at(*playerID - 1) != true) {
 				*cities.at(*playerID - 1) = true;
 				cityLocation.setCities(cities);
-				*availableCities--;
+				int cities = *availableCities;
+				cities--;
+				*availableCities = cities;
 			}
 			else {
 				cout << "\nCity already exists in country. Build one somewhere else.";
@@ -556,6 +558,67 @@ int Player::computeScore(Map m) {
 	//Add the length of owned country vector, owned continent vector, and points from card goods
 	
 	return getCountriesOwned(m).size() + getContinentsOwned(m).size() + pointsFromCards();
+}
+
+int Player::andOrAction(int actionNum) {
+	return actionNum;
+}
+
+void Player::ignore() {
+	cout << "You have chosen to ignore your action!" << endl;
+}
+
+//returns a vector of country Ids where the player has at least one army.
+std::vector<int> Player::getArmyLocations(Map m) {
+
+	vector<Country> v = m.getCountries();
+	vector<int> locations = {};
+
+	int me = *playerID;
+
+	for (int i = 0; i < v.size(); i++) {
+		if ((*v[i].getArmiesPerPlayer()[me - 1]) > 0) {
+			locations.push_back(v[i].getCountryId());
+		}
+	}
+	return locations;
+}
+//returns a vector of country Ids where the player has at least one army.
+std::vector<int> Player::getArmyLocationsForCity(Map m) {
+
+	vector<Country> v = m.getCountries();
+	vector<int> locations = {};
+	int me = *playerID;
+
+	for (int i = 0; i < v.size(); i++) {
+		if ((*v[i].getArmiesPerPlayer()[me - 1]) > 0) {
+			bool containsCity = false;
+			for (int j = 0; j < v[i].getCities().size(); j++) {
+				if (*v[i].getCities().at(j) == true) {
+					containsCity = true;
+				}
+			}
+
+			if (!containsCity) {
+				locations.push_back(v[i].getCountryId());
+			}
+
+		}
+	}
+	return locations;
+}
+
+std::vector<int> Player::getArmySpawnLocations(Map m) {
+
+	vector<Country> v = m.getCountries();
+	vector<int> locations = {};
+	int me = *playerID;
+	for (int i = 0; i < v.size(); i++) {
+		if (v[i].isStartingCountry() || *v[i].getCities()[me - 1]) {
+			locations.push_back(v[i].getCountryId());
+		}
+	}
+	return locations;
 }
 
 

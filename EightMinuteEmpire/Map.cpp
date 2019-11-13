@@ -265,3 +265,8 @@ vector<int> Map::getContinents() {
 
 	return continents;
 }
+
+void Map::setCountry(std::vector<Country> countries) {
+	mappedCountries = countries;
+}
+

@@ -27,6 +27,7 @@ public:
 	std::string getOperator() const;
 	bool getIsFive() const;
 	std::string printCard();
+	std::string formatAction(std::string action, std::string number);
 };
 
 class Deck {

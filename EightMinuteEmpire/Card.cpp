@@ -84,3 +84,25 @@ string Card::printCard() {
 	string str = "Goods: " + to_string(Card::getGoodAmount()) + " " + Card::getGood() + ", Action 1: " + Card::getAction1() + "x" + to_string(Card::getNumA1()) + ", Action 2: " + Card::getAction2() + "x" + to_string(Card::getNumA2()) + " 5-Player-Card: " + to_string(Card::getIsFive());
 	return str;
 }
+
+string Card::formatAction(std::string action, std::string number) {
+	string formattedString = "";
+	if (action == "build") {
+		formattedString = "You can build one city in a region you occupy";
+	}
+	else if (action == "destroy") {
+		formattedString = "You can destroy " + number + " opponent armies";
+	}
+	else if (action == "move") {
+		formattedString = "You can move " + number + " of your own armies within their own respective continents";
+	}
+	else if (action == "moveOver") {
+		formattedString = "You can move " + number + " of your own armies, even across continents";
+	}
+	else if (action == "place") {
+		formattedString = "You can place " + number + " armies";
+	}
+
+	return formattedString;
+
+}

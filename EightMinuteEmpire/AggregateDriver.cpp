@@ -14,7 +14,7 @@ using namespace std;
 #include <boost/graph/graphviz.hpp>
 #include <boost/graph/graph_utility.hpp>
 using namespace boost;
-/*
+
 int main()
 {
 
@@ -90,11 +90,11 @@ int main()
 	for (int i = 0; i < numberOfPlayers; i++) {
 		Player p = Player();
 		p.setAvailableCoins(startingCoins);
-		p.setPlayerID(i);
+		p.setPlayerID(i + 1);
 
 		players.push_back(p); //inserting players
 
-		cout << "Player " << p.getPlayerID() + 1 << " is ready, and has " << p.getAvailableCoins() << " coins!" << endl;
+		cout << "Player " << p.getPlayerID() << " is ready, and has " << p.getAvailableCoins() << " coins!" << endl;
 	}
 
 	//[Requirement 3: Initializing Deck]
@@ -131,7 +131,7 @@ int main()
 	}
 
 	for (int i = 0; i < numberOfPlayers; i++) { // Display and verify initial army placement
-		cout << "Player " << players[i].getPlayerID() + 1 << " starts with " << players[i].getAvailableArmies() << " armies and ";
+		cout << "Player " << players[i].getPlayerID() << " starts with " << players[i].getAvailableArmies() << " armies and ";
 		cout << players[i].getAvailableCities() << " cities, and placed 3 armies at the starting region, " << m.getStartingCountry().getCountryId() << endl;
 	}
 
@@ -140,7 +140,7 @@ int main()
 		cout << endl;
 		Player npc = Player();
 		npc.setAvailableArmies(10);
-		npc.setPlayerID(2); //NPC is effectively player 3
+		npc.setPlayerID(3); //NPC is effectively player 3
 		int selectCountry = 0;
 		int placingPlayer = 1; //The player who gets to choose where to place the army
 		for (int i = 0; i < npc.getAvailableArmies(); i++) {
@@ -228,11 +228,11 @@ int main()
 
 			deck.printDeck();
 			cout << "You have " << players[currentPlayer].getAvailableCoins() << " coins." << endl;
+			Card chosenCard = Card(); //This will be used to determine what action to take.
 
 			//Giving the player a choice of actions
 			while (1) {
 
-				Card chosenCard = Card(); //This will be used to determine what action to take.
 
 				int choice = 0;
 				cout << "\nWhat would you like to do: " << endl;
@@ -332,9 +332,501 @@ int main()
 					cout << "Invalid choice of action" << endl;
 				}
 			}
-
 			//:::::::::::::::::::::::::::::::::::PART 4::::::::::::::::::::::::::::::::::::::::::::::
+			cout << "Time to do the action of your card" << endl;
+			int numberOfActions = 0;
+			if (chosenCard.getOperator() == "")
+				numberOfActions = 1;
+			else if (chosenCard.getOperator() == "or")
+				numberOfActions = 1;
+			else if (chosenCard.getOperator() == "and")
+				numberOfActions = 2;
 
+			int playerChoice = -1;
+			//Say for example there is an AND/OR, then it is a tracker to see which action was selected
+			//For example, Card has Action 1 and Action 2, Player selects Action 2, cardActionUsed will be set to 2
+			//So next time, they cannot pick Action.
+			int cardActionUsed = -1;
+			bool multipleChoices = false;
+			while (numberOfActions > 0) {
+				cout << "You have " << numberOfActions << " actions remaining. You have the following choices: " << endl;
+				if (cardActionUsed != 1)
+					cout << "1: " << chosenCard.formatAction(chosenCard.getAction1(), to_string(chosenCard.getNumA1())) << endl;
+				else
+					cout << "1: No action Available" << endl;
+
+				if ((chosenCard.getOperator() == "or" || chosenCard.getOperator() == "and") && cardActionUsed != 2) {
+					multipleChoices = true;
+					cout << chosenCard.getOperator() << endl;
+					cout << "2:" << chosenCard.formatAction(chosenCard.getAction2(), to_string(chosenCard.getNumA2())) << endl;
+				}
+				else {
+					cout << "2: No action available" << endl;
+				}
+				cout << "3: Ignore action" << endl;
+				cin >> playerChoice;
+
+				if (playerChoice == 1 && cardActionUsed != 1) {
+					if (multipleChoices) {
+						cardActionUsed = playerChoice;
+					}
+					int innerCounter = chosenCard.getNumA1();
+					while (innerCounter > 0) {
+						if (chosenCard.getAction1() == "build") {
+							//Prompt player to build city
+							//Looks for all countries that a player owns
+							cin.clear();
+							cin.ignore();
+							if (players[currentPlayer].getAvailableCities() > 0) {
+								cout << "Place your city!: " << endl;
+								int regionToBuildIn = -1;
+								if (players[currentPlayer].getArmyLocationsForCity(m).size() > 0) {
+									while (regionToBuildIn > players[currentPlayer].getArmyLocationsForCity(m).size() || regionToBuildIn < 1) {
+										cout << "Here are your options: " << endl;
+										for (int playerCityOptions = 0; playerCityOptions < players[currentPlayer].getArmyLocationsForCity(m).size(); playerCityOptions++) {
+											cout << playerCityOptions + 1 << ": Build in Country " << players[currentPlayer].getArmyLocationsForCity(m)[playerCityOptions] << endl;
+										}
+										if (regionToBuildIn > players[currentPlayer].getArmyLocationsForCity(m).size() || regionToBuildIn < 1)
+											cin >> regionToBuildIn;
+
+									}
+									cout << "Building a city here: Country " << players[currentPlayer].getArmyLocationsForCity(m)[regionToBuildIn - 1] << endl;
+									Country countryToBuildCityIn = m.getCountries()[players[currentPlayer].getArmyLocationsForCity(m)[regionToBuildIn - 1] - 1];
+									players[currentPlayer].buildCity(countryToBuildCityIn);
+								}
+								else {
+									cout << "Sorry, there are no available places for you to create a city!" << endl;
+								}
+							}
+							else {
+								cout << "Sorry you do not have any cities available" << endl;
+
+							}
+							innerCounter--;
+						}
+
+						//End While
+						//End Action: BUILD
+						//Still need to code for player choice
+						else if (chosenCard.getAction1() == "move") {
+							while (innerCounter > 0) {
+								cout << "You can move " << innerCounter << " armies" << endl;
+								cout << "You have armies in the following countries: " << endl;
+								//Loading valid players armies:
+								if (players[currentPlayer].getArmyLocations(m).size() > 0) {
+									int moveChoice = -1;
+									while (moveChoice > players[currentPlayer].getArmyLocations(m).size() || moveChoice < 1) {
+										for (int i = 0; i < players[currentPlayer].getArmyLocations(m).size(); i++) {
+											cout << i + 1 << ": Country " << m.getCountries()[players[currentPlayer].getArmyLocations(m)[i] - 1].getCountryId() << endl;
+										}
+										if (moveChoice > players[currentPlayer].getArmyLocations(m).size() || moveChoice < 1) {
+											cin >> moveChoice;
+										}
+
+									}
+									cout << "Here are your adjacent countries you can move into from Country " << players[currentPlayer].getArmyLocations(m)[moveChoice - 1] << endl;
+									int continentId = m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].getContinentId();
+									vector<int> countriesOnSameContinent = vector<int>(0);
+									for (int i = 0; i < m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].returnAdjacencies(GameMap).size(); i++) {
+										if (m.getCountries()[m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].returnAdjacencies(GameMap).at(i)].getContinentId() == continentId) {
+											countriesOnSameContinent.push_back(m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].returnAdjacencies(GameMap).at(i));
+										}
+									}
+
+									int countryDest = -1;
+									while (countryDest > countriesOnSameContinent.size() || countryDest < 1) {
+										for (int i = 0; i < countriesOnSameContinent.size(); i++) {
+											cout << i + 1 << ": Country " << countriesOnSameContinent[i] << endl;
+
+										}
+
+										if (countryDest > countriesOnSameContinent.size() || countryDest < 1)
+											cin >> countryDest;
+									}
+
+									players[currentPlayer].moveArmies(1, m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1], m.getCountries()[countriesOnSameContinent[countryDest - 1] - 1]);
+									m.setCountry(m.getCountries());
+
+									innerCounter--;
+								}
+								else {
+									cout << "Sorry you have no armies available!" << endl;
+								}
+							}
+
+
+						}
+						else if (chosenCard.getAction1() == "moveOver") {
+
+							while (innerCounter > 0) {
+								cout << "You can move " << innerCounter << " armies" << endl;
+								cout << "You have armies in the following countries: " << endl;
+								//Loading valid players armies:
+								if (players[currentPlayer].getArmyLocations(m).size() > 0) {
+									int moveChoice = -1;
+									while (moveChoice > players[currentPlayer].getArmyLocations(m).size() || moveChoice < 1) {
+										for (int i = 0; i < players[currentPlayer].getArmyLocations(m).size(); i++) {
+											cout << i + 1 << ": Country " << m.getCountries()[players[currentPlayer].getArmyLocations(m)[i] - 1].getCountryId() << endl;
+										}
+										if (moveChoice > players[currentPlayer].getArmyLocations(m).size() || moveChoice < 1) {
+											cin >> moveChoice;
+										}
+
+									}
+									cout << "Here are your adjacent countries you can move into from Country " << players[currentPlayer].getArmyLocations(m)[moveChoice - 1] << endl;
+									int continentId = m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].getContinentId();
+
+
+									int countryDest = -1;
+									while (countryDest > m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].returnAdjacencies(GameMap).size() || countryDest < 1) {
+										for (int i = 0; i < m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].returnAdjacencies(GameMap).size(); i++) {
+											cout << i + 1 << ": Country " << m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].returnAdjacencies(GameMap).at(i) << endl;
+										}
+
+										if (countryDest > m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].returnAdjacencies(GameMap).size() || countryDest < 1)
+											cin >> countryDest;
+									}
+
+									players[currentPlayer].moveArmies(1, m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1], m.getCountries()[m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].returnAdjacencies(GameMap).at(countryDest - 1) - 1]);
+									m.setCountry(m.getCountries());
+
+									innerCounter--;
+								}
+								else {
+									cout << "Sorry you have no armies available!" << endl;
+								}
+							}
+
+						}//End PLACE
+						else if (chosenCard.getAction1() == "place") {
+							//Place armies. 
+							while (innerCounter > 0) {
+								////Lets introduce a bug here bois
+								//if (players[currentPlayer].getAvailableArmies() > 11) {
+								//	players[currentPlayer].setAvailableArmies(11);
+								//}
+								cout << players[currentPlayer].getAvailableArmies() << " :Available Armies" << endl;
+								if (players[currentPlayer].getAvailableArmies() > 0) {
+									int spawnChoice = -1;
+									cout << "You may place " << innerCounter << " armies at the following locations: " << endl;
+									while (spawnChoice > players[currentPlayer].getArmySpawnLocations(m).size() || spawnChoice < 1) {
+										for (int i = 0; i < players[currentPlayer].getArmySpawnLocations(m).size(); i++) {
+											//cout << i + 1 << ": Country " << m.getCountries()[players[currentPlayer].getArmySpawnLocations(m).at(i)].getCountryId() << endl;
+											cout << i + 1 << ": Country " << players[currentPlayer].getArmySpawnLocations(m)[i] << endl;
+										}
+
+										if (spawnChoice > players[currentPlayer].getArmySpawnLocations(m).size() || spawnChoice < 1) {
+											cin >> spawnChoice;
+										}
+
+
+									}
+
+									Country updatedCountry = m.getCountries()[players[currentPlayer].getArmySpawnLocations(m)[spawnChoice - 1] - 1];
+									players[currentPlayer].placeNewArmies(1, updatedCountry);
+
+									innerCounter--;
+								}
+								else {
+									cout << "You do not have anymore armies!" << endl;
+									innerCounter = 0;
+								}
+
+
+
+							}
+
+						}
+						else if (chosenCard.getAction1() == "destroy") {
+
+							while (innerCounter > 0) {
+								//First getting all players
+								players[currentPlayer].getPlayerID();
+								vector<int> playersTargeted = vector<int>(0);
+								for (int i = 0; i < players.size(); i++) {
+									if (i != players[currentPlayer].getPlayerID() - 1 && players.at(i).getArmyLocations(m).size() > 0) {
+										playersTargeted.push_back(i);
+									}
+								}
+
+								int playerSelected = -1;
+								if (playersTargeted.size() > 0) {
+									while (playerSelected > playersTargeted.size() || playerSelected < 1) {
+										cout << "Choose player you want to remove armies from: " << endl;
+										for (int i = 0; i < playersTargeted.size(); i++) {
+											cout << i + 1 << ": Player " << playersTargeted[i] + 1 << endl;
+											}
+											if (playerSelected > playersTargeted.size() && playerSelected < 1) {
+												cin >> playerSelected;
+												vector<int> playerArmiesToDestroy = vector<int>(0);
+												playerArmiesToDestroy = players[playerSelected - 1].getArmyLocations(m);
+												int regionSelected = -1;
+												while (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
+													cout << "Choose Player " << playerSelected << "'s country of armies to destroy" << endl;
+													for (int i = 0; i < playerArmiesToDestroy.size(); i++) {
+														cout << i + 1 << ": Country: " << playerArmiesToDestroy.at(i) << endl;
+													}
+													if (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
+														cin >> regionSelected;
+													}
+												}
+
+												players[currentPlayer].destroyArmy(m.getCountries()[playerArmiesToDestroy[regionSelected - 1] - 1], players[playerSelected - 1]);
+												innerCounter--;
+												//playersTargeted = vector<int>(0);
+												
+											}
+									}
+								}
+								else {
+									cout << "There are no available armies to destroy!" << endl;
+									innerCounter = 0;
+								}
+							}
+
+
+						}
+						innerCounter--;
+					}
+					numberOfActions -= 1;
+
+				}
+				/*else if (playerChoice == 1 && cardActionUsed != 1) {
+					
+				}*/
+				else if (playerChoice == 2 && cardActionUsed != 2) {
+					if (multipleChoices) {
+						cardActionUsed = playerChoice;
+					}
+					int innerCounter = chosenCard.getNumA1();
+					while (innerCounter > 0) {
+						if (chosenCard.getAction1() == "build") {
+							//Prompt player to build city
+							//Looks for all countries that a player owns
+							cin.clear();
+							cin.ignore();
+							if (players[currentPlayer].getAvailableCities() > 0) {
+								cout << "Place your city!: " << endl;
+								int regionToBuildIn = -1;
+								if (players[currentPlayer].getArmyLocationsForCity(m).size() > 0) {
+									while (regionToBuildIn > players[currentPlayer].getArmyLocationsForCity(m).size() || regionToBuildIn < 1) {
+										cout << "Here are your options: " << endl;
+										for (int playerCityOptions = 0; playerCityOptions < players[currentPlayer].getArmyLocationsForCity(m).size(); playerCityOptions++) {
+											cout << playerCityOptions + 1 << ": Build in Country " << players[currentPlayer].getArmyLocationsForCity(m)[playerCityOptions] << endl;
+										}
+										if (regionToBuildIn > players[currentPlayer].getArmyLocationsForCity(m).size() || regionToBuildIn < 1)
+											cin >> regionToBuildIn;
+
+									}
+									cout << "Building a city here: Country " << players[currentPlayer].getArmyLocationsForCity(m)[regionToBuildIn - 1] << endl;
+									Country countryToBuildCityIn = m.getCountries()[players[currentPlayer].getArmyLocationsForCity(m)[regionToBuildIn - 1] - 1];
+									players[currentPlayer].buildCity(countryToBuildCityIn);
+								}
+								else {
+									cout << "Sorry, there are no available places for you to create a city!" << endl;
+								}
+							}
+							else {
+								cout << "Sorry you do not have any cities available" << endl;
+
+							}
+							innerCounter--;
+						}
+
+						//End While
+						//End Action: BUILD
+						//Still need to code for player choice
+						else if (chosenCard.getAction2() == "move") {
+							while (innerCounter > 0) {
+								cout << "You can move " << innerCounter << " armies" << endl;
+								cout << "You have armies in the following countries: " << endl;
+								//Loading valid players armies:
+								if (players[currentPlayer].getArmyLocations(m).size() > 0) {
+									int moveChoice = -1;
+									while (moveChoice > players[currentPlayer].getArmyLocations(m).size() || moveChoice < 1) {
+										for (int i = 0; i < players[currentPlayer].getArmyLocations(m).size(); i++) {
+											cout << i + 1 << ": Country " << m.getCountries()[players[currentPlayer].getArmyLocations(m)[i] - 1].getCountryId() << endl;
+										}
+										if (moveChoice > players[currentPlayer].getArmyLocations(m).size() || moveChoice < 1) {
+											cin >> moveChoice;
+										}
+
+									}
+									cout << "Here are your adjacent countries you can move into from Country " << players[currentPlayer].getArmyLocations(m)[moveChoice - 1] << endl;
+									int continentId = m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].getContinentId();
+									vector<int> countriesOnSameContinent = vector<int>(0);
+									for (int i = 0; i < m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].returnAdjacencies(GameMap).size(); i++) {
+										if (m.getCountries()[m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].returnAdjacencies(GameMap).at(i)].getContinentId() == continentId) {
+											countriesOnSameContinent.push_back(m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].returnAdjacencies(GameMap).at(i));
+										}
+									}
+
+									int countryDest = -1;
+									while (countryDest > countriesOnSameContinent.size() || countryDest < 1) {
+										for (int i = 0; i < countriesOnSameContinent.size(); i++) {
+											cout << i + 1 << ": Country " << countriesOnSameContinent[i] << endl;
+
+										}
+
+										if (countryDest > countriesOnSameContinent.size() || countryDest < 1)
+											cin >> countryDest;
+									}
+
+									players[currentPlayer].moveArmies(1, m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1], m.getCountries()[countriesOnSameContinent[countryDest - 1] - 1]);
+									m.setCountry(m.getCountries());
+
+									innerCounter--;
+								}
+								else {
+									cout << "Sorry you have no armies available!" << endl;
+								}
+							}
+
+
+						}
+						else if (chosenCard.getAction2() == "moveOver") {
+
+							while (innerCounter > 0) {
+								cout << "You can move " << innerCounter << " armies" << endl;
+								cout << "You have armies in the following countries: " << endl;
+								//Loading valid players armies:
+								if (players[currentPlayer].getArmyLocations(m).size() > 0) {
+									int moveChoice = -1;
+									while (moveChoice > players[currentPlayer].getArmyLocations(m).size() || moveChoice < 1) {
+										for (int i = 0; i < players[currentPlayer].getArmyLocations(m).size(); i++) {
+											cout << i + 1 << ": Country " << m.getCountries()[players[currentPlayer].getArmyLocations(m)[i] - 1].getCountryId() << endl;
+										}
+										if (moveChoice > players[currentPlayer].getArmyLocations(m).size() || moveChoice < 1) {
+											cin >> moveChoice;
+											cin.clear();
+											cin.ignore();
+										}
+
+									}
+									cout << "Here are your adjacent countries you can move into from Country " << players[currentPlayer].getArmyLocations(m)[moveChoice - 1] << endl;
+									int continentId = m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].getContinentId();
+
+
+									int countryDest = -1;
+									while (countryDest > m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].returnAdjacencies(GameMap).size() || countryDest < 1) {
+										for (int i = 0; i < m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].returnAdjacencies(GameMap).size(); i++) {
+											cout << i + 1 << ": Country " << m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].returnAdjacencies(GameMap).at(i) << endl;
+										}
+
+										if (countryDest > m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].returnAdjacencies(GameMap).size() || countryDest < 1)
+											cin >> countryDest;
+									}
+
+									players[currentPlayer].moveArmies(1, m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1], m.getCountries()[m.getCountries()[players[currentPlayer].getArmyLocations(m)[moveChoice - 1] - 1].returnAdjacencies(GameMap).at(countryDest - 1) - 1]);
+									m.setCountry(m.getCountries());
+
+									innerCounter--;
+								}
+								else {
+									cout << "Sorry you have no armies available!" << endl;
+								}
+							}
+
+						}//End PLACE
+						else if (chosenCard.getAction2() == "place") {
+							//Place armies. 
+							while (innerCounter > 0) {
+								////Lets introduce a bug here bois
+								//if (players[currentPlayer].getAvailableArmies() > 11) {
+								//	players[currentPlayer].setAvailableArmies(11);
+								//}
+								cout << players[currentPlayer].getAvailableArmies() << " :Available Armies" << endl;
+								if (players[currentPlayer].getAvailableArmies() > 0) {
+									int spawnChoice = -1;
+									cout << "You may place " << innerCounter << " armies at the following locations: " << endl;
+									while (spawnChoice > players[currentPlayer].getArmySpawnLocations(m).size() || spawnChoice < 1) {
+										for (int i = 0; i < players[currentPlayer].getArmySpawnLocations(m).size(); i++) {
+											//cout << i + 1 << ": Country " << m.getCountries()[players[currentPlayer].getArmySpawnLocations(m).at(i)].getCountryId() << endl;
+											cout << i + 1 << ": Country " << players[currentPlayer].getArmySpawnLocations(m)[i] << endl;
+										}
+
+										if (spawnChoice > players[currentPlayer].getArmySpawnLocations(m).size() || spawnChoice < 1) {
+											cin >> spawnChoice;
+										}
+
+
+									}
+
+									Country updatedCountry = m.getCountries()[players[currentPlayer].getArmySpawnLocations(m)[spawnChoice - 1] - 1];
+									players[currentPlayer].placeNewArmies(1, updatedCountry);
+
+									innerCounter--;
+								}
+								else {
+									cout << "You do not have anymore armies!" << endl;
+									innerCounter = 0;
+								}
+
+
+
+							}
+
+						}
+						else if (chosenCard.getAction2() == "destroy") {
+
+							while (innerCounter > 0) {
+								//First getting all players
+
+								vector<int> playersTargeted = vector<int>(0);
+								for (int i = 0; i < players.size(); i++) {
+									if (i != players[currentPlayer].getPlayerID() - 1 && players.at(i).getArmyLocations(m).size() > 0) {
+										playersTargeted.push_back(i);
+									}
+								}
+
+								int playerSelected = -1;
+								if (playersTargeted.size() > 0) {
+									while (playerSelected > playersTargeted.size() || playerSelected < 1) {
+										cout << "Choose player you want to remove armies from: " << endl;
+										for (int i = 0; i < playersTargeted.size(); i++) {
+											cout << i + 1 << ": Player " << (playersTargeted[i] + 1) << endl;
+											}
+											if (playerSelected > playersTargeted.size() && playerSelected < 1) {
+												cin >> playerSelected;
+												vector<int> playerArmiesToDestroy = vector<int>(0);
+												playerArmiesToDestroy = players[playerSelected - 1].getArmyLocations(m);
+												int regionSelected = -1;
+												while (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
+													cout << "Choose Player " << playerSelected << "'s country of armies to destroy" << endl;
+
+													if (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
+														cin >> regionSelected;
+													}
+												}
+
+												players[currentPlayer].destroyArmy(m.getCountries()[playerArmiesToDestroy[regionSelected - 1] - 1], players[playerSelected - 1]);
+												innerCounter--;
+											}
+										
+									}
+								}
+								else {
+									cout << "There are no available armies to destroy!" << endl;
+									innerCounter = 0;
+								}
+							}
+
+
+						}
+						numberOfActions--;
+					}
+					numberOfActions -= 1;
+				}
+				else if (playerChoice == 3) {
+					players[currentPlayer].ignore();
+					numberOfActions -= 1;
+				}
+				else {
+					cout << "Invalid Action" << endl;
+					cin.clear();
+					cin.ignore();
+				}
+			}
 
 			//:::::::::::::::::::::::::::::::::::PART 5::::::::::::::::::::::::::::::::::::::::::::::
 			// After a player has made a valid card choice and the card has been pulled from card space,
@@ -412,4 +904,4 @@ int main()
 	
 
 
-}*/
+}
