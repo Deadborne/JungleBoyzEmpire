@@ -67,8 +67,26 @@ int main()
 		}
 	}
 
+	int numberOfBots = 0;
+	if (numberOfPlayers <= 4) {
+		//Gets the most number of bots you can get
+		int maxBots = 5 - numberOfPlayers;
+		cout << "Select how many bots you would like to add to your game" << endl;
+		numberOfBots = -1;
+		while (numberOfBots > maxBots || numberOfBots < 0) {
+			for (int i = 0; i <= maxBots; i++) {
+				cout << i + 1 << "): Add " << i << " bot(s) to the game" << endl;
+			}
+
+			if (numberOfBots > maxBots || numberOfBots < 0) {
+				cin >> numberOfBots;
+			}
+		}
+		
+	}
+
 	//giving each player the right amount of coins, depending on the number of players.
-	switch (numberOfPlayers) {
+	switch (numberOfPlayers + numberOfBots) {
 	case 2:
 		startingCoins = 14;
 		break;
@@ -84,7 +102,7 @@ int main()
 	}
 
 	vector<Player> players; //The players
-
+	
 	//Insert a number of players depending on the selected number, give them starting coins, set their ID, give them a "bidding facility"
 	for (int i = 0; i < numberOfPlayers; i++) {
 		Player p = Player();
@@ -134,8 +152,14 @@ int main()
 		cout << players[i].getAvailableCities() << " cities, and placed 3 armies at the starting region, " << Map::instance()->getStartingCountry().getCountryId() << endl;
 	}
 
+
+	//Asking if they want npcs
+	
+	
 	//this loop is for placing NPCs in a 2 player game.
 	if (numberOfPlayers == 2) {
+		
+
 		cout << endl;
 		Player npc = Player();
 		npc.setAvailableArmies(10);
@@ -157,6 +181,9 @@ int main()
 			else
 				placingPlayer = 1;
 		}
+	}
+	else {
+
 	}
 
 	Map::instance()->showEverything();
@@ -569,7 +596,7 @@ int main()
 														cin >> regionSelected;
 													}
 												}
-
+												cout << "Destroying player armies" << endl;
 												players[currentPlayer].destroyArmy(Map::instance()->getCountries()[playerArmiesToDestroy[regionSelected - 1] - 1], players[playerSelected - 1]);
 												innerCounter--;
 												//playersTargeted = vector<int>(0);
