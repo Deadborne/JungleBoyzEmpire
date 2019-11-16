@@ -128,7 +128,6 @@ void Player::PayCoin(int numCoins) {
 //	2. Number of armies player can place is determined by the card he/she has drawn
 //	3. Player can only place new armies in countries where they own a city 
 void Player::placeNewArmies(int numArmies, Country& country) {
-	//Map m = Map();
 
 	//Check that the country is either the starting country or one where the player owns a city
 	//Add following validation later
@@ -153,12 +152,12 @@ void Player::placeNewArmies(int numArmies, Country& country) {
 		//If the player has too few armies
 		cerr << "\nOperation blocked. You only have " << *availableArmies << " armies available to you.";
 	}
+	Notify();
 }
 
 //Takes a number of armies, an origin country and a destination country. Subtracts armies from
 //the origin and places them in the destination
 void Player::moveArmies(int numArmies, Country& origin, Country& destination) {
-	//Map m = Map();
 
 	//Build some temporary vectors to hold armies in each country
 	vector<int*> originArmies = origin.getArmiesPerPlayer();
@@ -166,9 +165,6 @@ void Player::moveArmies(int numArmies, Country& origin, Country& destination) {
 
 	//Avoid moving more armies than exist in the vector 
 	if (*originArmies.at(*playerID - 1) >= numArmies) {
-
-		//int *movedArmies;
-		//movedArmies = new int(numArmies);
 		
 		//Move from origin
 		*originArmies.at(*playerID - 1) -= numArmies;
@@ -184,6 +180,7 @@ void Player::moveArmies(int numArmies, Country& origin, Country& destination) {
 			<< " armies in Country " << origin.getCountryId()
 			<< ". You cannot move more than that.";
 	}
+	Notify();
 }
 
 //Same as regular moveArmies, but first we check that our 2 countries exist on the same continent.
@@ -196,12 +193,12 @@ void Player::moveOverLand(int numArmies, Country& origin, Country& destination, 
 	else {
 		cout << "The origin and destination countrie are not adjacent on land";
 	}
+	Notify();
 }
 
 //Allows a player to destroy an army of some other player. Finds the armyOwner's armies in armyLocation
 //and decrements armies in that index
 void Player::destroyArmy(Country& armyLocation, Player armyOwner) {
-	//Map m = Map();
 
 	//temporary army vector for country's armies
 	vector<int*> armies = armyLocation.getArmiesPerPlayer();
@@ -225,6 +222,7 @@ void Player::destroyArmy(Country& armyLocation, Player armyOwner) {
 		cout << "\nPlayer " << armyOwnerID << " has no armies in Country " 
 			<< armyLocation.getCountryId() + 1 <<".\n";
 	}
+	Notify();
 }
 
 //Allows a player to build a city in a given country, provided that:
@@ -232,7 +230,6 @@ void Player::destroyArmy(Country& armyLocation, Player armyOwner) {
 //2. They have an army deployed in the country
 //3. They don't have a city already built in that country
 void Player::buildCity(Country& cityLocation) {
-	//Map m = Map();
 	
 	//1
 	if (availableCities > 0) {
@@ -247,6 +244,7 @@ void Player::buildCity(Country& cityLocation) {
 				int cities = *availableCities;
 				cities--;
 				*availableCities = cities;
+				Notify();
 			}
 			else {
 				cout << "\nCity already exists in country. Build one somewhere else.";
@@ -263,7 +261,6 @@ void Player::buildCity(Country& cityLocation) {
 
 //Not required, but lets us destroy a city in the same manner we destroy an army
 void Player::destroyCity(Country& cityLocation, Player& cityOwner) {
-	//Map m = Map();
 
 	vector<bool*> cities = cityLocation.getCities();
 
@@ -338,7 +335,6 @@ bool Player::isCountryOwner(Country& country) {
 			}
 		}
 	}
-	
 	
 	int dupe = 0;
 

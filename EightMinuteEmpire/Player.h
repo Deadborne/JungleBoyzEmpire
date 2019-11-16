@@ -8,6 +8,7 @@
 #include <string>
 #include "Country.h"
 #include "Map.h"
+#include "Subject.h"
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -16,7 +17,7 @@
 using namespace std;
 typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 
-class Player {
+class Player : public Subject {
 private:
 	int* playerID;
 	int* birthday;
@@ -71,6 +72,7 @@ public:
 
 	vector<int> getContinentsOwned(Map m);
 
+	bool ownsMaxCards();
 	int pointsFromCards();
 
 	int computeScore(Map m);

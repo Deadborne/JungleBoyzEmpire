@@ -7,6 +7,7 @@
 #include "Country.h"
 #include "Player.h" 
 #include "Card.h"
+#include "Statistics.h"
 #include <ostream>
 #include <vector>
 using namespace std;
@@ -27,7 +28,7 @@ int main()
 	cout << "		| __  |     |  |  |__   |				" << endl;
 	cout << "		| __ -|  |  |_   _|   __|				" << endl;
 	cout << "		|_____|_____| |_| |_____|				" << endl;
-	cout << "		 _____ _____ _____ _____ _____ _____	" << endl; 
+	cout << "		 _____ _____ _____ _____ _____ _____	" << endl;
 	cout << "		|   __|     |  _  |     | __  |   __|	" << endl;
 	cout << "		|   __| | | |   __|-   -|    -|   __|	" << endl;
 	cout << "		|_____|_|_|_|__|  |_____|__|__|_____|	" << endl;
@@ -111,9 +112,8 @@ int main()
 
 	//:::::::::::::::::::::::::::::::::::PART 2::::::::::::::::::::::::::::::::::::::::::::::
 
-
 	cout << "\n[PART 2: STARTUP PHASE]\n" << endl;
-
+	
 	//[Requirement 1: Shuffling Deck]
 	// The shuffling already appears on the Deck Constructor. To verify, we are printing the card space. Each time we get different amount of cards.
 	deck.printDeck();
@@ -190,15 +190,53 @@ int main()
 
 	cout << "The winner of the bid is Player " << maxIndex + 1 << endl;
 	cout << "\n" << endl;
-	
+
 	//:::::::::::::::::::::::::::::::::::PART 3::::::::::::::::::::::::::::::::::::::::::::::
 	cout << "[PART 3: MAIN GAME LOOP]\n" << endl;
+
+	//Attaching Observers
+	/*vector<Statistics> observers;
+	for (int i = 0; i < numberOfPlayers; i++) {
+		Statistics *s = new Statistics();
+		Player *p;
+		p = &players[i];
+		s->setSubject(p);
+		observers.push_back(*s);
+	}*/
+
+	Statistics *s1 = new Statistics();
+	Player *p1;
+	p1 = &players[0];
+	s1->setSubject(p1);
+	Statistics *s2 = new Statistics();
+	Player *p2;
+	p2 = &players[1];
+	s2->setSubject(p2);
+
+	if (players.size() >= 3) {
+		Statistics *s3 = new Statistics();
+		Player *p3;
+		p3 = &players[2];
+		s3->setSubject(p3);
+	}
+	if (players.size() >= 4) {
+		Statistics *s4 = new Statistics();
+		Player *p4;
+		p4 = &players[3];
+		s4->setSubject(p4);
+	}
+	if (players.size() == 5) {
+		Statistics *s5 = new Statistics();
+		Player *p5;
+		p5 = &players[4];
+		s5->setSubject(p5);
+	}
 	
 	//setting the first player to the bid winner
 	int startingPlayer = maxIndex; 
 
 	int currentPlayer = startingPlayer; //Makes it so that starting player is the first "current player"
-	int numberOfTurns; //At what turn the game ends
+	int numberOfTurns; //At what turn the game end
 
 	switch (numberOfPlayers) {
 	case 2:
@@ -495,7 +533,6 @@ int main()
 									cout << "Sorry you have no armies available!" << endl;
 								}
 							}
-
 						}//End PLACE
 						else if (chosenCard.getAction1() == "place") {
 							//Place armies. 

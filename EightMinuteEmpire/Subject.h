@@ -1,14 +1,18 @@
 #pragma once
+
+#include "GameObservers.h"
 #include <list>
+#include <vector>
 using namespace std;
-class GameObserver;
+
 class Subject {
+	vector <GameObserver*> views;
 public:
-	virtual void Attach(GameObserver* o);
+	virtual void Attach(GameObserver* o); //ok
 	virtual void Detach(GameObserver* o);
-	virtual void Notify();
+	virtual void Notify(); //ok
 	Subject();
 	~Subject();
-private:
-	list<GameObserver*> *_observers;
+
+	//list<GameObserver*> *_observers;
 };
