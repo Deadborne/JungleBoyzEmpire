@@ -367,6 +367,61 @@ vector<Country> Player::getCountriesOwned(Map m) {
 	return ownedCountries;
 }
 
+
+
+//A player actually owns a continent only if they control more countries than other players
+bool Player::isContinentOwner(int continentID, Map m, vector<Player> allPlayers) {
+
+	//Basically we need to check that the calling player owns the most countries in this continent
+	vector<Country> countries = m.getCountries();
+
+	vector<Country> countriesInContinent;
+	
+	//For each country, 
+	for (int i = 0; i < countries.size(); i++) {
+		//If it belongs to our desired continent
+		if (countries.at(i).getContinentId() == continentID) {
+			//Add it to a vector of countries
+			countriesInContinent.push_back(countries.at(i));
+		}
+	}
+		
+	//Check how many countries does our calling player own 
+	for (int i = 0; i < countriesInContinent.size(); i++) {
+
+
+	}
+	//vector<int> continents = m.getContinents();
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//First check if they are the only player stationed in that continent --> Continent owned
+	//if ()
+
+
+
+	//In the given continent
+		//Get the number of countries owned by the calling player
+	
+		//
+
+		//Loop through each player
+			//count how many countries they own in a given country
+			//compare that number to the number owned by the calling player
+				//if 
+			
+
+	return false;
+}
+
+
+
 //Using the country data, determine which countries we have, if any
 vector<int> Player::getContinentsOwned(Map m) {
 
@@ -407,6 +462,8 @@ vector<int> Player::getContinentsOwned(Map m) {
 	//The variable will have been changed in the player's data members, but this function will also return that vector for ease of use
 	return continentsOwned;
 }
+
+
 //Calulate all the points from the goods we have collected via cards
 int Player::pointsFromCards() {
 	//Get the player's hand

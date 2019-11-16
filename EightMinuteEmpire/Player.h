@@ -7,6 +7,7 @@
 #include "Card.h"
 #include <string>
 #include "Country.h"
+#include "Continent.h"
 #include "Map.h"
 #include "Subject.h"
 #include <vector>
@@ -65,7 +66,7 @@ public:
 	void buildCity(Country& cityLocation);
 	void destroyArmy(Country& armyLocation, Player armyOwner);
 
-
+	bool isContinentOwner(int continentID, Map m, vector<Player> allPlayers);
 	bool isCountryOwner(Country& country);
 
 	vector<Country> getCountriesOwned(Map m);
