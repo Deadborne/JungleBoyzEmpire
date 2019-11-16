@@ -46,6 +46,9 @@
     <Filter Include="Header Files\Strategy">
       <UniqueIdentifier>{d2d58fce-ddda-422e-8678-189624cbfdaa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Strategy">
+      <UniqueIdentifier>{fb53f235-48de-4e66-a9b9-ef6d214f17f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -113,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="Npc.h">
       <Filter>Header Files\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +208,18 @@
     </ClCompile>
     <ClCompile Include="Bid.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GreedStrategy.cpp">
+      <Filter>Source Files\Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="ModerateStrategy.cpp">
+      <Filter>Source Files\Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Npc.cpp">
+      <Filter>Source Files\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

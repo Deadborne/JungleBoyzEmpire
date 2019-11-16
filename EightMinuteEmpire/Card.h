@@ -42,6 +42,7 @@ private:
 public:
 	Deck();
 	Deck(int players);
+	~Deck();
 	void draw();
 	std::vector<Card> getDeck() const;
 	std::vector<Card> getSpace() const;

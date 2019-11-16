@@ -160,6 +160,9 @@
     <ClCompile Include="AggregateDriver.cpp" />
     <ClCompile Include="Bid.cpp" />
     <ClCompile Include="BidDriver.cpp" />
+    <ClCompile Include="GreedStrategy.cpp" />
+    <ClCompile Include="ModerateStrategy.cpp" />
+    <ClCompile Include="Npc.cpp" />
     <ClCompile Include="Part6Supplemental.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Continent.cpp" />
