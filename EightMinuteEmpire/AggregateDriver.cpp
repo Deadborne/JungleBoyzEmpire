@@ -111,7 +111,7 @@ int main()
 	cout << "" << endl;
 
 	//:::::::::::::::::::::::::::::::::::PART 2::::::::::::::::::::::::::::::::::::::::::::::
-
+	cout << Map::instance()->getCountries().at(9).getCountryId();
 	cout << "\n[PART 2: STARTUP PHASE]\n" << endl;
 	
 	//[Requirement 1: Shuffling Deck]
@@ -195,14 +195,7 @@ int main()
 	cout << "[PART 3: MAIN GAME LOOP]\n" << endl;
 
 	//Attaching Observers
-	/*vector<Statistics> observers;
-	for (int i = 0; i < numberOfPlayers; i++) {
-		Statistics *s = new Statistics();
-		Player *p;
-		p = &players[i];
-		s->setSubject(p);
-		observers.push_back(*s);
-	}*/
+
 
 	Statistics *s1 = new Statistics();
 	Player *p1;
@@ -627,9 +620,7 @@ int main()
 					numberOfActions -= 1;
 
 				}
-				/*else if (playerChoice == 1 && cardActionUsed != 1) {
-					
-				}*/
+
 				else if (playerChoice == 2 && cardActionUsed != 2) {
 					if (multipleChoices) {
 						cardActionUsed = playerChoice;

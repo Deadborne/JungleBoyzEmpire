@@ -93,7 +93,7 @@ Graph Map::ReadMap(string f)
 			connectingContinent = new int;
 			connectsAcrossSea = new bool;
 
-
+			//mappedCountries.push_back(c0);
 			std::string allAdjacent;
 
 			//grabs first number (country number)

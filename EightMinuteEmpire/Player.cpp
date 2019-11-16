@@ -344,11 +344,11 @@ bool Player::isCountryOwner(Country& country) {
 			dupe++;
 	}
 	if (dupe > 1) //duplicates present --> nobody owns it
-		return false;
-	else if (maxArmiesIndex == *playerID) //check that the max is at the same index as our current player.
+		return false;  //test
+	else if (maxArmiesIndex == *playerID-1) //check that the max is at the same index as our current player.
 		return true;
 	else {
-		return false;
+		return false;//test
 	}	
 	
 }
