@@ -7,6 +7,7 @@
 #include "Country.h"
 #include "Player.h" 
 #include "Card.h"
+#include "Npc.h"
 #include <ostream>
 #include <vector>
 using namespace std;
@@ -108,12 +109,21 @@ int main()
 		Player p = Player();
 		p.setAvailableCoins(startingCoins);
 		p.setPlayerID(i + 1);
-
+		p.setIsNPC(false);
 		players.push_back(p); //inserting players
 
 		cout << "Player " << p.getPlayerID() << " is ready, and has " << p.getAvailableCoins() << " coins!" << endl;
 	}
-
+	//Adding our bots into the game
+	for (int i = 0; i < numberOfBots; i++) {
+		Player p = Player();
+		p.setAvailableCoins(startingCoins);
+		p.setPlayerID(players.size() + 1);
+		p.setIsNPC(true);
+		players.push_back(p);
+	}
+	//Updating numberOfPlayers
+	numberOfPlayers = numberOfPlayers + numberOfBots;
 	//[Requirement 3: Initializing Deck]
 
 	Deck deck = Deck(numberOfPlayers); //Note: this automatically shuffles the deck

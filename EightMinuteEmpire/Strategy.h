@@ -24,14 +24,14 @@ public:
 	virtual const string getAction(Card card, int choice) = NULL; // return the action chosen in a form of string
 };
 
-class GreedStrategy : Strategy {
+class GreedStrategy : public Strategy {
 public:
 	const int getCard(vector<Card> deck);
 	const int getChoice(Card card);
 	const string getAction(Card card, int choice);
 };
 
-class ModerateStrategy : Strategy {
+class ModerateStrategy : public Strategy {
 public:
 	const int getCard(vector<Card> deck);
 	const int getChoice(Card card);

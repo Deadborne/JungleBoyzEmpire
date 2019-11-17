@@ -8,6 +8,7 @@
 #include <string>
 #include "Country.h"
 #include "Map.h"
+#include "Strategy.h"
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -31,7 +32,8 @@ private:
 
 
 	Bid *playerBid;
-
+	Strategy* strategy;
+	bool *isNPC;
 	int* finalScore;
 	
 
@@ -110,6 +112,17 @@ public:
 
 	int andOrAction(int actionNumber);
 	void ignore();
+
+	void setGreedStrategy(GreedStrategy _startegy);
+	void setModerateStrategy(ModerateStrategy _startegy);
+	Strategy* getStrategy();
+
+	
+	
+
+
+	void setIsNPC(bool isNPC);
+	bool getIsNPC();
 
 	
 

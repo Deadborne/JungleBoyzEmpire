@@ -621,7 +621,25 @@ std::vector<int> Player::getArmySpawnLocations(Map m) {
 	return locations;
 }
 
+void Player::setGreedStrategy(GreedStrategy _strategy) {
+	strategy = new GreedStrategy(_strategy);
+}
 
+void Player::setModerateStrategy(ModerateStrategy _strategy) {
+	strategy = new ModerateStrategy(_strategy);
+}
+
+Strategy* Player::getStrategy() {
+	return strategy;
+}
+
+void Player::setIsNPC(bool _isNPC) {
+	isNPC = new bool(_isNPC);
+}
+
+bool Player::getIsNPC() {
+	return *isNPC;
+}
 
 
 
