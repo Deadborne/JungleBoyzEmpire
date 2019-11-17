@@ -452,42 +452,56 @@ bool Player::isContinentOwner(int continentID, Map m, vector<Player> allPlayers)
 
 
 //Using the country data, determine which countries we have, if any
-vector<int> Player::getContinentsOwned(Map m) {
+vector<int> Player::getContinentsOwned(Map m, vector<Player> allPlayers) {
 
 	vector<int> continentsOwned;
-	//For each continent that exists
+
+	//For each existing continent
 	for (int i = 0; i < m.getContinents().size(); i++) {
-		//Get # of countries in this continet
-		vector<Country> countries = m.getCountries();
-		int countriesInContinent = 0;
-
-		//COUNT TOTAL COUNTRIES IN A CONTINENT
-		//For every country
-		for (int j = 0; j < countries.size(); j++) {
-			//if that country's continent matches our current continent then we need to count it
-			if (countries.at(j).getContinentId() == m.getContinents().at(i)) {
-				//increment some variable, which will track the number of countries in a continent
-				countriesInContinent++;
-			}
-		}
-		//COUNT # COUNTRIES OWNED FROM THAT SAME CONTINENT
-		int countriesOwnedInContinent = 0;
-
-		//For each country we OWN
-		for (int k = 0; k < getCountriesOwned(m).size(); k++) {
-			//if that country's continent mateches our current continent,
-			if (getCountriesOwned(m).at(k).getContinentId() == m.getContinents().at(i)) {
-				countriesOwnedInContinent++;
-			}
-		}
-		//COMPARE THE 2 VALUES
-		if (countriesInContinent == countriesOwnedInContinent) {
-			//Then add the current continent to those that we own, adding its ID to a vector.
+		//if the calling player is the owner 
+		if (isContinentOwner(m.getContinents().at(i), m, allPlayers)) {
+			//then add it to the list of continents owned by the calling player
 			continentsOwned.push_back(m.getContinents().at(i));
 		}
 
 	}
-	
+
+
+	////For each continent that exists
+	//for (int i = 0; i < m.getContinents().size(); i++) {
+	//	//Get # of countries in this continet
+	//	vector<Country> countries = m.getCountries();
+	//	int countriesInContinent = 0;
+
+	//	//COUNT TOTAL COUNTRIES IN A CONTINENT
+	//	//For every country
+	//	for (int j = 0; j < countries.size(); j++) {
+	//		//if that country's continent matches our current continent then we need to count it
+	//		if (countries.at(j).getContinentId() == m.getContinents().at(i)) {
+	//			//increment some variable, which will track the number of countries in a continent
+	//			countriesInContinent++;
+	//		}
+	//	}
+	//	//COUNT # COUNTRIES OWNED FROM THAT SAME CONTINENT
+	//	int countriesOwnedInContinent = 0;
+
+	//	//For each country we OWN
+	//	for (int k = 0; k < getCountriesOwned(m).size(); k++) {
+	//		//if that country's continent mateches our current continent,
+	//		if (getCountriesOwned(m).at(k).getContinentId() == m.getContinents().at(i)) {
+	//			countriesOwnedInContinent++;
+	//		}
+	//	}
+	//	//COMPARE THE 2 VALUES
+	//	if (countriesInContinent == countriesOwnedInContinent) {
+	//		//Then add the current continent to those that we own, adding its ID to a vector.
+	//		continentsOwned.push_back(m.getContinents().at(i));
+	//	}
+	//}
+	//
+
+
+
 	//The variable will have been changed in the player's data members, but this function will also return that vector for ease of use
 	return continentsOwned;
 }
@@ -525,7 +539,7 @@ int Player::pointsFromCards() {
 	}
 
 	//Display current count for other cards, so as to make the right decision
-	cout << "You currently have:"
+	cout << "Player " << *playerID << " currently has:"
 		<< "\n\t- " << trees << " trees"
 		<< "\n\t- " << anvils << " anvils"
 		<< "\n\t- " << shards << " shards"
@@ -535,8 +549,8 @@ int Player::pointsFromCards() {
 
 	//If we have have any wildcards to handle
 	if (wildcards > 0) {
-		cout << "\n\nYou also have " << wildcards << " wildcards\n";
-		cout << "As such, you may assign it to be either:"
+		cout << "\n\n" << *playerID << " also has " << wildcards << " wildcards\n";
+		cout << "As such, you may assign it to be one of the following options:"
 			<< "\n\t- tree"
 			<< "\n\t- anvil"
 			<< "\n\t- shard"
@@ -665,6 +679,8 @@ std::vector<int> Player::getArmyLocations(Map m) {
 	}
 	return locations;
 }
+
+
 //returns a vector of country Ids where the player has at least one army.
 std::vector<int> Player::getArmyLocationsForCity(Map m) {
 

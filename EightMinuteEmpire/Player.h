@@ -71,7 +71,7 @@ public:
 
 	vector<Country> getCountriesOwned(Map m);
 
-	vector<int> getContinentsOwned(Map m);
+	vector<int> getContinentsOwned(Map m, vector<Player>);
 
 	bool ownsMaxCards();
 	int pointsFromCards();
