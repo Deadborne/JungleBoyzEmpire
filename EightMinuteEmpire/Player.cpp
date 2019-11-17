@@ -319,6 +319,7 @@ Player::~Player() {
 	delete[] playerBid;
 	//delete[] continentsOwned;
 	delete hand;
+	delete strategy;
 }
 
 //Check if a player is the owner of a particular country

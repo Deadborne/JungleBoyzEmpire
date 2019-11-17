@@ -19,21 +19,21 @@ using namespace boost;
 
 class Strategy {
 public:
-	virtual const int getCard(vector<Card> deck) = 0; // return the index of the card chosen in the card space
+	virtual const int getCard(vector<Card> deck, Player player) = 0; // return the index of the card chosen in the card space
 	virtual const int getChoice(Card card) = 0; // return 0 for choosing action1 and return 1 for action 2
-	virtual const string getAction(Card card, int choice) = NULL; // return the action chosen in a form of string
+	virtual const string getAction(Card card, int actionChoice) = NULL; // return the action chosen in a form of string
 };
 
 class GreedStrategy : public Strategy {
 public:
-	const int getCard(vector<Card> deck);
+	const int getCard(vector<Card> deck, Player player);
 	const int getChoice(Card card);
-	const string getAction(Card card, int choice);
+	const string getAction(Card card, int actionChoice);
 };
 
 class ModerateStrategy : public Strategy {
 public:
-	const int getCard(vector<Card> deck);
+	const int getCard(vector<Card> deck, Player player);
 	const int getChoice(Card card);
-	const string getAction(Card card, int choice);
+	const string getAction(Card card, int actionChoice);
 };
