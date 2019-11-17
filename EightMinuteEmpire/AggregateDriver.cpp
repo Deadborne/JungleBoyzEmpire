@@ -122,6 +122,7 @@ int main()
 		p.setIsNPC(true);
 		players.push_back(p);
 	}
+	int oldNumberOfPlayers = numberOfPlayers;
 	//Updating numberOfPlayers
 	numberOfPlayers = numberOfPlayers + numberOfBots;
 	//[Requirement 3: Initializing Deck]
@@ -161,9 +162,7 @@ int main()
 		cout << "Player " << players[i].getPlayerID() << " starts with " << players[i].getAvailableArmies() << " armies and ";
 		cout << players[i].getAvailableCities() << " cities, and placed 3 armies at the starting region, " << Map::instance()->getStartingCountry().getCountryId() << endl;
 	}
-
-
-	//Asking if they want npcs
+	
 	
 	
 	//this loop is for placing NPCs in a 2 player game.
@@ -204,7 +203,7 @@ int main()
 	//[Requirement 4: Bidding System]
 
 	// Step 1: Prompt each player to enter their bidding coins and their birthdate in the form of YYYYMMDD
-	for (int i = 0; i < numberOfPlayers; i++) {
+	for (int i = 0; i < oldNumberOfPlayers; i++) {
 		cin.clear(); //removing bad values from cin.
 		cin.ignore();
 		players[i].setBid(startingCoins);
@@ -214,9 +213,16 @@ int main()
 	// Create vectors and enter their values to be compared after. The appropriate values match with the appropriate player index
 	vector<int> bids(numberOfPlayers);
 	vector<int> dates(numberOfPlayers);
-	for (int i = 0; i < numberOfPlayers; i++) {
+	for (int i = 0; i < oldNumberOfPlayers; i++) {
 		bids[i] = players[i].getBid().getBidAmount();
 		dates[i] = players[i].getBirthday();
+	}
+
+	for (int i = 0; i < bids.size(); i++) {
+		if (bids[i] == NULL) {
+			bids[i] = 0;
+			dates[i] = 0;
+		}
 	}
 	Bid calculator = Bid();
 	int maxIndex = calculator.calculateBid(bids);
@@ -263,22 +269,30 @@ int main()
 			cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::\n" << endl;
 
 			deck.printDeck();
-			cout << "You have " << players[currentPlayer].getAvailableCoins() << " coins." << endl;
+			if (!players[currentPlayer].getIsNPC()) {
+				cout << "You have " << players[currentPlayer].getAvailableCoins() << " coins." << endl;
+			}
+			else {
+				cout << "NPCs Turn" << endl;
+			}
 			Card chosenCard = Card(); //This will be used to determine what action to take.
 
 			//Giving the player a choice of actions
 			while (1) {
-
-
 				int choice = 0;
-				cout << "\nWhat would you like to do: " << endl;
-				cout << "1: View Map." << endl;
-				cout << "2: See available cards again." << endl;
-				cout << "3: See my hand." << endl;
-				cout << "4: Pick a card." << endl;
-				cout << "You are Player: " << currentPlayer+1 << endl; //tracing
-				cin >> choice;
-			
+				if (!players[currentPlayer].getIsNPC()) {
+					cout << "\nWhat would you like to do: " << endl;
+					cout << "1: View Map." << endl;
+					cout << "2: See available cards again." << endl;
+					cout << "3: See my hand." << endl;
+					cout << "4: Pick a card." << endl;
+					cout << "You are Player: " << currentPlayer+1 << endl; //tracing
+					cin >> choice;
+				}
+				else {
+					choice = 4;
+					cout << "\nBOT CHOSE TO SELECT CARD 4\n" << endl;
+				}
 				if (choice == 1) //display the map
 					Map::instance()->showEverything();
 				else if (choice == 2) { //show what cards they can pick
