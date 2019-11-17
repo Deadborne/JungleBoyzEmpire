@@ -74,17 +74,19 @@ int main()
 		int maxBots = 5 - numberOfPlayers;
 		cout << "Select how many bots you would like to add to your game" << endl;
 		numberOfBots = -1;
-		while (numberOfBots > maxBots || numberOfBots < 0) {
+		while (numberOfBots > maxBots + 1 || numberOfBots < 1) {
 			for (int i = 0; i <= maxBots; i++) {
 				cout << i + 1 << "): Add " << i << " bot(s) to the game" << endl;
 			}
 
-			if (numberOfBots > maxBots || numberOfBots < 0) {
+			if (numberOfBots > maxBots + 1 || numberOfBots < 1) {
 				cin >> numberOfBots;
 			}
 		}
 		
 	}
+	//Fixing off by 1 error :) 
+	numberOfBots = numberOfBots - 1;
 
 	//giving each player the right amount of coins, depending on the number of players.
 	switch (numberOfPlayers + numberOfBots) {
@@ -273,7 +275,38 @@ int main()
 				cout << "You have " << players[currentPlayer].getAvailableCoins() << " coins." << endl;
 			}
 			else {
+				int yesOrNo = -1;
 				cout << "NPCs Turn" << endl;
+				while (yesOrNo != 1 && yesOrNo != 2) {
+					cout << "You want to change the bot's strategy?" << endl;
+					cout << "1: Yes" << endl;
+					cout << "2: No" << endl;
+					
+					if (yesOrNo != 1 && yesOrNo != 2) {
+						cin >> yesOrNo;
+					}
+					
+				}
+
+				if (yesOrNo == 1) {
+					//Selects new strategy for bot
+					yesOrNo = -1;
+					while (yesOrNo != 1 && yesOrNo != 2) {
+						cout << "Choose the bots strategy!" << endl;
+						cout << "1: Greed Bot" << endl;
+						cout << "2: Moderate Bot" << endl;
+						if (yesOrNo != 1 && yesOrNo != 2) {
+							cin >> yesOrNo;
+						}
+					}
+					if (yesOrNo == 1) {
+						players[currentPlayer].setGreedStrategy(GreedStrategy());
+					}
+					else {
+						players[currentPlayer].setModerateStrategy(ModerateStrategy());
+					}
+
+				}
 			}
 			Card chosenCard = Card(); //This will be used to determine what action to take.
 
