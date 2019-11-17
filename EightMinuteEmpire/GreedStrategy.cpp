@@ -15,7 +15,7 @@ using namespace std;
 #include <boost/graph/graph_utility.hpp>
 using namespace boost;
 
-const int GreedStrategy::getCard(vector<Card> deck, Player player) {
+const int GreedStrategy::getCard(vector<Card> deck, int coins) {
 	int choice = 0;
 	for (int i = 0; i < deck.size(); i++) {
 		if (deck[i].getAction1() == "destroy" || deck[i].getAction2() == "destroy")
@@ -33,26 +33,20 @@ const int GreedStrategy::getCard(vector<Card> deck, Player player) {
 	if (choice == 0)
 		return choice;
 	else if (choice == 1 || choice == 2) {
-		if (player.getAvailableCoins() > 0) {
-			player.PayCoin();
+		if (coins > 0)
 			return choice;
-		}
 		else
 			return 0;
 	}
 	else if (choice == 3 || choice == 4) {
-		if (player.getAvailableCoins() > 1) {
-			player.PayCoin(2);
+		if (coins > 1)
 			return choice;
-		}
 		else
 			return 0;
 	}
 	else if (choice == 5) {
-		if (player.getAvailableCoins() > 2) {
-			player.PayCoin(3);
+		if (coins > 2)
 			return choice;
-		}
 		else
 			return 0;
 	}
