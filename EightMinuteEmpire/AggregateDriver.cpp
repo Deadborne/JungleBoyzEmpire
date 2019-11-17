@@ -10,11 +10,15 @@
 #include "Npc.h"
 #include <ostream>
 #include <vector>
+#include "time.h"
 using namespace std;
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graphviz.hpp>
 #include <boost/graph/graph_utility.hpp>
 using namespace boost;
+
+// Free function: generate random numbers within given range
+const int random(int min, int max);
 
 int main()
 {
@@ -977,4 +981,14 @@ int main()
 
 	}
 	
+}
+
+const int random(int min, int max) { //range : [min, max)
+	static bool first = true;
+	if (first)
+	{
+		srand(time(NULL));
+		first = false;
+	}
+	return min + rand() % ((max + 1) - min);
 }
