@@ -18,14 +18,18 @@ using namespace boost;
 const int GreedStrategy::getCard(vector<Card> deck, int coins) {
 	int choice = 0;
 	for (int i = 0; i < deck.size(); i++) {
-		if (deck[i].getAction1() == "destroy" || deck[i].getAction2() == "destroy")
+		if (deck[i].getAction1() == "place" || deck[i].getAction2() == "place") {
 			choice = i;
-		else if (deck[i].getAction1() == "build" || deck[i].getAction2() == "build")
+			break;
+		}
+		else if (deck[i].getAction1() == "move" || deck[i].getAction2() == "Move") {
 			choice = i;
-		else if (deck[i].getAction1() == "moveOver" || deck[i].getAction2() == "moveOver")
+			break;
+		}
+		else if (deck[i].getAction1() == "moveOver" || deck[i].getAction2() == "moveOver") {
 			choice = i;
-		else if (deck[i].getAction1() == "place" || deck[i].getAction2() == "place")
-			choice = i;
+			break;
+		}
 		else
 			continue;
 	}

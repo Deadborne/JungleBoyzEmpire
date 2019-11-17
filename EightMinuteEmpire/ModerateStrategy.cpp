@@ -20,12 +20,18 @@ using namespace boost;
 const int ModerateStrategy::getCard(vector<Card> deck, int coins) {
 	int choice = 0;
 	for (int i = 0; i < deck.size(); i++) {
-		if (deck[i].getAction1() == "place" || deck[i].getAction2() == "place")
+		if (deck[i].getAction1() == "place" || deck[i].getAction2() == "place") {
 			choice = i;
-		else if (deck[i].getAction1() == "move" || deck[i].getAction2() == "Move")
+			break;
+		}
+		else if (deck[i].getAction1() == "move" || deck[i].getAction2() == "Move") {
 			choice = i;
-		else if (deck[i].getAction1() == "moveOver" || deck[i].getAction2() == "moveOver")
+			break;
+		}
+		else if (deck[i].getAction1() == "moveOver" || deck[i].getAction2() == "moveOver") {
 			choice = i;
+			break;
+		}
 		else
 			continue;
 	}
