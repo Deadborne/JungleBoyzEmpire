@@ -281,18 +281,8 @@ int main()
 			}
 			else {
 				int yesOrNo = -1;
+				yesOrNo = 1;
 				cout << "NPCs Turn" << endl;
-				while (yesOrNo != 1 && yesOrNo != 2) {
-					cout << "You want to change the bot's strategy?" << endl;
-					cout << "1: Yes" << endl;
-					cout << "2: No" << endl;
-					
-					if (yesOrNo != 1 && yesOrNo != 2) {
-						cin >> yesOrNo;
-					}
-					
-				}
-
 				if (yesOrNo == 1) {
 					//Selects new strategy for bot
 					yesOrNo = -1;
@@ -310,6 +300,9 @@ int main()
 					else {
 						players[currentPlayer].setModerateStrategy(ModerateStrategy());
 					}
+
+				}
+				else {
 
 				}
 			}
