@@ -386,38 +386,67 @@ bool Player::isContinentOwner(int continentID, Map m, vector<Player> allPlayers)
 		}
 	}
 		
-	//Check how many countries does our calling player own 
-	for (int i = 0; i < countriesInContinent.size(); i++) {
+	vector<int> countriesOwnedInContinent{ 0,0,0,0,0 };
 
+	//For each player
+	for (int i = 0; i < allPlayers.size(); i++) {
+		//Get countries owned by the player
+		vector<Country> countriesOwned = allPlayers.at(i).getCountriesOwned(m);
+		
+		//For each country  they own
+		for (int j = 0; j < countriesOwned.size(); j++) {
+			if (countriesOwned.at(j).getContinentId() == continentID) {
+				//then we need to count that fact PER PLAYER
+				//So increment the value at the corresponding index in CountriesOwnedInContinent
+				countriesOwnedInContinent[i]++;
+
+				//We should end up with a vector like so
+
+				//continentsOwned[]
+				//i		0	1	2	3	4
+				//		p1	p2	p3	p4	p5
+				//c		1	3	1	2	0		
+			}
+		}
+	}
+
+	//Now we need to determine which player owns the most countries in the continents
+	int maxCountries = countriesOwnedInContinent[0];
+	int maxCountriesIndex = 0;
+
+	for (int i = 0; i < countriesOwnedInContinent.size(); i++) {
+		for (int j = i + 1; j < countriesOwnedInContinent.size(); j++) {
+			if (countriesOwnedInContinent[j] > maxCountries) {
+				maxCountries = countriesOwnedInContinent[j];
+				maxCountriesIndex = j;
+			}
+		}
+	}
+
+	//If the maxCountries is 0, that means nobody owns the Continent, which means the calling player definetely doesn't own it.
+	if (maxCountries == 0)
+		return false;
+	//Otherwise, we have to check if there are multiple players who are tied for ownership
+	else {
+		int dupe = 0;
+		//Count any duplicates of the max value
+		for (int i = 0; i < countriesOwnedInContinent.size(); i++) {
+			if (countriesOwnedInContinent[i] == maxCountries)
+				dupe++;
+		}
+
+		//Only once we have this information can we determine ownership.
+		//If theres any sort of tie, nobody gets the continent
+		if (dupe > 1)
+			return false;
+		//If theres only one copy of that number and the max countries belong to this player's index, they DO own the continent
+		else if (maxCountriesIndex == *playerID - 1)
+			return true;
+		else
+			return false;
 
 	}
-	//vector<int> continents = m.getContinents();
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	//First check if they are the only player stationed in that continent --> Continent owned
-	//if ()
-
-
-
-	//In the given continent
-		//Get the number of countries owned by the calling player
-	
-		//
-
-		//Loop through each player
-			//count how many countries they own in a given country
-			//compare that number to the number owned by the calling player
-				//if 
-			
-
-	return false;
 }
 
 
@@ -674,58 +703,6 @@ std::vector<int> Player::getArmySpawnLocations(Map m) {
 	return locations;
 }
 
-
-
-
-
-//FUNTIONALITY NOT REQUIRED --- TO BE IMPLEMENTED IN A2//
-
-////For future implementation, this function will scan countries, determine the owner
-////and pass the country ID to its respective owner's countriesOwned vector
-//vector<int> Player::getCountriesOwned() {
-//	Map m = Map();				//Start the map
-//	vector<Country> allCountries = m.getCountries();
-//	
-//	//This is where we will store countries owned by a player 
-//	vector<int> countriesOwned;	
-//
-//	//Take the vector of country objects
-//	//Loop through countries
-//	for (int i = 0; i < allCountries.size(); i++) {
-//		//Get the army vector for each country
-//		vector<int> armies = allCountries.at(i).getArmiesPerPlayer();
-//		//Get the largest element in the vector
-//		vector<int>::iterator maxElement = max_element(armies.begin(), armies.end());
-//		bool duplicatesExist = false;
-//
-//		
-//		//-----THIS PART OF THE FUNCTION HAS NOT BEEN TESTED-----//
-//		//Does our matrix have duplicates? Does it therefore have an owner?
-//		for (int i = 0; (i < armies.size() && (duplicatesExist== false)); i++) {
-//			for (int j = i + 1; j < armies.size(); j++) {
-//
-//				//If there are duplicates in the array and one of them is equal to 
-//				if ((armies.at(i) == armies.at(j)) && (armies.at(i) == *maxElement)) {
-//					duplicatesExist = true;
-//				}
-//			}
-//		}
-//		
-//		//if the maxElement has a duplicate 
-//		if (duplicatesExist == false) {
-//			//Position of largest value
-//			int ownerIndex = std::distance(armies.begin(), maxElement);
-//
-//			//If the playerID is the same as the index with the most armies
-//			if (*playerID == ownerIndex + 1) {
-//				//Then add that country to the player's owned countries
-//				countriesOwned.push_back(allCountries.at(i).getCountryId());
-//			}
-//		}
-//	}
-//
-//	return countriesOwned;
-//}
 
 
 
