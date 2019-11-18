@@ -370,7 +370,7 @@ vector<Country> Player::getCountriesOwned(Map m) {
 
 
 //A player actually owns a continent only if they control more countries than other players
-bool Player::isContinentOwner(int continentID, Map m, vector<Player> allPlayers) {
+bool Player::isContinentOwner(int continentID, Map m) {
 
 	//Basically we need to check that the calling player owns the most countries in this continent
 	vector<Country> countries = m.getCountries();
@@ -388,10 +388,11 @@ bool Player::isContinentOwner(int continentID, Map m, vector<Player> allPlayers)
 		
 	vector<int> countriesOwnedInContinent{ 0,0,0,0,0 };
 
+	
 	//For each player
-	for (int i = 0; i < allPlayers.size(); i++) {
+	for (int i = 0; i < m.getPlayers().size(); i++) {
 		//Get countries owned by the player
-		vector<Country> countriesOwned = allPlayers.at(i).getCountriesOwned(m);
+		vector<Country> countriesOwned = m.getPlayers().at(i)->getCountriesOwned(m);
 		
 		//For each country  they own
 		for (int j = 0; j < countriesOwned.size(); j++) {
@@ -452,14 +453,14 @@ bool Player::isContinentOwner(int continentID, Map m, vector<Player> allPlayers)
 
 
 //Using the country data, determine which countries we have, if any
-vector<int> Player::getContinentsOwned(Map m, vector<Player> allPlayers) {
+vector<int> Player::getContinentsOwned(Map m) {
 
 	vector<int> continentsOwned;
 
 	//For each existing continent
 	for (int i = 0; i < m.getContinents().size(); i++) {
 		//if the calling player is the owner 
-		if (isContinentOwner(m.getContinents().at(i), m, allPlayers)) {
+		if (isContinentOwner(m.getContinents().at(i), m)) {
 			//then add it to the list of continents owned by the calling player
 			continentsOwned.push_back(m.getContinents().at(i));
 		}

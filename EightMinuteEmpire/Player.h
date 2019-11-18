@@ -43,16 +43,10 @@ public:
 	vector<int> getArmyLocationsForCity(Map m);
 
 	vector<int> getArmySpawnLocations(Map m);
-	//Player();
 	
 	//--- Bidding --- //
 
 	~Player();
-
-	//----Wish List----//
-	//void claimCountry();
-	//void setCountriesOwned();
-	
 	
 	void destroyCity(Country& cityLocation, Player& cityOwner);
 	//vector<int> getCountriesOwned();
@@ -66,12 +60,12 @@ public:
 	void buildCity(Country& cityLocation);
 	void destroyArmy(Country& armyLocation, Player armyOwner);
 
-	bool isContinentOwner(int continentID, Map m, vector<Player> allPlayers);
+	bool isContinentOwner(int continentID, Map m);
 	bool isCountryOwner(Country& country);
 
 	vector<Country> getCountriesOwned(Map m);
 
-	vector<int> getContinentsOwned(Map m, vector<Player>);
+	vector<int> getContinentsOwned(Map m);
 
 	bool ownsMaxCards();
 	int pointsFromCards();
