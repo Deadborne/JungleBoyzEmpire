@@ -60,9 +60,6 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Header Files\Map</Filter>
-    </ClInclude>
     <ClInclude Include="Country.h">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
@@ -123,13 +120,22 @@
     <ClInclude Include="Bid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Phases.h">
+      <Filter>Header Files\GameObservers</Filter>
+    </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source Files\Map</Filter>
     </ClCompile>
     <ClCompile Include="Country.cpp">
       <Filter>Source Files\Map</Filter>
@@ -199,6 +205,18 @@
     </ClCompile>
     <ClCompile Include="Bid.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Phases.cpp">
+      <Filter>Source Files\GameObservers</Filter>
+    </ClCompile>
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\Map</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

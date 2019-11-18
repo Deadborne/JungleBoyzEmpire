@@ -282,3 +282,11 @@ void Map::resetInstance() {
 	delete mapInstance;
 	mapInstance = NULL;
 }
+
+void Map::setPlayers(std::vector<Player*> x) {
+	players = x;
+}
+
+std::vector<Player*> Map::getPlayers() {
+	return players;
+}

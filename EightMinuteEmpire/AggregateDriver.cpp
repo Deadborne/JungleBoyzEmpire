@@ -97,6 +97,25 @@ int main()
 		cout << "Player " << p.getPlayerID() << " is ready, and has " << p.getAvailableCoins() << " coins!" << endl;
 	}
 
+
+
+
+	//-----------------------------------------Jank Storage-----------------------------------
+	//Create copy location																	//
+	vector<Player*> playersCopy;															//
+																							//
+	for (int i = 0; i != players.size(); i++) {												//
+		playersCopy.push_back(&players[i]);														//
+	}																						//
+																							//
+	//Copy the players into the map so we can use it globally w/o passing as param			//
+	Map::instance()->setPlayers(playersCopy);												//
+	//playersCopy.clear;																		//
+	//----------------------------------------------------------------------------------------
+
+
+
+
 	//[Requirement 3: Initializing Deck]
 
 	Deck deck = Deck(numberOfPlayers); //Note: this automatically shuffles the deck
@@ -297,9 +316,12 @@ int main()
 
 							vector<Card> v = players[currentPlayer].getHand();
 							v.push_back(chosenCard);
+							//WELTON+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+							//====================================================================================
 
 							players[currentPlayer].setHand(v);
 							deck.removeCard(cardChoice); 
+							/////////////////////////////////////////////////////////////////////////////////////
 							break;
 						}
 						else if (cardChoice == 2 || 3) {
