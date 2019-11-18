@@ -25,6 +25,10 @@ void Subject::Notify() {
 		views[i]->Update();
 
 	//By doing this, any of our phases should be updated when anything is changed in the Subject
+	//for (int i = 0; i < phases.size(); i++)
+		//phases[i]->Update();
+};   
+void Subject::NotifyPhase() {
 	for (int i = 0; i < phases.size(); i++)
 		phases[i]->Update();
-};
+}

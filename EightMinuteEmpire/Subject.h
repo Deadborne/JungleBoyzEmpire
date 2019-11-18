@@ -12,6 +12,7 @@ public:
 	virtual void Attach(GameObserver* o); //ok
 	virtual void Detach(GameObserver* o);
 	virtual void Notify(); //ok
+	virtual void NotifyPhase();
 	Subject();
 	~Subject();
 
