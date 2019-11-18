@@ -85,6 +85,9 @@ vector<Card> Player::getHand() {
 
 void Player::setHand(vector<Card> v) {
 	hand->swapHand(v);
+	
+	//Notify the phase observer, baby!
+	NotifyPhase();
 }
 
 void Player::printHand() {

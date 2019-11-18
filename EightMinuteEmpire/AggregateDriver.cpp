@@ -8,6 +8,7 @@
 #include "Player.h" 
 #include "Card.h"
 #include "Statistics.h"
+#include "Phases.h"
 #include <ostream>
 #include <vector>
 using namespace std;
@@ -217,31 +218,47 @@ int main()
 
 
 	Statistics *s1 = new Statistics();
+	Phases *ph1 = new Phases();
+
 	Player *p1;
 	p1 = &players[0];
 	s1->setSubject(p1);
+	ph1->setSubject(p1);
+
 	Statistics *s2 = new Statistics();
+	Phases *ph2 = new Phases();
+
 	Player *p2;
 	p2 = &players[1];
 	s2->setSubject(p2);
+	ph2->setSubject(p2);
 
 	if (players.size() >= 3) {
 		Statistics *s3 = new Statistics();
+		Phases *ph3 = new Phases();
+
 		Player *p3;
 		p3 = &players[2];
 		s3->setSubject(p3);
+		ph3->setSubject(p3);
 	}
 	if (players.size() >= 4) {
 		Statistics *s4 = new Statistics();
+		Phases *ph4 = new Phases();
+		
 		Player *p4;
 		p4 = &players[3];
 		s4->setSubject(p4);
+		ph4->setSubject(p4);
 	}
 	if (players.size() == 5) {
 		Statistics *s5 = new Statistics();
+		Phases *ph5 = new Phases();
+
 		Player *p5;
 		p5 = &players[4];
 		s5->setSubject(p5);
+		ph5->setSubject(p5);
 	}
 	
 	//setting the first player to the bid winner
@@ -391,7 +408,7 @@ int main()
 				}
 			}
 			//:::::::::::::::::::::::::::::::::::PART 4::::::::::::::::::::::::::::::::::::::::::::::
-			cout << "Time to do the action of your card" << endl;
+			//cout << "Time to do the action of your card" << endl;
 			int numberOfActions = 0;
 			if (chosenCard.getOperator() == "")
 				numberOfActions = 1;
@@ -407,7 +424,7 @@ int main()
 			int cardActionUsed = -1;
 			bool multipleChoices = false;
 			while (numberOfActions > 0) {
-				cout << "You have " << numberOfActions << " actions remaining. You have the following choices: " << endl;
+				cout << "You have " << numberOfActions << " actions remaining. What would you like to do: " << endl;
 				if (cardActionUsed != 1)
 					cout << "1: " << chosenCard.formatAction(chosenCard.getAction1(), to_string(chosenCard.getNumA1())) << endl;
 				else
