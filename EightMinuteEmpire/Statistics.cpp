@@ -25,7 +25,7 @@ void Statistics::Update() {
 //The meat of the observer - show points, who controls what
 void Statistics::display() {
 
-	cout << "\n-----GAME STATISTICS:----\n" << endl;
+	cout << "\n-----GAME STATISTICS:----\n" << endl; 
 
 	//Congratulate player on drawing their last card
 	if (_subject->checkIfReachedHandLimit() == true) {
