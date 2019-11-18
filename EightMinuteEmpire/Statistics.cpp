@@ -26,6 +26,28 @@ void Statistics::Update() {
 void Statistics::display() {
 
 	cout << "\n-----GAME STATISTICS:----\n" << endl;
+
+	//Congratulate player on drawing their last card
+	if (_subject->checkIfReachedHandLimit() == true) {
+
+		_subject->setHandStatus(false); //just so we don't see this message again for the same player
+
+		cout << "~~~~~~~~OH MY GOODNESS!~~~~~~~~~~" << endl;
+		cout << "Player " << _subject->getPlayerID() << ", ";
+		if (_subject->getPlayerID() == 0)
+			cout << "you beautiful bastard, ";
+		else if (_subject->getPlayerID() == 1)
+			cout << "you mythical creature, ";
+		else if (_subject->getPlayerID() == 2)
+			cout << "you white lion of a human being, ";
+		else if (_subject->getPlayerID() == 3)
+			cout << "you delicate work of art, ";
+		else if (_subject->getPlayerID() == 4)
+			cout << "you majestic human unicorn, ";
+		else if (_subject->getPlayerID() == 5)
+			cout << "you wonderful golden child, ";
+		cout << "you've completed a full hand!\n In any case, here's where things stand:" << endl;
+	}
 	//print out every country owned by the player
 	cout << "Player " << _subject->getPlayerID() << " has dominion over these Regions: [ ";
 	for (int i = 0; i < _subject->getCountriesOwned(*Map::instance()).size(); i++) {

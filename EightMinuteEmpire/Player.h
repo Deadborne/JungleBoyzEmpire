@@ -33,7 +33,7 @@ private:
 
 
 	Bid *playerBid;
-
+	bool *reachedHandLimit = new bool(false);
 	int* finalScore;
 	
 public:
@@ -65,7 +65,6 @@ public:
 
 	vector<int> getContinentsOwned(Map m);
 
-	bool ownsMaxCards();
 	int pointsFromCards();
 
 	int computeScore(Map m);
@@ -103,9 +102,12 @@ public:
 	void setBid(int maxBid);
 	Bid getBid();
 
+	void setHandStatus(bool s);
+	bool checkIfReachedHandLimit();
+
+
 	int andOrAction(int actionNumber);
 	void ignore();
-
 	
 
 

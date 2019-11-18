@@ -91,6 +91,16 @@ void Player::printHand() {
 	hand->printHand();
 }
 
+void Player::setHandStatus(bool s) {
+	*reachedHandLimit = s;
+}
+
+bool Player::checkIfReachedHandLimit() {
+	return *reachedHandLimit;
+}
+
+
+
 //Bid functionality
 void Player::setBid() {
 	playerBid = new Bid();
@@ -506,6 +516,7 @@ vector<int> Player::getContinentsOwned(Map m) {
 	//The variable will have been changed in the player's data members, but this function will also return that vector for ease of use
 	return continentsOwned;
 }
+
 
 
 //Calulate all the points from the goods we have collected via cards

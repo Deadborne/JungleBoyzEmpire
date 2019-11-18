@@ -275,6 +275,12 @@ int main()
 			cout << "::::::::::::It is currently Player " << currentPlayer + 1 << "'s turn::::::::::::" << endl;
 			cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::\n" << endl;
 
+			//if it's the last turn, sets the "last turn" boolean inside the Player
+			if (currentTurn == numberOfTurns - 1) {
+				players[currentPlayer].setHandStatus(true);
+			}
+
+
 			deck.printDeck();
 			cout << "You have " << players[currentPlayer].getAvailableCoins() << " coins." << endl;
 			Card chosenCard = Card(); //This will be used to determine what action to take.
