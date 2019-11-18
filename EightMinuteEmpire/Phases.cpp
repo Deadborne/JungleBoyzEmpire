@@ -22,7 +22,7 @@ void Phases::Update() {
 }
 
 void Phases::display() {
-	cout << "\n-----PLAYER " << _subject->getPlayerID() << "'S TURN " <<	
+	cout << "\n-----PLAYER " << _subject->getPlayerID() << "'S TURN ";
 	//we need to display 
 }
 

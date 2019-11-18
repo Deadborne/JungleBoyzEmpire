@@ -104,8 +104,8 @@ int main()
 	//Create copy location																	//
 	vector<Player*> playersCopy;															//
 																							//
-	for (int i = 0; i < players.size(); i++) {												//
-		playersCopy[i] = &players[i];														//
+	for (int i = 0; i != players.size(); i++) {												//
+		playersCopy.push_back(&players[i]);														//
 	}																						//
 																							//
 	//Copy the players into the map so we can use it globally w/o passing as param			//

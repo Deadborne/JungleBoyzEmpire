@@ -7,7 +7,7 @@
 #include <boost/graph/graphviz.hpp>
 #include "Player.h"
 typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
-
+class Player;
 
 class Map
 {

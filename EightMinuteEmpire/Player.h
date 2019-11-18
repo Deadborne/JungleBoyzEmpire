@@ -13,7 +13,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-
+class Map;
 
 using namespace std;
 typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
@@ -35,8 +35,6 @@ private:
 	Bid *playerBid;
 
 	int* finalScore;
-	
-
 	
 public:
 	vector<int> getArmyLocations(Map m);
