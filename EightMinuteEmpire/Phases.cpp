@@ -39,9 +39,11 @@ void Phases::display() {
 		else if (lastCard.getAction1() == "move")
 			cout << "move " << lastCard.getNumA1() << " army/armies over land.\n\n";
 		else if (lastCard.getAction1() == "moveOver")
-			cout << "move " << lastCard.getNumA1() << " army/armies over land or sea.\n/n";
+			cout << "move " << lastCard.getNumA1() << " army/armies over land or sea.\n\n";
 		else if (lastCard.getAction1() == "build")
-			cout << "build 1 city.";
+			cout << "build a city.\n\n";
+		else if (lastCard.getAction1() == "destroy")
+			cout << "destroy an opponent's city.\n\n";
 	}
 	else if (lastCard.getOperator() == "and") {
 		cout << " both ";
@@ -53,8 +55,9 @@ void Phases::display() {
 		else if (lastCard.getAction1() == "moveOver")
 			cout << "move " << lastCard.getNumA1() << " army/armies over land or sea ";
 		else if (lastCard.getAction1() == "build")
-			cout << "build 1 city, ";
-		
+			cout << "build 1 city ";
+		else if (lastCard.getAction1() == "destroy")
+			cout << "destroy an opponent's city ";
 		//and this
 		cout << "and ";
 		
@@ -65,7 +68,9 @@ void Phases::display() {
 		else if (lastCard.getAction2() == "moveOver")
 			cout << "move " << lastCard.getNumA2() << " army/armies over land or sea.\n\n";
 		else if (lastCard.getAction2() == "build")
-			cout << "build 1 city.";
+			cout << "build 1 city.\n\n";
+		else if (lastCard.getAction2() == "destroy")
+			cout << "destroy an opponent's city.\n\n";
 	}
 	else if (lastCard.getOperator() == "or") {
 		cout << " either ";
@@ -78,7 +83,9 @@ void Phases::display() {
 		else if (lastCard.getAction1() == "moveOver")
 			cout << "move " << lastCard.getNumA1() << " army/armies over land or sea ";
 		else if (lastCard.getAction1() == "build")
-			cout << "build 1 city, ";
+			cout << "build 1 city ";
+		else if (lastCard.getAction1() == "destroy")
+			cout << "destroy an opponent's city ";
 
 		//and this
 		cout << "or ";
@@ -91,6 +98,8 @@ void Phases::display() {
 			cout << "move " << lastCard.getNumA2() << " army/armies over land or sea.\n\n";
 		else if (lastCard.getAction2() == "build")
 			cout << "build 1 city.";
+		else if (lastCard.getAction2() == "destroy")
+			cout << "destroy an opponent's city.\n\n";
 	}
 		
 	

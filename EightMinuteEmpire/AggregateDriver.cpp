@@ -17,6 +17,110 @@ using namespace std;
 #include <boost/graph/graph_utility.hpp>
 using namespace boost;
 
+
+//Handles final calculations
+Player getWinner(vector<int> scores, vector<Player> players) {
+
+	//get the top score
+	int topScore = *max_element(scores.begin(), scores.end());
+
+	//get the index of the top score
+	int topIndex = std::distance(scores.begin(), max_element(scores.begin(), scores.end()));
+
+
+	//Are there even any duplicates high scores out here
+	//Run through scores and see if there is more than one value matching topScore
+
+	int dupeTop = 0;
+	for (int i = 0; i < scores.size(); i++) {
+		if (scores[i] == topScore)
+			dupeTop++;
+	}
+
+	//if theres more than one value matching the topScore, we have some sort of tie and need to compare 'em
+	if (dupeTop > 1) {
+		vector<Player> tied;
+		for (int i = 0; i < scores.size(); i++) {
+			//if they are one of the fools who tied, get that player and add em to a subset of players who have the same score
+			if (scores[i] == topScore)
+				tied.push_back(players[i]);
+		}
+
+		//now we need to check who of the tied players has the most remaining coins
+		int coinsMax = 0;
+		Player coinWinner;
+
+		//For each tied player
+		for (int i = 0; i < tied.size(); i++) {
+			//if a player has more coins than the current max coins,
+			if (tied[i].getAvailableCoins() > coinsMax) {
+				coinsMax = tied[i].getAvailableCoins();			//that player's coin count becomes the max
+				coinWinner = tied[i];							//and that player becomes the winner of the tie
+			}
+		}
+
+		//We must now see if there is more than one person with that same number of coins
+		int dupeCoins = 0;
+		for (int i = 0; i < tied.size(); i++) {
+			if (tied[i].getAvailableCoins() == coinsMax)
+				dupeCoins++;
+		}
+
+		//if theres still a tie between players after checking their coin counts
+		if (dupeCoins > 1) {
+			vector<Player> stillTied;
+
+			//Get the people who are still somehow tied
+			for (int i = 0; i < tied.size(); i++) {
+				if (tied[i].getAvailableCoins() == coinsMax)
+					stillTied.push_back(tied[i]);
+			}
+
+			//Find minimum remaining armies - meaning whoever has placed the most armies wins
+			int minArmies = 100;
+			Player finalWinner;
+
+			for (int i = 0; i < stillTied.size(); i++) {
+				if (stillTied[i].getAvailableArmies() < minArmies) {
+					minArmies = stillTied[i].getAvailableArmies();
+					finalWinner = stillTied[i];
+				}
+
+			}
+
+			int dupeArmies = 0;
+			for (int i = 0; i < stillTied.size(); i++) {
+				if (stillTied[i].getAvailableArmies() == minArmies)
+					dupeArmies++;
+			}
+
+			if (dupeArmies <= 1) {
+				return finalWinner;
+
+			}
+			else {
+				throw string("\n\n\n\n\n\n\n\n\n\n\n\n\n\\nCongrats!!!!! You broke the game. How inconsiderate.");
+			}
+
+
+		}
+		else {
+			return coinWinner;
+		}
+
+	}
+	else {
+		//otherwise, the player with the top score wins, obviously
+		return players.at(topIndex);
+	}
+
+
+
+
+}
+
+
+
 int main()
 {
 
@@ -917,54 +1021,25 @@ int main()
 	//:::::::::::::::::::::::::::::::::::PART 6::::::::::::::::::::::::::::::::::::::::::::::
 
 	vector<int> scores;
-
-	cout << "\n\n========================FINAL SCORES========================\n\n";
+	cout << "============================================================";
+	cout << "\n\n======================= FINAL SCORES =======================\n\n";
+	cout << "============================================================";
+	
 	for (int i = 0; i < players.size(); i++) {
 		cout << "Player " << i+1 << ": " << players.at(i).computeScore(*Map::instance()) << endl;
 		scores.push_back(players.at(i).computeScore(*Map::instance()));
-		//i0 = p1 score, i1 = p2 score, i2 = p3 score
-	}
-
-
-	int topScore = *max_element(scores.begin(), scores.end());
-
-	int topIndex = std::distance(scores.begin(), max_element(scores.begin(), scores.end()));
-
-
-	//Place all the tie members in another vector and compare just them
-
-	vector<Player> tied;
-	for (int i = 0; i < scores.size(); i++) {
-		if (scores.at(i) == topScore) {
-			//push the player ID to a new 
-			tied.push_back(players.at(i));
-			//tied should be a vector of players for whom the final score is equivalent
-
-		}
-		else {
-			//then the player at topIndex is the winner
-			cout << "\n\n\nCongrats! Player " << players.at(topIndex).getPlayerID() + 1 << " is the winner\n";
-			/git
-		}
-	}
-
-
-	if (tied.size() > 1) {
-	
-		int coinsMax = 0;
-		Player coinWinner;
-		//Process the ties.. For each tied player
-		for (int i = 0; i < tied.size(); i++) {
-			//Get most coins left
-			if (tied.at(i).getAvailableCoins() > coinsMax) {
-				coinsMax = tied.at(i).getAvailableCoins();
-				coinWinner = tied.at(i);
-			}
-				
-		}
 		
-		cout << "\n\n\nCongrats! Player " << coinWinner.getPlayerID() + 1 << " is the winner\n";
+		
+		//i0 = p1 score, i1 = p2 score, i2 = p3 score, etc
+	}
 
+	try {
+		cout << "\n\n\n\n CONGRATS PLAYER" << getWinner(scores, players).getPlayerID() << ". YOU WIN!!!";
+			
+	}
+	catch (string std) {
+		cout << std;
 	}
 	
 }
+
