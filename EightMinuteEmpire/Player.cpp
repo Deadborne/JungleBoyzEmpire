@@ -564,7 +564,7 @@ int Player::pointsFromCards() {
 
 	//If we have have any wildcards to handle
 	if (wildcards > 0) {
-		cout << "\n\n" << *playerID << " also has " << wildcards << " wildcards\n";
+		cout << "\n\nPLAYER " << *playerID << " also has " << wildcards << " wildcards\n";
 		cout << "As such, you may assign it to be one of the following options:"
 			<< "\n\t- tree"
 			<< "\n\t- anvil"
@@ -575,7 +575,7 @@ int Player::pointsFromCards() {
 		//Assign values to each of our wild cards
 		for (int j = 1; j <= wildcards; j++) {
 			string chosenGood;
-			cout << "\n\nChoose a value for wildcard " << j << endl;
+			cout << "\n\nPLAYER " << *playerID << ", please choose a value for wildcard " << j << endl;
 			cin >> chosenGood;
 
 			//Add the chosen value
