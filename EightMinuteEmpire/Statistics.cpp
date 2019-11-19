@@ -70,11 +70,19 @@ void Statistics::display() {
 	cout << "]" << endl;
 
 	//Bar Graph!
-	cout << "Current points: ";
-	int points = _subject->getContinentsOwned(*Map::instance()).size() + _subject->getCountriesOwned(*Map::instance()).size();
-	for (int i = 0; i < points; i++) {
-		cout << "o";
+	cout << "\nCurrent points: " << endl;
+
+	//prints out one "o" per point
+	for (int i = 0; i < Map::instance()->getPlayers().size(); i++) {
+		
+		int points = Map::instance()->getPlayers()[i]->getCountriesOwned(*Map::instance()).size() + Map::instance()->getPlayers()[i]->getContinentsOwned(*Map::instance()).size();
+		cout << "Player " << Map::instance()->getPlayers()[i]->getPlayerID() << " points: ";
+		for (int j = 0; j < points; j++) {
+			cout << "o";
+		}
+		cout << endl;
 	}
+
 	cout << "\n\n----END OF STATISTICS----\n"<< endl;
 }
 
