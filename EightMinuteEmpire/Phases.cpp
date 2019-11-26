@@ -97,7 +97,7 @@ void Phases::display() {
 		else if (lastCard.getAction2() == "moveOver")
 			cout << "move " << lastCard.getNumA2() << " army/armies over land or sea.\n\n";
 		else if (lastCard.getAction2() == "build")
-			cout << "build 1 city.";
+			cout << "build 1 city.\n\n";
 		else if (lastCard.getAction2() == "destroy")
 			cout << "destroy an opponent's city.\n\n";
 	}

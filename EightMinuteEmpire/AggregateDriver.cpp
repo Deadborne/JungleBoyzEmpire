@@ -748,11 +748,12 @@ int main()
 														cin >> regionSelected;
 													}
 												}
+												int countryID = playerArmiesToDestroy[regionSelected - 1];
+												int playerID = players[playerSelected - 1].getPlayerID();
+												Map::instance()->killArmy(countryID, playerID);
+												players.at(currentPlayer).Notify();
 
-												players[currentPlayer].destroyArmy(Map::instance()->getCountries()[playerArmiesToDestroy[regionSelected - 1] - 1], players[playerSelected - 1]);
-												innerCounter--;
-												//playersTargeted = vector<int>(0);
-												
+												innerCounter--;								
 											}
 									}
 								}
@@ -761,8 +762,6 @@ int main()
 									innerCounter = 0;
 								}
 							}
-
-
 						}
 						innerCounter--;
 					}
@@ -975,10 +974,13 @@ int main()
 													}
 												}
 
-												players[currentPlayer].destroyArmy(Map::instance()->getCountries()[playerArmiesToDestroy[regionSelected - 1] - 1], players[playerSelected - 1]);
+												int countryID = playerArmiesToDestroy[regionSelected - 1];
+												int playerID = players[playerSelected - 1].getPlayerID();
+												Map::instance()->killArmy(countryID, playerID);
+												players.at(currentPlayer).Notify();
+
 												innerCounter--;
-											}
-										
+											}			
 									}
 								}
 								else {
@@ -986,8 +988,6 @@ int main()
 									innerCounter = 0;
 								}
 							}
-
-
 						}
 						numberOfActions--;
 					}

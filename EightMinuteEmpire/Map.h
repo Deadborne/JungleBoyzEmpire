@@ -40,4 +40,6 @@ public:
 	vector<Player*> getPlayers();
 	void setPlayers(vector<Player*> x);
 
+	void killArmy(int countryID, int playerID);
+
 };
