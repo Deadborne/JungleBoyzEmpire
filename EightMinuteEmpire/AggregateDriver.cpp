@@ -19,7 +19,7 @@ using namespace boost;
 
 
 //Handles final calculations
-Player getWinner(vector<int> scores, vector<Player> players) {
+void declareWinner(vector<int> scores, vector<Player> players) {
 
 	//get the top score
 	int topScore = *max_element(scores.begin(), scores.end());
@@ -95,7 +95,8 @@ Player getWinner(vector<int> scores, vector<Player> players) {
 			}
 
 			if (dupeArmies <= 1) {
-				return finalWinner;
+				cout << "\n\n CONGRATS PLAYER" << finalWinner.getPlayerID() << ". YOU WIN!!!";
+				return;
 
 			}
 			else {
@@ -105,21 +106,18 @@ Player getWinner(vector<int> scores, vector<Player> players) {
 
 		}
 		else {
-			return coinWinner;
+			cout << "\n\n CONGRATS PLAYER" << coinWinner.getPlayerID() << ". YOU WIN!!!";
+			return;
 		}
 
 	}
 	else {
 		//otherwise, the player with the top score wins, obviously
-		return players.at(topIndex);
+		cout << "\n\n CONGRATS PLAYER" << players.at(topIndex).getPlayerID() << ". YOU WIN!!!";
+		return;
 	}
 
-
-
-
 }
-
-
 
 int main()
 {
@@ -237,7 +235,7 @@ int main()
 	//:::::::::::::::::::::::::::::::::::PART 2::::::::::::::::::::::::::::::::::::::::::::::
 	cout << Map::instance()->getCountries().at(9).getCountryId();
 	cout << "\n[PART 2: STARTUP PHASE]\n" << endl;
-	
+
 	//[Requirement 1: Shuffling Deck]
 	// The shuffling already appears on the Deck Constructor. To verify, we are printing the card space. Each time we get different amount of cards.
 	deck.printDeck();
@@ -349,7 +347,7 @@ int main()
 	if (players.size() >= 4) {
 		Statistics *s4 = new Statistics();
 		Phases *ph4 = new Phases();
-		
+
 		Player *p4;
 		p4 = &players[3];
 		s4->setSubject(p4);
@@ -364,9 +362,9 @@ int main()
 		s5->setSubject(p5);
 		ph5->setSubject(p5);
 	}
-	
+
 	//setting the first player to the bid winner
-	int startingPlayer = maxIndex; 
+	int startingPlayer = maxIndex;
 
 	int currentPlayer = startingPlayer; //Makes it so that starting player is the first "current player"
 	int numberOfTurns; //At what turn the game end
@@ -376,7 +374,7 @@ int main()
 		numberOfTurns = 13;
 		break;
 	case 3:
-		numberOfTurns = 10;
+		numberOfTurns = 1; //FIX ME
 		break;
 	case 4:
 		numberOfTurns = 8;
@@ -416,9 +414,9 @@ int main()
 				cout << "2: See available cards again." << endl;
 				cout << "3: See my hand." << endl;
 				cout << "4: Pick a card." << endl;
-				cout << "You are Player: " << currentPlayer+1 << endl; //tracing
+				cout << "You are Player: " << currentPlayer + 1 << endl; //tracing
 				cin >> choice;
-			
+
 				if (choice == 1) //display the map
 					Map::instance()->showEverything();
 				else if (choice == 2) { //show what cards they can pick
@@ -447,7 +445,7 @@ int main()
 							//====================================================================================
 
 							players[currentPlayer].setHand(v);
-							deck.removeCard(cardChoice); 
+							deck.removeCard(cardChoice);
 							/////////////////////////////////////////////////////////////////////////////////////
 							break;
 						}
@@ -463,7 +461,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								deck.removeCard(cardChoice); 
+								deck.removeCard(cardChoice);
 								break;
 							}
 						}
@@ -478,7 +476,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								deck.removeCard(cardChoice); 
+								deck.removeCard(cardChoice);
 								break;
 							}
 						}
@@ -493,7 +491,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								deck.removeCard(cardChoice); 
+								deck.removeCard(cardChoice);
 								break;
 							}
 						}
@@ -733,28 +731,28 @@ int main()
 										cout << "Choose player you want to remove armies from: " << endl;
 										for (int i = 0; i < playersTargeted.size(); i++) {
 											cout << i + 1 << ": Player " << playersTargeted[i] + 1 << endl;
-											}
-											if (playerSelected > playersTargeted.size() && playerSelected < 1) {
-												cin >> playerSelected;
-												vector<int> playerArmiesToDestroy = vector<int>(0);
-												playerArmiesToDestroy = players[playerSelected - 1].getArmyLocations(*Map::instance());
-												int regionSelected = -1;
-												while (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
-													cout << "Choose Player " << playerSelected << "'s country of armies to destroy" << endl;
-													for (int i = 0; i < playerArmiesToDestroy.size(); i++) {
-														cout << i + 1 << ": Country: " << playerArmiesToDestroy.at(i) << endl;
-													}
-													if (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
-														cin >> regionSelected;
-													}
+										}
+										if (playerSelected > playersTargeted.size() && playerSelected < 1) {
+											cin >> playerSelected;
+											vector<int> playerArmiesToDestroy = vector<int>(0);
+											playerArmiesToDestroy = players[playerSelected - 1].getArmyLocations(*Map::instance());
+											int regionSelected = -1;
+											while (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
+												cout << "Choose Player " << playerSelected << "'s country of armies to destroy" << endl;
+												for (int i = 0; i < playerArmiesToDestroy.size(); i++) {
+													cout << i + 1 << ": Country: " << playerArmiesToDestroy.at(i) << endl;
 												}
-												int countryID = playerArmiesToDestroy[regionSelected - 1];
-												int playerID = players[playerSelected - 1].getPlayerID();
-												Map::instance()->killArmy(countryID, playerID);
-												players.at(currentPlayer).Notify();
-
-												innerCounter--;								
+												if (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
+													cin >> regionSelected;
+												}
 											}
+											int countryID = playerArmiesToDestroy[regionSelected - 1];
+											int playerID = players[playerSelected - 1].getPlayerID();
+											Map::instance()->killArmy(countryID, playerID);
+											players.at(currentPlayer).Notify();
+
+											innerCounter--;
+										}
 									}
 								}
 								else {
@@ -960,27 +958,27 @@ int main()
 										cout << "Choose player you want to remove armies from: " << endl;
 										for (int i = 0; i < playersTargeted.size(); i++) {
 											cout << i + 1 << ": Player " << (playersTargeted[i] + 1) << endl;
-											}
-											if (playerSelected > playersTargeted.size() && playerSelected < 1) {
-												cin >> playerSelected;
-												vector<int> playerArmiesToDestroy = vector<int>(0);
-												playerArmiesToDestroy = players[playerSelected - 1].getArmyLocations(*Map::instance());
-												int regionSelected = -1;
-												while (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
-													cout << "Choose Player " << playerSelected << "'s country of armies to destroy" << endl;
+										}
+										if (playerSelected > playersTargeted.size() && playerSelected < 1) {
+											cin >> playerSelected;
+											vector<int> playerArmiesToDestroy = vector<int>(0);
+											playerArmiesToDestroy = players[playerSelected - 1].getArmyLocations(*Map::instance());
+											int regionSelected = -1;
+											while (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
+												cout << "Choose Player " << playerSelected << "'s country of armies to destroy" << endl;
 
-													if (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
-														cin >> regionSelected;
-													}
+												if (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
+													cin >> regionSelected;
 												}
+											}
 
-												int countryID = playerArmiesToDestroy[regionSelected - 1];
-												int playerID = players[playerSelected - 1].getPlayerID();
-												Map::instance()->killArmy(countryID, playerID);
-												players.at(currentPlayer).Notify();
+											int countryID = playerArmiesToDestroy[regionSelected - 1];
+											int playerID = players[playerSelected - 1].getPlayerID();
+											Map::instance()->killArmy(countryID, playerID);
+											players.at(currentPlayer).Notify();
 
-												innerCounter--;
-											}			
+											innerCounter--;
+										}
 									}
 								}
 								else {
@@ -1023,23 +1021,31 @@ int main()
 	vector<int> scores;
 	cout << "============================================================";
 	cout << "\n\n======================= FINAL SCORES =======================\n\n";
-	cout << "============================================================";
-	
-	for (int i = 0; i < players.size(); i++) {
-		cout << "Player " << i+1 << ": " << players.at(i).computeScore(*Map::instance()) << endl;
-		scores.push_back(players.at(i).computeScore(*Map::instance()));
-		
-		
-		//i0 = p1 score, i1 = p2 score, i2 = p3 score, etc
+	cout << "============================================================\n";
+
+	for (int i = 0; i < players.size(); i++) //push to scores vector for winner computation
+	{ 
+	scores.push_back(players.at(i).computeScore(*Map::instance())); 
+	//i0 = p1 score, i1 = p2 score, i2 = p3 score, etc
 	}
 
-	try {
-		cout << "\n\n\n\n CONGRATS PLAYER" << getWinner(scores, players).getPlayerID() << ". YOU WIN!!!";
-			
+	for (int i = 0; i < players.size(); i++) //display final results table
+	{
+		cout << "\nPLAYER " << i+1 << ": " << endl;
+		cout << "Victory Points:		" << scores[i] << endl;
+		cout << "Cards:			" << players.at(i).getHand().size() << endl;
+		cout << "Coins:			" << players.at(i).getAvailableCoins() << endl;
+	}
+	
+	//int winnerID = (getWinner(scores, players).getPlayerID()) + 1;
+	declareWinner(scores, players);
+
+	/*try {
+		cout << "\n\n\n\n CONGRATS PLAYER" << getWinner(scores, players).getPlayerID() << ". YOU WIN!!!";		
 	}
 	catch (string std) {
 		cout << std;
-	}
+	}*/
 	
 }
 

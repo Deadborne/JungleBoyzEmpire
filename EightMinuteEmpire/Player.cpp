@@ -559,7 +559,7 @@ int Player::pointsFromCards() {
 		<< "\n\t- " << anvils << " anvils"
 		<< "\n\t- " << shards << " shards"
 		<< "\n\t- " << coals << " coals"
-		<< "\n\t- " << carrots << " carrots"
+		<< "\n\t- " << carrots << " carrots" << endl
 		;
 
 	//If we have have any wildcards to handle

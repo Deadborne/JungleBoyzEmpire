@@ -101,9 +101,6 @@ void Phases::display() {
 		else if (lastCard.getAction2() == "destroy")
 			cout << "destroy an opponent's city.\n\n";
 	}
-		
-	
-
 }
 
 void Phases::setSubject(Player *s) {
