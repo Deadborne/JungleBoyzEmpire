@@ -19,6 +19,8 @@ Deck::Deck(int num) : deck(38), space(6), players(num) {
 	initializeSpace();
 };
 
+Deck::~Deck() {};
+
 // Created deck object with 42 cards
 void Deck::initializeDeck(int players) {
 	cout << "DECK SIZE: " << deck.size() << endl;

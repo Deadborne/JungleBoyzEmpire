@@ -43,6 +43,12 @@
     <Filter Include="Source Files\Map">
       <UniqueIdentifier>{8fd955bf-9fa6-4e20-a7d6-7565eac370ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Strategy">
+      <UniqueIdentifier>{d2d58fce-ddda-422e-8678-189624cbfdaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Strategy">
+      <UniqueIdentifier>{fb53f235-48de-4e66-a9b9-ef6d214f17f4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\GameObservers">
       <UniqueIdentifier>{771955e6-0cc2-481f-9ce2-36b577902073}</UniqueIdentifier>
     </Filter>
@@ -141,6 +147,18 @@
     <ClInclude Include="Bid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Strategy.h">
+      <Filter>Header Files\Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Npc.h">
+      <Filter>Header Files\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -235,6 +253,21 @@
     </ClCompile>
     <ClCompile Include="Bid.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GreedStrategy.cpp">
+      <Filter>Source Files\Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="ModerateStrategy.cpp">
+      <Filter>Source Files\Strategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Npc.cpp">
+      <Filter>Source Files\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

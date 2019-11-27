@@ -9,8 +9,10 @@
 #include "Card.h"
 #include "Statistics.h"
 #include "Phases.h"
+#include "Npc.h"
 #include <ostream>
 #include <vector>
+#include "time.h"
 using namespace std;
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graphviz.hpp>
@@ -19,6 +21,8 @@ using namespace boost;
 
 
 //Handles final calculations
+
+const int random(int a, int b);
 void declareWinner(vector<int> scores, vector<Player> players) {
 
 	//get the top score
@@ -171,8 +175,28 @@ int main()
 		}
 	}
 
+	int numberOfBots = 0;
+	if (numberOfPlayers <= 4) {
+		//Gets the most number of bots you can get
+		int maxBots = 5 - numberOfPlayers;
+		cout << "Select how many bots you would like to add to your game" << endl;
+		numberOfBots = -1;
+		while (numberOfBots > maxBots + 1 || numberOfBots < 1) {
+			for (int i = 0; i <= maxBots; i++) {
+				cout << i + 1 << "): Add " << i << " bot(s) to the game" << endl;
+			}
+
+			if (numberOfBots > maxBots + 1 || numberOfBots < 1) {
+				cin >> numberOfBots;
+			}
+		}
+		
+	}
+	//Fixing off by 1 error :) 
+	numberOfBots = numberOfBots - 1;
+
 	//giving each player the right amount of coins, depending on the number of players.
-	switch (numberOfPlayers) {
+	switch (numberOfPlayers + numberOfBots) {
 	case 2:
 		startingCoins = 14;
 		break;
@@ -188,13 +212,13 @@ int main()
 	}
 
 	vector<Player> players; //The players
-
+	
 	//Insert a number of players depending on the selected number, give them starting coins, set their ID, give them a "bidding facility"
 	for (int i = 0; i < numberOfPlayers; i++) {
 		Player p = Player();
 		p.setAvailableCoins(startingCoins);
 		p.setPlayerID(i + 1);
-
+		p.setIsNPC(false);
 		players.push_back(p); //inserting players
 
 		cout << "Player " << p.getPlayerID() << " is ready, and has " << p.getAvailableCoins() << " coins!" << endl;
@@ -219,6 +243,18 @@ int main()
 
 
 
+	//Adding our bots into the game
+	for (int i = 0; i < numberOfBots; i++) {
+		Player p = Player();
+		p.setAvailableCoins(startingCoins);
+		p.setPlayerID(players.size() + 1);
+		p.setIsNPC(true);
+		//p.setGreedStrategy(GreedStrategy());
+		players.push_back(p);
+	}
+	int oldNumberOfPlayers = numberOfPlayers;
+	//Updating numberOfPlayers
+	numberOfPlayers = numberOfPlayers + numberOfBots;
 	//[Requirement 3: Initializing Deck]
 
 	Deck deck = Deck(numberOfPlayers); //Note: this automatically shuffles the deck
@@ -255,9 +291,13 @@ int main()
 		cout << "Player " << players[i].getPlayerID() << " starts with " << players[i].getAvailableArmies() << " armies and ";
 		cout << players[i].getAvailableCities() << " cities, and placed 3 armies at the starting region, " << Map::instance()->getStartingCountry().getCountryId() << endl;
 	}
-
+	
+	
+	
 	//this loop is for placing NPCs in a 2 player game.
 	if (numberOfPlayers == 2) {
+		
+
 		cout << endl;
 		Player npc = Player();
 		npc.setAvailableArmies(10);
@@ -280,6 +320,9 @@ int main()
 				placingPlayer = 1;
 		}
 	}
+	else {
+
+	}
 
 	Map::instance()->showEverything();
 	cout << endl;
@@ -289,7 +332,7 @@ int main()
 	//[Requirement 4: Bidding System]
 
 	// Step 1: Prompt each player to enter their bidding coins and their birthdate in the form of YYYYMMDD
-	for (int i = 0; i < numberOfPlayers; i++) {
+	for (int i = 0; i < oldNumberOfPlayers; i++) {
 		cin.clear(); //removing bad values from cin.
 		cin.ignore();
 		players[i].setBid(startingCoins);
@@ -299,9 +342,16 @@ int main()
 	// Create vectors and enter their values to be compared after. The appropriate values match with the appropriate player index
 	vector<int> bids(numberOfPlayers);
 	vector<int> dates(numberOfPlayers);
-	for (int i = 0; i < numberOfPlayers; i++) {
+	for (int i = 0; i < oldNumberOfPlayers; i++) {
 		bids[i] = players[i].getBid().getBidAmount();
 		dates[i] = players[i].getBirthday();
+	}
+
+	for (int i = 0; i < bids.size(); i++) {
+		if (bids[i] == NULL) {
+			bids[i] = 0;
+			dates[i] = 0;
+		}
 	}
 	Bid calculator = Bid();
 	int maxIndex = calculator.calculateBid(bids);
@@ -401,22 +451,54 @@ int main()
 
 
 			deck.printDeck();
-			cout << "You have " << players[currentPlayer].getAvailableCoins() << " coins." << endl;
+			if (!players[currentPlayer].getIsNPC()) {
+				cout << "You have " << players[currentPlayer].getAvailableCoins() << " coins." << endl;
+			}
+			else {
+				int yesOrNo = -1;
+				yesOrNo = 1;
+				cout << "NPCs Turn" << endl;
+				if (yesOrNo == 1) {
+					//Selects new strategy for bot
+					yesOrNo = -1;
+					while (yesOrNo != 1 && yesOrNo != 2) {
+						cout << "Choose the bots strategy!" << endl;
+						cout << "1: Greed Bot" << endl;
+						cout << "2: Moderate Bot" << endl;
+						if (yesOrNo != 1 && yesOrNo != 2) {
+							cin >> yesOrNo;
+						}
+					}
+					if (yesOrNo == 1) {
+						players[currentPlayer].setGreedStrategy(GreedStrategy());
+					}
+					else {
+						players[currentPlayer].setModerateStrategy(ModerateStrategy());
+					}
+
+				}
+				else {
+
+				}
+			}
 			Card chosenCard = Card(); //This will be used to determine what action to take.
 
 			//Giving the player a choice of actions
 			while (1) {
-
-
 				int choice = 0;
-				cout << "\nWhat would you like to do: " << endl;
-				cout << "1: View Map." << endl;
-				cout << "2: See available cards again." << endl;
-				cout << "3: See my hand." << endl;
-				cout << "4: Pick a card." << endl;
-				cout << "You are Player: " << currentPlayer + 1 << endl; //tracing
-				cin >> choice;
-
+				if (!players[currentPlayer].getIsNPC()) {
+					cout << "\nWhat would you like to do: " << endl;
+					cout << "1: View Map." << endl;
+					cout << "2: See available cards again." << endl;
+					cout << "3: See my hand." << endl;
+					cout << "4: Pick a card." << endl;
+					cout << "You are Player: " << currentPlayer+1 << endl; //tracing
+					cin >> choice;
+				}
+				else {
+					choice = 4;
+					cout << "\nBOT CHOSE TO SELECT CARD 4\n" << endl;
+				}
 				if (choice == 1) //display the map
 					Map::instance()->showEverything();
 				else if (choice == 2) { //show what cards they can pick
@@ -433,8 +515,14 @@ int main()
 					while (1) {
 
 						int cardChoice = 0;
-						cout << "Select your card (1-6):" << endl;
-						cin >> cardChoice;
+						if (!players[currentPlayer].getIsNPC()) {
+							cout << "Select your card (1-6):" << endl;
+							cin >> cardChoice;
+						}							
+						else {
+							cardChoice = players[currentPlayer].getStrategy()->getCard(deck.getSpace(), players[currentPlayer].getAvailableCoins()) + 1;
+
+						}
 
 						if (cardChoice == 1) {
 							chosenCard = deck.getSpace()[cardChoice - 1];
@@ -524,24 +612,35 @@ int main()
 			//For example, Card has Action 1 and Action 2, Player selects Action 2, cardActionUsed will be set to 2
 			//So next time, they cannot pick Action.
 			int cardActionUsed = -1;
+			
 			bool multipleChoices = false;
 			while (numberOfActions > 0) {
-				cout << "You have " << numberOfActions << " actions remaining. What would you like to do: " << endl;
-				if (cardActionUsed != 1)
-					cout << "1: " << chosenCard.formatAction(chosenCard.getAction1(), to_string(chosenCard.getNumA1())) << endl;
-				else
-					cout << "1: No action Available" << endl;
+				if (!players[currentPlayer].getIsNPC()) {
+					cout << "You have " << numberOfActions << " actions remaining. You have the following choices: " << endl;
+					if (cardActionUsed != 1)
+						cout << "1: " << chosenCard.formatAction(chosenCard.getAction1(), to_string(chosenCard.getNumA1())) << endl;
+					else
+						cout << "1: No action Available" << endl;
 
-				if ((chosenCard.getOperator() == "or" || chosenCard.getOperator() == "and") && cardActionUsed != 2) {
-					multipleChoices = true;
-					cout << chosenCard.getOperator() << endl;
-					cout << "2:" << chosenCard.formatAction(chosenCard.getAction2(), to_string(chosenCard.getNumA2())) << endl;
+					if ((chosenCard.getOperator() == "or" || chosenCard.getOperator() == "and") && cardActionUsed != 2) {
+						multipleChoices = true;
+						cout << chosenCard.getOperator() << endl;
+						cout << "2:" << chosenCard.formatAction(chosenCard.getAction2(), to_string(chosenCard.getNumA2())) << endl;
+					}
+					else {
+						cout << "2: No action available" << endl;
+					}
+					cout << "3: Ignore action" << endl;
+					cin >> playerChoice;
 				}
 				else {
-					cout << "2: No action available" << endl;
+					playerChoice = players[currentPlayer].getStrategy()->getChoice(chosenCard) + 1;
+					if (playerChoice == 1 && cardActionUsed == 1)
+						playerChoice = 2;
+					if (playerChoice == 2 && cardActionUsed == 2)
+						playerChoice = 1;
 				}
-				cout << "3: Ignore action" << endl;
-				cin >> playerChoice;
+				
 
 				if (playerChoice == 1 && cardActionUsed != 1) {
 					if (multipleChoices) {
@@ -554,10 +653,18 @@ int main()
 							//Looks for all countries that a player owns
 							cin.clear();
 							cin.ignore();
+							int regionToBuildIn = -1;
 							if (players[currentPlayer].getAvailableCities() > 0) {
-								cout << "Place your city!: " << endl;
-								int regionToBuildIn = -1;
+								if (!players[currentPlayer].getIsNPC()) {
+									cout << "Place your city!: " << endl;
+								}
+								
+								
 								if (players[currentPlayer].getArmyLocationsForCity(*Map::instance()).size() > 0) {
+									if (players[currentPlayer].getArmyLocationsForCity(*Map::instance()).size() == 1)
+										regionToBuildIn = 1;
+									else
+										regionToBuildIn = random(1, players[currentPlayer].getArmyLocationsForCity(*Map::instance()).size());
 									while (regionToBuildIn > players[currentPlayer].getArmyLocationsForCity(*Map::instance()).size() || regionToBuildIn < 1) {
 										cout << "Here are your options: " << endl;
 										for (int playerCityOptions = 0; playerCityOptions < players[currentPlayer].getArmyLocationsForCity(*Map::instance()).size(); playerCityOptions++) {
@@ -567,6 +674,7 @@ int main()
 											cin >> regionToBuildIn;
 
 									}
+									if (!players[currentPlayer].getIsNPC())
 									cout << "Building a city here: Country " << players[currentPlayer].getArmyLocationsForCity(*Map::instance())[regionToBuildIn - 1] << endl;
 									Country countryToBuildCityIn = Map::instance()->getCountries()[players[currentPlayer].getArmyLocationsForCity(*Map::instance())[regionToBuildIn - 1] - 1];
 									players[currentPlayer].buildCity(countryToBuildCityIn);
@@ -592,16 +700,21 @@ int main()
 								//Loading valid players armies:
 								if (players[currentPlayer].getArmyLocations(*Map::instance()).size() > 0) {
 									int moveChoice = -1;
-									while (moveChoice > players[currentPlayer].getArmyLocations(*Map::instance()).size() || moveChoice < 1) {
-										for (int i = 0; i < players[currentPlayer].getArmyLocations(*Map::instance()).size(); i++) {
-											cout << i + 1 << ": Country " << Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[i] - 1].getCountryId() << endl;
-										}
-										if (moveChoice > players[currentPlayer].getArmyLocations(*Map::instance()).size() || moveChoice < 1) {
-											cin >> moveChoice;
-										}
-
+									if (players[currentPlayer].getIsNPC()) {
+										moveChoice = random(1, players[currentPlayer].getArmyLocations(*Map::instance()).size());
 									}
-									cout << "Here are your adjacent countries you can move into from Country " << players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] << endl;
+									else {
+										while (moveChoice > players[currentPlayer].getArmyLocations(*Map::instance()).size() || moveChoice < 1) {
+											for (int i = 0; i < players[currentPlayer].getArmyLocations(*Map::instance()).size(); i++) {
+												cout << i + 1 << ": Country " << Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[i] - 1].getCountryId() << endl;
+											}
+											if (moveChoice > players[currentPlayer].getArmyLocations(*Map::instance()).size() || moveChoice < 1) {
+												cin >> moveChoice;
+											}
+
+										}
+										cout << "Here are your adjacent countries you can move into from Country " << players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] << endl;
+									}									
 									int continentId = Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].getContinentId();
 									vector<int> countriesOnSameContinent = vector<int>(0);
 									for (int i = 0; i < Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).size(); i++) {
@@ -611,15 +724,21 @@ int main()
 									}
 
 									int countryDest = -1;
-									while (countryDest > countriesOnSameContinent.size() || countryDest < 1) {
-										for (int i = 0; i < countriesOnSameContinent.size(); i++) {
-											cout << i + 1 << ": Country " << countriesOnSameContinent[i] << endl;
-
-										}
-
-										if (countryDest > countriesOnSameContinent.size() || countryDest < 1)
-											cin >> countryDest;
+									if (players[currentPlayer].getIsNPC()) {
+										countryDest = random(1, countriesOnSameContinent.size());
 									}
+									else {
+										while (countryDest > countriesOnSameContinent.size() || countryDest < 1) {
+											for (int i = 0; i < countriesOnSameContinent.size(); i++) {
+												cout << i + 1 << ": Country " << countriesOnSameContinent[i] << endl;
+
+											}
+
+											if (countryDest > countriesOnSameContinent.size() || countryDest < 1)
+												cin >> countryDest;
+										}
+									}
+									
 
 									players[currentPlayer].moveArmies(1, Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1], Map::instance()->getCountries()[countriesOnSameContinent[countryDest - 1] - 1]);
 									Map::instance()->setCountry(Map::instance()->getCountries());
@@ -641,6 +760,9 @@ int main()
 								//Loading valid players armies:
 								if (players[currentPlayer].getArmyLocations(*Map::instance()).size() > 0) {
 									int moveChoice = -1;
+									if (players[currentPlayer].getIsNPC()) {
+										moveChoice = random(1, players[currentPlayer].getArmyLocations(*Map::instance()).size());
+									}
 									while (moveChoice > players[currentPlayer].getArmyLocations(*Map::instance()).size() || moveChoice < 1) {
 										for (int i = 0; i < players[currentPlayer].getArmyLocations(*Map::instance()).size(); i++) {
 											cout << i + 1 << ": Country " << Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[i] - 1].getCountryId() << endl;
@@ -655,6 +777,9 @@ int main()
 
 
 									int countryDest = -1;
+									if (players[currentPlayer].getIsNPC()) {
+										countryDest = random(1, Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).size() + 1);
+									}
 									while (countryDest > Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).size() || countryDest < 1) {
 										for (int i = 0; i < Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).size(); i++) {
 											cout << i + 1 << ": Country " << Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).at(i) << endl;
@@ -677,26 +802,28 @@ int main()
 						else if (chosenCard.getAction1() == "place") {
 							//Place armies. 
 							while (innerCounter > 0) {
-								////Lets introduce a bug here bois
-								//if (players[currentPlayer].getAvailableArmies() > 11) {
-								//	players[currentPlayer].setAvailableArmies(11);
-								//}
 								cout << players[currentPlayer].getAvailableArmies() << " :Available Armies" << endl;
 								if (players[currentPlayer].getAvailableArmies() > 0) {
 									int spawnChoice = -1;
-									cout << "You may place " << innerCounter << " armies at the following locations: " << endl;
-									while (spawnChoice > players[currentPlayer].getArmySpawnLocations(*Map::instance()).size() || spawnChoice < 1) {
-										for (int i = 0; i < players[currentPlayer].getArmySpawnLocations(*Map::instance()).size(); i++) {
-											//cout << i + 1 << ": Country " << Map::instance()->getCountries()[players[currentPlayer].getArmySpawnLocations(*Map::instance()).at(i)].getCountryId() << endl;
-											cout << i + 1 << ": Country " << players[currentPlayer].getArmySpawnLocations(*Map::instance())[i] << endl;
-										}
-
-										if (spawnChoice > players[currentPlayer].getArmySpawnLocations(*Map::instance()).size() || spawnChoice < 1) {
-											cin >> spawnChoice;
-										}
-
-
+									if (players[currentPlayer].getIsNPC()) {
+										spawnChoice = random(1, players[currentPlayer].getArmySpawnLocations(*Map::instance()).size());
 									}
+									else {
+										cout << "You may place " << innerCounter << " armies at the following locations: " << endl;
+										while (spawnChoice > players[currentPlayer].getArmySpawnLocations(*Map::instance()).size() || spawnChoice < 1) {
+											for (int i = 0; i < players[currentPlayer].getArmySpawnLocations(*Map::instance()).size(); i++) {
+												//cout << i + 1 << ": Country " << Map::instance()->getCountries()[players[currentPlayer].getArmySpawnLocations(*Map::instance()).at(i)].getCountryId() << endl;
+												cout << i + 1 << ": Country " << players[currentPlayer].getArmySpawnLocations(*Map::instance())[i] << endl;
+											}
+
+											if (spawnChoice > players[currentPlayer].getArmySpawnLocations(*Map::instance()).size() || spawnChoice < 1) {
+												cin >> spawnChoice;
+											}
+
+
+										}
+									}
+									
 
 									Country updatedCountry = Map::instance()->getCountries()[players[currentPlayer].getArmySpawnLocations(*Map::instance())[spawnChoice - 1] - 1];
 									players[currentPlayer].placeNewArmies(1, updatedCountry);
@@ -726,33 +853,38 @@ int main()
 								}
 
 								int playerSelected = -1;
+								if (players[currentPlayer].getIsNPC()) {
+									playerSelected = random(1, playersTargeted.size());
+								}
 								if (playersTargeted.size() > 0) {
 									while (playerSelected > playersTargeted.size() || playerSelected < 1) {
 										cout << "Choose player you want to remove armies from: " << endl;
 										for (int i = 0; i < playersTargeted.size(); i++) {
 											cout << i + 1 << ": Player " << playersTargeted[i] + 1 << endl;
-										}
-										if (playerSelected > playersTargeted.size() && playerSelected < 1) {
-											cin >> playerSelected;
-											vector<int> playerArmiesToDestroy = vector<int>(0);
-											playerArmiesToDestroy = players[playerSelected - 1].getArmyLocations(*Map::instance());
-											int regionSelected = -1;
-											while (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
-												cout << "Choose Player " << playerSelected << "'s country of armies to destroy" << endl;
-												for (int i = 0; i < playerArmiesToDestroy.size(); i++) {
-													cout << i + 1 << ": Country: " << playerArmiesToDestroy.at(i) << endl;
-												}
-												if (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
-													cin >> regionSelected;
-												}
 											}
-											int countryID = playerArmiesToDestroy[regionSelected - 1];
-											int playerID = players[playerSelected - 1].getPlayerID();
-											Map::instance()->killArmy(countryID, playerID);
-											players.at(currentPlayer).Notify();
-
-											innerCounter--;
-										}
+											if (playerSelected > playersTargeted.size() && playerSelected < 1) {
+												cin >> playerSelected;
+												vector<int> playerArmiesToDestroy = vector<int>(0);
+												playerArmiesToDestroy = players[playerSelected - 1].getArmyLocations(*Map::instance());
+												int regionSelected = -1;
+												if (players[currentPlayer].getIsNPC()) {
+													regionSelected = random(1, playerArmiesToDestroy.size());
+												}
+												while (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
+													cout << "Choose Player " << playerSelected << "'s country of armies to destroy" << endl;
+													for (int i = 0; i < playerArmiesToDestroy.size(); i++) {
+														cout << i + 1 << ": Country: " << playerArmiesToDestroy.at(i) << endl;
+													}
+													if (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
+														cin >> regionSelected;
+													}
+												}
+												cout << "Destroying player armies" << endl;
+												players[currentPlayer].destroyArmy(Map::instance()->getCountries()[playerArmiesToDestroy[regionSelected - 1] - 1], players[playerSelected - 1]);
+												innerCounter--;
+												//playersTargeted = vector<int>(0);
+												
+											}
 									}
 								}
 								else {
@@ -773,15 +905,23 @@ int main()
 					}
 					int innerCounter = chosenCard.getNumA1();
 					while (innerCounter > 0) {
-						if (chosenCard.getAction1() == "build") {
+						if (chosenCard.getAction2() == "build") {
 							//Prompt player to build city
 							//Looks for all countries that a player owns
 							cin.clear();
 							cin.ignore();
+							int regionToBuildIn = -1;
 							if (players[currentPlayer].getAvailableCities() > 0) {
-								cout << "Place your city!: " << endl;
-								int regionToBuildIn = -1;
+								if (!players[currentPlayer].getIsNPC()) {
+									cout << "Place your city!: " << endl;
+								}
+
+
 								if (players[currentPlayer].getArmyLocationsForCity(*Map::instance()).size() > 0) {
+									if (players[currentPlayer].getArmyLocationsForCity(*Map::instance()).size() == 1)
+										regionToBuildIn = 1;
+									else
+										regionToBuildIn = random(1, players[currentPlayer].getArmyLocationsForCity(*Map::instance()).size());
 									while (regionToBuildIn > players[currentPlayer].getArmyLocationsForCity(*Map::instance()).size() || regionToBuildIn < 1) {
 										cout << "Here are your options: " << endl;
 										for (int playerCityOptions = 0; playerCityOptions < players[currentPlayer].getArmyLocationsForCity(*Map::instance()).size(); playerCityOptions++) {
@@ -791,7 +931,8 @@ int main()
 											cin >> regionToBuildIn;
 
 									}
-									cout << "Building a city here: Country " << players[currentPlayer].getArmyLocationsForCity(*Map::instance())[regionToBuildIn - 1] << endl;
+									if (!players[currentPlayer].getIsNPC())
+										cout << "Building a city here: Country " << players[currentPlayer].getArmyLocationsForCity(*Map::instance())[regionToBuildIn - 1] << endl;
 									Country countryToBuildCityIn = Map::instance()->getCountries()[players[currentPlayer].getArmyLocationsForCity(*Map::instance())[regionToBuildIn - 1] - 1];
 									players[currentPlayer].buildCity(countryToBuildCityIn);
 								}
@@ -816,16 +957,21 @@ int main()
 								//Loading valid players armies:
 								if (players[currentPlayer].getArmyLocations(*Map::instance()).size() > 0) {
 									int moveChoice = -1;
-									while (moveChoice > players[currentPlayer].getArmyLocations(*Map::instance()).size() || moveChoice < 1) {
-										for (int i = 0; i < players[currentPlayer].getArmyLocations(*Map::instance()).size(); i++) {
-											cout << i + 1 << ": Country " << Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[i] - 1].getCountryId() << endl;
-										}
-										if (moveChoice > players[currentPlayer].getArmyLocations(*Map::instance()).size() || moveChoice < 1) {
-											cin >> moveChoice;
-										}
-
+									if (players[currentPlayer].getIsNPC()) {
+										moveChoice = random(1, players[currentPlayer].getArmyLocations(*Map::instance()).size());
 									}
-									cout << "Here are your adjacent countries you can move into from Country " << players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] << endl;
+									else {
+										while (moveChoice > players[currentPlayer].getArmyLocations(*Map::instance()).size() || moveChoice < 1) {
+											for (int i = 0; i < players[currentPlayer].getArmyLocations(*Map::instance()).size(); i++) {
+												cout << i + 1 << ": Country " << Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[i] - 1].getCountryId() << endl;
+											}
+											if (moveChoice > players[currentPlayer].getArmyLocations(*Map::instance()).size() || moveChoice < 1) {
+												cin >> moveChoice;
+											}
+
+										}
+										cout << "Here are your adjacent countries you can move into from Country " << players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] << endl;
+									}
 									int continentId = Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].getContinentId();
 									vector<int> countriesOnSameContinent = vector<int>(0);
 									for (int i = 0; i < Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).size(); i++) {
@@ -835,15 +981,21 @@ int main()
 									}
 
 									int countryDest = -1;
-									while (countryDest > countriesOnSameContinent.size() || countryDest < 1) {
-										for (int i = 0; i < countriesOnSameContinent.size(); i++) {
-											cout << i + 1 << ": Country " << countriesOnSameContinent[i] << endl;
-
-										}
-
-										if (countryDest > countriesOnSameContinent.size() || countryDest < 1)
-											cin >> countryDest;
+									if (players[currentPlayer].getIsNPC()) {
+										countryDest = random(1, countriesOnSameContinent.size());
 									}
+									else {
+										while (countryDest > countriesOnSameContinent.size() || countryDest < 1) {
+											for (int i = 0; i < countriesOnSameContinent.size(); i++) {
+												cout << i + 1 << ": Country " << countriesOnSameContinent[i] << endl;
+
+											}
+
+											if (countryDest > countriesOnSameContinent.size() || countryDest < 1)
+												cin >> countryDest;
+										}
+									}
+
 
 									players[currentPlayer].moveArmies(1, Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1], Map::instance()->getCountries()[countriesOnSameContinent[countryDest - 1] - 1]);
 									Map::instance()->setCountry(Map::instance()->getCountries());
@@ -857,7 +1009,7 @@ int main()
 
 
 						}
-						else if (chosenCard.getAction2() == "moveOver") {
+						else if (chosenCard.getAction1() == "moveOver") {
 
 							while (innerCounter > 0) {
 								cout << "You can move " << innerCounter << " armies" << endl;
@@ -865,14 +1017,15 @@ int main()
 								//Loading valid players armies:
 								if (players[currentPlayer].getArmyLocations(*Map::instance()).size() > 0) {
 									int moveChoice = -1;
+									if (players[currentPlayer].getIsNPC()) {
+										moveChoice = random(1, players[currentPlayer].getArmyLocations(*Map::instance()).size());
+									}
 									while (moveChoice > players[currentPlayer].getArmyLocations(*Map::instance()).size() || moveChoice < 1) {
 										for (int i = 0; i < players[currentPlayer].getArmyLocations(*Map::instance()).size(); i++) {
 											cout << i + 1 << ": Country " << Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[i] - 1].getCountryId() << endl;
 										}
 										if (moveChoice > players[currentPlayer].getArmyLocations(*Map::instance()).size() || moveChoice < 1) {
 											cin >> moveChoice;
-											cin.clear();
-											cin.ignore();
 										}
 
 									}
@@ -881,6 +1034,9 @@ int main()
 
 
 									int countryDest = -1;
+									if (players[currentPlayer].getIsNPC()) {
+										countryDest = random(1, Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).size());
+									}
 									while (countryDest > Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).size() || countryDest < 1) {
 										for (int i = 0; i < Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).size(); i++) {
 											cout << i + 1 << ": Country " << Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).at(i) << endl;
@@ -904,14 +1060,14 @@ int main()
 						else if (chosenCard.getAction2() == "place") {
 							//Place armies. 
 							while (innerCounter > 0) {
-								////Lets introduce a bug here bois
-								//if (players[currentPlayer].getAvailableArmies() > 11) {
-								//	players[currentPlayer].setAvailableArmies(11);
-								//}
 								cout << players[currentPlayer].getAvailableArmies() << " :Available Armies" << endl;
 								if (players[currentPlayer].getAvailableArmies() > 0) {
 									int spawnChoice = -1;
-									cout << "You may place " << innerCounter << " armies at the following locations: " << endl;
+									if (players[currentPlayer].getIsNPC()) {
+										spawnChoice = random(1, players[currentPlayer].getArmySpawnLocations(*Map::instance()).size());
+									}
+									else
+										cout << "You may place " << innerCounter << " armies at the following locations: " << endl;
 									while (spawnChoice > players[currentPlayer].getArmySpawnLocations(*Map::instance()).size() || spawnChoice < 1) {
 										for (int i = 0; i < players[currentPlayer].getArmySpawnLocations(*Map::instance()).size(); i++) {
 											//cout << i + 1 << ": Country " << Map::instance()->getCountries()[players[currentPlayer].getArmySpawnLocations(*Map::instance()).at(i)].getCountryId() << endl;
@@ -944,7 +1100,7 @@ int main()
 
 							while (innerCounter > 0) {
 								//First getting all players
-
+								players[currentPlayer].getPlayerID();
 								vector<int> playersTargeted = vector<int>(0);
 								for (int i = 0; i < players.size(); i++) {
 									if (i != players[currentPlayer].getPlayerID() - 1 && players.at(i).getArmyLocations(*Map::instance()).size() > 0) {
@@ -953,31 +1109,37 @@ int main()
 								}
 
 								int playerSelected = -1;
+								if (players[currentPlayer].getIsNPC()) {
+									playerSelected = random(1, playersTargeted.size());
+								}
 								if (playersTargeted.size() > 0) {
 									while (playerSelected > playersTargeted.size() || playerSelected < 1) {
 										cout << "Choose player you want to remove armies from: " << endl;
 										for (int i = 0; i < playersTargeted.size(); i++) {
-											cout << i + 1 << ": Player " << (playersTargeted[i] + 1) << endl;
+											cout << i + 1 << ": Player " << playersTargeted[i] + 1 << endl;
 										}
 										if (playerSelected > playersTargeted.size() && playerSelected < 1) {
 											cin >> playerSelected;
 											vector<int> playerArmiesToDestroy = vector<int>(0);
 											playerArmiesToDestroy = players[playerSelected - 1].getArmyLocations(*Map::instance());
 											int regionSelected = -1;
+											if (players[currentPlayer].getIsNPC()) {
+												regionSelected = random(1, playerArmiesToDestroy.size());
+											}
 											while (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
 												cout << "Choose Player " << playerSelected << "'s country of armies to destroy" << endl;
-
+												for (int i = 0; i < playerArmiesToDestroy.size(); i++) {
+													cout << i + 1 << ": Country: " << playerArmiesToDestroy.at(i) << endl;
+												}
 												if (regionSelected > playerArmiesToDestroy.size() || regionSelected < 1) {
 													cin >> regionSelected;
 												}
 											}
-
-											int countryID = playerArmiesToDestroy[regionSelected - 1];
-											int playerID = players[playerSelected - 1].getPlayerID();
-											Map::instance()->killArmy(countryID, playerID);
-											players.at(currentPlayer).Notify();
-
+											cout << "Destroying player armies" << endl;
+											players[currentPlayer].destroyArmy(Map::instance()->getCountries()[playerArmiesToDestroy[regionSelected - 1] - 1], players[playerSelected - 1]);
 											innerCounter--;
+											//playersTargeted = vector<int>(0);
+
 										}
 									}
 								}
@@ -987,9 +1149,10 @@ int main()
 								}
 							}
 						}
-						numberOfActions--;
+						innerCounter--;
 					}
 					numberOfActions -= 1;
+					
 				}
 				else if (playerChoice == 3) {
 					players[currentPlayer].ignore();
@@ -1036,9 +1199,22 @@ int main()
 		cout << "Cards:			" << players.at(i).getHand().size() << endl;
 		cout << "Coins:			" << players.at(i).getAvailableCoins() << endl;
 	}
+
+	declareWinner(scores, players);
+	
+}
+
+const int random(int min, int max) { //range : [min, max)
+	static bool first = true;
+	if (first)
+	{
+		srand(time(NULL));
+		first = false;
+	}
+	return min + rand() % ((max + 1) - min);
+}
 	
 	//int winnerID = (getWinner(scores, players).getPlayerID()) + 1;
-	declareWinner(scores, players);
 
 	/*try {
 		cout << "\n\n\n\n CONGRATS PLAYER" << getWinner(scores, players).getPlayerID() << ". YOU WIN!!!";		
@@ -1047,5 +1223,3 @@ int main()
 		cout << std;
 	}*/
 	
-}
-
