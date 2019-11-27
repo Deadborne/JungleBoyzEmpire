@@ -49,6 +49,12 @@
     <Filter Include="Source Files\Strategy">
       <UniqueIdentifier>{fb53f235-48de-4e66-a9b9-ef6d214f17f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameObservers">
+      <UniqueIdentifier>{771955e6-0cc2-481f-9ce2-36b577902073}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObservers">
+      <UniqueIdentifier>{902dd1ba-dcde-47fe-bb45-49d510b654d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -59,9 +65,6 @@
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Header Files\Map</Filter>
     </ClInclude>
     <ClInclude Include="Country.h">
       <Filter>Header Files\Map</Filter>
@@ -111,6 +114,42 @@
     <ClInclude Include="Bid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameObservers.h">
+      <Filter>Header Files\GameObservers</Filter>
+    </ClInclude>
+    <ClInclude Include="Statistics.h">
+      <Filter>Header Files\GameObservers</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Header Files\GameObservers</Filter>
+    </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Phases.h">
+      <Filter>Header Files\GameObservers</Filter>
+    </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Strategy.h">
       <Filter>Header Files\Strategy</Filter>
     </ClInclude>
@@ -125,12 +164,6 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EightMinuteEmpire.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source Files\Map</Filter>
-    </ClCompile>
     <ClCompile Include="Country.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
@@ -142,12 +175,6 @@
     </ClCompile>
     <ClCompile Include="Bid.cpp">
       <Filter>Source Files\Bid</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerDriver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BidDriver.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Bid.cpp">
       <Filter>Source Files\Bid</Filter>
@@ -167,19 +194,10 @@
     <ClCompile Include="Bid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Part1Driver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Bid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Part2Driver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Bid.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Part3Driver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Bid.cpp">
@@ -191,19 +209,49 @@
     <ClCompile Include="Bid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Part6Driver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Bid.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Part6Supplemental.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Bid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AggregateDriver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObservers.cpp">
+      <Filter>Source Files\GameObservers</Filter>
+    </ClCompile>
+    <ClCompile Include="Statistics.cpp">
+      <Filter>Source Files\GameObservers</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Source Files\GameObservers</Filter>
+    </ClCompile>
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Phases.cpp">
+      <Filter>Source Files\GameObservers</Filter>
+    </ClCompile>
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Bid.cpp">

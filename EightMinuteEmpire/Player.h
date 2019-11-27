@@ -7,17 +7,19 @@
 #include "Card.h"
 #include <string>
 #include "Country.h"
+#include "Continent.h"
 #include "Map.h"
+#include "Subject.h"
 #include "Strategy.h"
 #include <vector>
 #include <string>
 #include <algorithm>
-
+class Map;
 
 using namespace std;
 typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
 
-class Player {
+class Player : public Subject {
 private:
 	int* playerID;
 	int* birthday;
@@ -32,27 +34,20 @@ private:
 
 
 	Bid *playerBid;
+	bool *reachedHandLimit = new bool(false);
 	Strategy* strategy;
 	bool *isNPC;
 	int* finalScore;
-	
-
 	
 public:
 	vector<int> getArmyLocations(Map m);
 	vector<int> getArmyLocationsForCity(Map m);
 
 	vector<int> getArmySpawnLocations(Map m);
-	//Player();
 	
 	//--- Bidding --- //
 
 	~Player();
-
-	//----Wish List----//
-	//void claimCountry();
-	//void setCountriesOwned();
-	
 	
 	void destroyCity(Country& cityLocation, Player& cityOwner);
 	//vector<int> getCountriesOwned();
@@ -66,7 +61,7 @@ public:
 	void buildCity(Country& cityLocation);
 	void destroyArmy(Country& armyLocation, Player armyOwner);
 
-
+	bool isContinentOwner(int continentID, Map m);
 	bool isCountryOwner(Country& country);
 
 	vector<Country> getCountriesOwned(Map m);
@@ -110,6 +105,10 @@ public:
 	void setBid(int maxBid);
 	Bid getBid();
 
+	void setHandStatus(bool s);
+	bool checkIfReachedHandLimit();
+
+
 	int andOrAction(int actionNumber);
 	void ignore();
 
@@ -125,7 +124,6 @@ public:
 	bool getIsNPC();
 
 	
-
 
 
 
