@@ -93,7 +93,7 @@ Graph Map::ReadMap(string f)
 			connectingContinent = new int;
 			connectsAcrossSea = new bool;
 
-
+			//mappedCountries.push_back(c0);
 			std::string allAdjacent;
 
 			//grabs first number (country number)
@@ -281,4 +281,29 @@ Map* Map::instance() {
 void Map::resetInstance() {
 	delete mapInstance;
 	mapInstance = NULL;
+}
+
+void Map::setPlayers(std::vector<Player*> x) {
+	players = x;
+}
+
+std::vector<Player*> Map::getPlayers() {
+	return players;
+}
+
+void Map::killArmy(int countryID, int playerID) {
+	
+	//temporary army vector for country's armies
+	vector<int*> armies = mappedCountries.at(countryID-1).getArmiesPerPlayer();
+
+	if (*armies.at(playerID - 1) > 0) //making sure there is an army to destroy
+	{ 
+		*armies.at(playerID - 1) = *(armies.at(playerID - 1)) - 1; //deduct one army
+		mappedCountries.at(countryID - 1).setArmiesPerPlayer(armies); //set the new army vector for that country
+		Map::players.at(playerID - 1)->setAvailableArmies((Map::players.at(playerID - 1)->getAvailableArmies()) + 1); //give the player one army back
+	}
+	else
+	{
+		cout << "The poor bastard doesn't even have an army to destroy!" << endl;
+	}
 }

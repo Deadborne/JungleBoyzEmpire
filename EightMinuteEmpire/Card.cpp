@@ -81,7 +81,7 @@ bool Card::getIsFive() const {
 }
 
 string Card::printCard() {
-	string str = "Goods: " + to_string(Card::getGoodAmount()) + " " + Card::getGood() + ", Action 1: " + Card::getAction1() + "x" + to_string(Card::getNumA1()) + ", Action 2: " + Card::getAction2() + "x" + to_string(Card::getNumA2()) + " 5-Player-Card: " + to_string(Card::getIsFive());
+	string str = "Goods: " + to_string(Card::getGoodAmount()) + " " + Card::getGood() + ", Action 1: " + Card::getAction1() + "x" + to_string(Card::getNumA1()) + ", Action 2: " + Card::getAction2() + "x" + to_string(Card::getNumA2());
 	return str;
 }
 

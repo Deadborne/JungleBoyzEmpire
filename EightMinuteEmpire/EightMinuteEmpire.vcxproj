@@ -149,11 +149,15 @@
     <ClInclude Include="Continent.h" />
     <ClInclude Include="Country.h" />
     <ClInclude Include="Bid.h" />
+    <ClInclude Include="GameObservers.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Npc.h" />
+    <ClInclude Include="Phases.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Statistics.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Strategy.h" />
+    <ClInclude Include="Subject.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -164,26 +168,23 @@
     <ClCompile Include="ModerateStrategy.cpp" />
     <ClCompile Include="Npc.cpp" />
     <ClCompile Include="Part6Supplemental.cpp" />
+    <ClCompile Include="GameObservers.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Continent.cpp" />
     <ClCompile Include="Country.cpp" />
     <ClCompile Include="Deck.cpp" />
-    <ClCompile Include="EightMinuteEmpire.cpp" />
     <ClCompile Include="Hand.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Part1Driver.cpp" />
-    <ClCompile Include="Part2Driver.cpp" />
-    <ClCompile Include="Part3Driver.cpp" />
-    <ClCompile Include="Part6Driver.cpp" />
+    <ClCompile Include="Phases.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Bid.cpp" />
-    <ClCompile Include="PlayerDriver.cpp" />
+    <ClCompile Include="Statistics.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Subject.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

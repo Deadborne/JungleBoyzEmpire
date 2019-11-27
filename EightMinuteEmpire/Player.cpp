@@ -85,11 +85,24 @@ vector<Card> Player::getHand() {
 
 void Player::setHand(vector<Card> v) {
 	hand->swapHand(v);
+	
+	//Notify the phase observer, baby!
+	NotifyPhase();
 }
 
 void Player::printHand() {
 	hand->printHand();
 }
+
+void Player::setHandStatus(bool s) {
+	*reachedHandLimit = s;
+}
+
+bool Player::checkIfReachedHandLimit() {
+	return *reachedHandLimit;
+}
+
+
 
 //Bid functionality
 void Player::setBid() {
@@ -128,7 +141,6 @@ void Player::PayCoin(int numCoins) {
 //	2. Number of armies player can place is determined by the card he/she has drawn
 //	3. Player can only place new armies in countries where they own a city 
 void Player::placeNewArmies(int numArmies, Country& country) {
-	//Map m = Map();
 
 	//Check that the country is either the starting country or one where the player owns a city
 	//Add following validation later
@@ -153,12 +165,12 @@ void Player::placeNewArmies(int numArmies, Country& country) {
 		//If the player has too few armies
 		cerr << "\nOperation blocked. You only have " << *availableArmies << " armies available to you.";
 	}
+	Notify();
 }
 
 //Takes a number of armies, an origin country and a destination country. Subtracts armies from
 //the origin and places them in the destination
 void Player::moveArmies(int numArmies, Country& origin, Country& destination) {
-	//Map m = Map();
 
 	//Build some temporary vectors to hold armies in each country
 	vector<int*> originArmies = origin.getArmiesPerPlayer();
@@ -166,9 +178,6 @@ void Player::moveArmies(int numArmies, Country& origin, Country& destination) {
 
 	//Avoid moving more armies than exist in the vector 
 	if (*originArmies.at(*playerID - 1) >= numArmies) {
-
-		//int *movedArmies;
-		//movedArmies = new int(numArmies);
 		
 		//Move from origin
 		*originArmies.at(*playerID - 1) -= numArmies;
@@ -184,6 +193,7 @@ void Player::moveArmies(int numArmies, Country& origin, Country& destination) {
 			<< " armies in Country " << origin.getCountryId()
 			<< ". You cannot move more than that.";
 	}
+	Notify();
 }
 
 //Same as regular moveArmies, but first we check that our 2 countries exist on the same continent.
@@ -196,12 +206,12 @@ void Player::moveOverLand(int numArmies, Country& origin, Country& destination, 
 	else {
 		cout << "The origin and destination countrie are not adjacent on land";
 	}
+	Notify();
 }
 
 //Allows a player to destroy an army of some other player. Finds the armyOwner's armies in armyLocation
 //and decrements armies in that index
 void Player::destroyArmy(Country& armyLocation, Player armyOwner) {
-	//Map m = Map();
 
 	//temporary army vector for country's armies
 	vector<int*> armies = armyLocation.getArmiesPerPlayer();
@@ -225,6 +235,7 @@ void Player::destroyArmy(Country& armyLocation, Player armyOwner) {
 		cout << "\nPlayer " << armyOwnerID << " has no armies in Country " 
 			<< armyLocation.getCountryId() + 1 <<".\n";
 	}
+	Notify();
 }
 
 //Allows a player to build a city in a given country, provided that:
@@ -232,7 +243,6 @@ void Player::destroyArmy(Country& armyLocation, Player armyOwner) {
 //2. They have an army deployed in the country
 //3. They don't have a city already built in that country
 void Player::buildCity(Country& cityLocation) {
-	//Map m = Map();
 	
 	//1
 	if (availableCities > 0) {
@@ -247,6 +257,7 @@ void Player::buildCity(Country& cityLocation) {
 				int cities = *availableCities;
 				cities--;
 				*availableCities = cities;
+				Notify();
 			}
 			else {
 				cout << "\nCity already exists in country. Build one somewhere else.";
@@ -263,7 +274,6 @@ void Player::buildCity(Country& cityLocation) {
 
 //Not required, but lets us destroy a city in the same manner we destroy an army
 void Player::destroyCity(Country& cityLocation, Player& cityOwner) {
-	//Map m = Map();
 
 	vector<bool*> cities = cityLocation.getCities();
 
@@ -340,7 +350,6 @@ bool Player::isCountryOwner(Country& country) {
 		}
 	}
 	
-	
 	int dupe = 0;
 
 	//Count duplicates of max
@@ -349,11 +358,11 @@ bool Player::isCountryOwner(Country& country) {
 			dupe++;
 	}
 	if (dupe > 1) //duplicates present --> nobody owns it
-		return false;
-	else if (maxArmiesIndex == *playerID) //check that the max is at the same index as our current player.
+		return false;  //test
+	else if (maxArmiesIndex == *playerID-1) //check that the max is at the same index as our current player.
 		return true;
 	else {
-		return false;
+		return false;//test
 	}	
 	
 }
@@ -372,46 +381,148 @@ vector<Country> Player::getCountriesOwned(Map m) {
 	return ownedCountries;
 }
 
+
+
+//A player actually owns a continent only if they control more countries than other players
+bool Player::isContinentOwner(int continentID, Map m) {
+
+	//Basically we need to check that the calling player owns the most countries in this continent
+	vector<Country> countries = m.getCountries();
+
+	vector<Country> countriesInContinent;
+	
+	//For each country, 
+	for (int i = 0; i < countries.size(); i++) {
+		//If it belongs to our desired continent
+		if (countries.at(i).getContinentId() == continentID) {
+			//Add it to a vector of countries
+			countriesInContinent.push_back(countries.at(i));
+		}
+	}
+		
+	vector<int> countriesOwnedInContinent{ 0,0,0,0,0 };
+
+	
+	//For each player
+	for (int i = 0; i < m.getPlayers().size(); i++) {
+		//Get countries owned by the player
+		vector<Country> countriesOwned = m.getPlayers().at(i)->getCountriesOwned(m);
+		
+		//For each country  they own
+		for (int j = 0; j < countriesOwned.size(); j++) {
+			if (countriesOwned.at(j).getContinentId() == continentID) {
+				//then we need to count that fact PER PLAYER
+				//So increment the value at the corresponding index in CountriesOwnedInContinent
+				countriesOwnedInContinent[i]++;
+
+				//We should end up with a vector like so
+
+				//continentsOwned[]
+				//i		0	1	2	3	4
+				//		p1	p2	p3	p4	p5
+				//c		1	3	1	2	0		
+			}
+		}
+	}
+
+	//Now we need to determine which player owns the most countries in the continents
+	int maxCountries = countriesOwnedInContinent[0];
+	int maxCountriesIndex = 0;
+
+	for (int i = 0; i < countriesOwnedInContinent.size(); i++) {
+		for (int j = i + 1; j < countriesOwnedInContinent.size(); j++) {
+			if (countriesOwnedInContinent[j] > maxCountries) {
+				maxCountries = countriesOwnedInContinent[j];
+				maxCountriesIndex = j;
+			}
+		}
+	}
+
+	//If the maxCountries is 0, that means nobody owns the Continent, which means the calling player definetely doesn't own it.
+	if (maxCountries == 0)
+		return false;
+	//Otherwise, we have to check if there are multiple players who are tied for ownership
+	else {
+		int dupe = 0;
+		//Count any duplicates of the max value
+		for (int i = 0; i < countriesOwnedInContinent.size(); i++) {
+			if (countriesOwnedInContinent[i] == maxCountries)
+				dupe++;
+		}
+
+		//Only once we have this information can we determine ownership.
+		//If theres any sort of tie, nobody gets the continent
+		if (dupe > 1)
+			return false;
+		//If theres only one copy of that number and the max countries belong to this player's index, they DO own the continent
+		else if (maxCountriesIndex == *playerID - 1)
+			return true;
+		else
+			return false;
+
+	}
+	
+}
+
+
+
 //Using the country data, determine which countries we have, if any
 vector<int> Player::getContinentsOwned(Map m) {
 
 	vector<int> continentsOwned;
-	//For each continent that exists
+
+	//For each existing continent
 	for (int i = 0; i < m.getContinents().size(); i++) {
-		//Get # of countries in this continet
-		vector<Country> countries = m.getCountries();
-		int countriesInContinent = 0;
-
-		//COUNT TOTAL COUNTRIES IN A CONTINENT
-		//For every country
-		for (int j = 0; j < countries.size(); j++) {
-			//if that country's continent matches our current continent then we need to count it
-			if (countries.at(j).getContinentId() == m.getContinents().at(i)) {
-				//increment some variable, which will track the number of countries in a continent
-				countriesInContinent++;
-			}
-		}
-		//COUNT # COUNTRIES OWNED FROM THAT SAME CONTINENT
-		int countriesOwnedInContinent = 0;
-
-		//For each country we OWN
-		for (int k = 0; k < getCountriesOwned(m).size(); k++) {
-			//if that country's continent mateches our current continent,
-			if (getCountriesOwned(m).at(k).getContinentId() == m.getContinents().at(i)) {
-				countriesOwnedInContinent++;
-			}
-		}
-		//COMPARE THE 2 VALUES
-		if (countriesInContinent == countriesOwnedInContinent) {
-			//Then add the current continent to those that we own, adding its ID to a vector.
+		//if the calling player is the owner 
+		if (isContinentOwner(m.getContinents().at(i), m)) {
+			//then add it to the list of continents owned by the calling player
 			continentsOwned.push_back(m.getContinents().at(i));
 		}
 
 	}
-	
+
+
+	////For each continent that exists
+	//for (int i = 0; i < m.getContinents().size(); i++) {
+	//	//Get # of countries in this continet
+	//	vector<Country> countries = m.getCountries();
+	//	int countriesInContinent = 0;
+
+	//	//COUNT TOTAL COUNTRIES IN A CONTINENT
+	//	//For every country
+	//	for (int j = 0; j < countries.size(); j++) {
+	//		//if that country's continent matches our current continent then we need to count it
+	//		if (countries.at(j).getContinentId() == m.getContinents().at(i)) {
+	//			//increment some variable, which will track the number of countries in a continent
+	//			countriesInContinent++;
+	//		}
+	//	}
+	//	//COUNT # COUNTRIES OWNED FROM THAT SAME CONTINENT
+	//	int countriesOwnedInContinent = 0;
+
+	//	//For each country we OWN
+	//	for (int k = 0; k < getCountriesOwned(m).size(); k++) {
+	//		//if that country's continent mateches our current continent,
+	//		if (getCountriesOwned(m).at(k).getContinentId() == m.getContinents().at(i)) {
+	//			countriesOwnedInContinent++;
+	//		}
+	//	}
+	//	//COMPARE THE 2 VALUES
+	//	if (countriesInContinent == countriesOwnedInContinent) {
+	//		//Then add the current continent to those that we own, adding its ID to a vector.
+	//		continentsOwned.push_back(m.getContinents().at(i));
+	//	}
+	//}
+	//
+
+
+
 	//The variable will have been changed in the player's data members, but this function will also return that vector for ease of use
 	return continentsOwned;
 }
+
+
+
 //Calulate all the points from the goods we have collected via cards
 int Player::pointsFromCards() {
 	//Get the player's hand
@@ -444,18 +555,18 @@ int Player::pointsFromCards() {
 	}
 
 	//Display current count for other cards, so as to make the right decision
-	cout << "You currently have:"
+	cout << "Player " << *playerID << " currently has:"
 		<< "\n\t- " << trees << " trees"
 		<< "\n\t- " << anvils << " anvils"
 		<< "\n\t- " << shards << " shards"
 		<< "\n\t- " << coals << " coals"
-		<< "\n\t- " << carrots << " carrots"
+		<< "\n\t- " << carrots << " carrots" << endl
 		;
 
 	//If we have have any wildcards to handle
 	if (wildcards > 0) {
-		cout << "\n\nYou also have " << wildcards << " wildcards\n";
-		cout << "As such, you may assign it to be either:"
+		cout << "\n\nPLAYER " << *playerID << " also has " << wildcards << " wildcards\n";
+		cout << "As such, you may assign it to be one of the following options:"
 			<< "\n\t- tree"
 			<< "\n\t- anvil"
 			<< "\n\t- shard"
@@ -465,7 +576,7 @@ int Player::pointsFromCards() {
 		//Assign values to each of our wild cards
 		for (int j = 1; j <= wildcards; j++) {
 			string chosenGood;
-			cout << "\n\nChoose a value for wildcard " << j << endl;
+			cout << "\n\nPLAYER " << *playerID << ", please choose a value for wildcard " << j << endl;
 			cin >> chosenGood;
 
 			//Add the chosen value
@@ -584,6 +695,8 @@ std::vector<int> Player::getArmyLocations(Map m) {
 	}
 	return locations;
 }
+
+
 //returns a vector of country Ids where the player has at least one army.
 std::vector<int> Player::getArmyLocationsForCity(Map m) {
 
@@ -641,58 +754,6 @@ void Player::setIsNPC(bool _isNPC) {
 bool Player::getIsNPC() {
 	return *isNPC;
 }
-
-
-
-//FUNTIONALITY NOT REQUIRED --- TO BE IMPLEMENTED IN A2//
-
-////For future implementation, this function will scan countries, determine the owner
-////and pass the country ID to its respective owner's countriesOwned vector
-//vector<int> Player::getCountriesOwned() {
-//	Map m = Map();				//Start the map
-//	vector<Country> allCountries = m.getCountries();
-//	
-//	//This is where we will store countries owned by a player 
-//	vector<int> countriesOwned;	
-//
-//	//Take the vector of country objects
-//	//Loop through countries
-//	for (int i = 0; i < allCountries.size(); i++) {
-//		//Get the army vector for each country
-//		vector<int> armies = allCountries.at(i).getArmiesPerPlayer();
-//		//Get the largest element in the vector
-//		vector<int>::iterator maxElement = max_element(armies.begin(), armies.end());
-//		bool duplicatesExist = false;
-//
-//		
-//		//-----THIS PART OF THE FUNCTION HAS NOT BEEN TESTED-----//
-//		//Does our matrix have duplicates? Does it therefore have an owner?
-//		for (int i = 0; (i < armies.size() && (duplicatesExist== false)); i++) {
-//			for (int j = i + 1; j < armies.size(); j++) {
-//
-//				//If there are duplicates in the array and one of them is equal to 
-//				if ((armies.at(i) == armies.at(j)) && (armies.at(i) == *maxElement)) {
-//					duplicatesExist = true;
-//				}
-//			}
-//		}
-//		
-//		//if the maxElement has a duplicate 
-//		if (duplicatesExist == false) {
-//			//Position of largest value
-//			int ownerIndex = std::distance(armies.begin(), maxElement);
-//
-//			//If the playerID is the same as the index with the most armies
-//			if (*playerID == ownerIndex + 1) {
-//				//Then add that country to the player's owned countries
-//				countriesOwned.push_back(allCountries.at(i).getCountryId());
-//			}
-//		}
-//	}
-//
-//	return countriesOwned;
-//}
-
 
 
 

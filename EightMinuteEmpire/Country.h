@@ -19,6 +19,7 @@ private:
 	vector<bool*> _cities{ new bool (false), new bool(false), new bool(false), new bool(false), new bool(false) };
 
 public:
+
 	Country();
 	~Country();
 	Country(int* _countryId, int* _continentId);

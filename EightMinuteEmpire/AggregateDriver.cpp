@@ -8,6 +8,8 @@
 #include "Player.h" 
 #include "Card.h"
 #include "Npc.h"
+#include "Statistics.h"
+#include "Phases.h"
 #include <ostream>
 #include <vector>
 #include "time.h"
@@ -17,8 +19,111 @@ using namespace std;
 #include <boost/graph/graph_utility.hpp>
 using namespace boost;
 
+
 // Free function: generate random numbers within given range
 const int random(int min, int max);
+
+
+//Handles final calculations
+void declareWinner(vector<int> scores, vector<Player> players) {
+
+	//get the top score
+	int topScore = *max_element(scores.begin(), scores.end());
+
+	//get the index of the top score
+	int topIndex = std::distance(scores.begin(), max_element(scores.begin(), scores.end()));
+
+
+	//Are there even any duplicates high scores out here
+	//Run through scores and see if there is more than one value matching topScore
+
+	int dupeTop = 0;
+	for (int i = 0; i < scores.size(); i++) {
+		if (scores[i] == topScore)
+			dupeTop++;
+	}
+
+	//if theres more than one value matching the topScore, we have some sort of tie and need to compare 'em
+	if (dupeTop > 1) {
+		vector<Player> tied;
+		for (int i = 0; i < scores.size(); i++) {
+			//if they are one of the fools who tied, get that player and add em to a subset of players who have the same score
+			if (scores[i] == topScore)
+				tied.push_back(players[i]);
+		}
+
+		//now we need to check who of the tied players has the most remaining coins
+		int coinsMax = 0;
+		Player coinWinner;
+
+		//For each tied player
+		for (int i = 0; i < tied.size(); i++) {
+			//if a player has more coins than the current max coins,
+			if (tied[i].getAvailableCoins() > coinsMax) {
+				coinsMax = tied[i].getAvailableCoins();			//that player's coin count becomes the max
+				coinWinner = tied[i];							//and that player becomes the winner of the tie
+			}
+		}
+
+		//We must now see if there is more than one person with that same number of coins
+		int dupeCoins = 0;
+		for (int i = 0; i < tied.size(); i++) {
+			if (tied[i].getAvailableCoins() == coinsMax)
+				dupeCoins++;
+		}
+
+		//if theres still a tie between players after checking their coin counts
+		if (dupeCoins > 1) {
+			vector<Player> stillTied;
+
+			//Get the people who are still somehow tied
+			for (int i = 0; i < tied.size(); i++) {
+				if (tied[i].getAvailableCoins() == coinsMax)
+					stillTied.push_back(tied[i]);
+			}
+
+			//Find minimum remaining armies - meaning whoever has placed the most armies wins
+			int minArmies = 100;
+			Player finalWinner;
+
+			for (int i = 0; i < stillTied.size(); i++) {
+				if (stillTied[i].getAvailableArmies() < minArmies) {
+					minArmies = stillTied[i].getAvailableArmies();
+					finalWinner = stillTied[i];
+				}
+
+			}
+
+			int dupeArmies = 0;
+			for (int i = 0; i < stillTied.size(); i++) {
+				if (stillTied[i].getAvailableArmies() == minArmies)
+					dupeArmies++;
+			}
+
+			if (dupeArmies <= 1) {
+				cout << "\n\n CONGRATS PLAYER" << finalWinner.getPlayerID() << ". YOU WIN!!!";
+				return;
+
+			}
+			else {
+				throw string("\n\n\n\n\n\n\n\n\n\n\n\n\n\\nCongrats!!!!! You broke the game. How inconsiderate.");
+			}
+
+
+		}
+		else {
+			cout << "\n\n CONGRATS PLAYER" << coinWinner.getPlayerID() << ". YOU WIN!!!";
+			return;
+		}
+
+	}
+	else {
+		//otherwise, the player with the top score wins, obviously
+		cout << "\n\n CONGRATS PLAYER" << players.at(topIndex).getPlayerID() << ". YOU WIN!!!";
+		return;
+	}
+
+}
 
 int main()
 {
@@ -32,7 +137,7 @@ int main()
 	cout << "		| __  |     |  |  |__   |				" << endl;
 	cout << "		| __ -|  |  |_   _|   __|				" << endl;
 	cout << "		|_____|_____| |_| |_____|				" << endl;
-	cout << "		 _____ _____ _____ _____ _____ _____	" << endl; 
+	cout << "		 _____ _____ _____ _____ _____ _____	" << endl;
 	cout << "		|   __|     |  _  |     | __  |   __|	" << endl;
 	cout << "		|   __| | | |   __|-   -|    -|   __|	" << endl;
 	cout << "		|_____|_|_|_|__|  |_____|__|__|_____|	" << endl;
@@ -120,6 +225,7 @@ int main()
 
 		cout << "Player " << p.getPlayerID() << " is ready, and has " << p.getAvailableCoins() << " coins!" << endl;
 	}
+
 	//Adding our bots into the game
 	for (int i = 0; i < numberOfBots; i++) {
 		Player p = Player();
@@ -132,6 +238,27 @@ int main()
 	int oldNumberOfPlayers = numberOfPlayers;
 	//Updating numberOfPlayers
 	numberOfPlayers = numberOfPlayers + numberOfBots;
+
+
+
+
+
+	//-----------------------------------------Jank Storage-----------------------------------
+	//Create copy location																	//
+	vector<Player*> playersCopy;															//
+																							//
+	for (int i = 0; i != players.size(); i++) {												//
+		playersCopy.push_back(&players[i]);														//
+	}																						//
+																							//
+	//Copy the players into the map so we can use it globally w/o passing as param			//
+	Map::instance()->setPlayers(playersCopy);												//
+	//playersCopy.clear;																		//
+	//----------------------------------------------------------------------------------------
+
+
+
+
 	//[Requirement 3: Initializing Deck]
 
 	Deck deck = Deck(numberOfPlayers); //Note: this automatically shuffles the deck
@@ -146,8 +273,7 @@ int main()
 	cout << "" << endl;
 
 	//:::::::::::::::::::::::::::::::::::PART 2::::::::::::::::::::::::::::::::::::::::::::::
-
-
+	cout << Map::instance()->getCountries().at(9).getCountryId();
 	cout << "\n[PART 2: STARTUP PHASE]\n" << endl;
 
 	//[Requirement 1: Shuffling Deck]
@@ -240,22 +366,69 @@ int main()
 
 	cout << "The winner of the bid is Player " << maxIndex + 1 << endl;
 	cout << "\n" << endl;
-	
+
 	//:::::::::::::::::::::::::::::::::::PART 3::::::::::::::::::::::::::::::::::::::::::::::
 	cout << "[PART 3: MAIN GAME LOOP]\n" << endl;
-	
+
+	//Attaching Observers
+
+
+	Statistics *s1 = new Statistics();
+	Phases *ph1 = new Phases();
+
+	Player *p1;
+	p1 = &players[0];
+	s1->setSubject(p1);
+	ph1->setSubject(p1);
+
+	Statistics *s2 = new Statistics();
+	Phases *ph2 = new Phases();
+
+	Player *p2;
+	p2 = &players[1];
+	s2->setSubject(p2);
+	ph2->setSubject(p2);
+
+	if (players.size() >= 3) {
+		Statistics *s3 = new Statistics();
+		Phases *ph3 = new Phases();
+
+		Player *p3;
+		p3 = &players[2];
+		s3->setSubject(p3);
+		ph3->setSubject(p3);
+	}
+	if (players.size() >= 4) {
+		Statistics *s4 = new Statistics();
+		Phases *ph4 = new Phases();
+
+		Player *p4;
+		p4 = &players[3];
+		s4->setSubject(p4);
+		ph4->setSubject(p4);
+	}
+	if (players.size() == 5) {
+		Statistics *s5 = new Statistics();
+		Phases *ph5 = new Phases();
+
+		Player *p5;
+		p5 = &players[4];
+		s5->setSubject(p5);
+		ph5->setSubject(p5);
+	}
+
 	//setting the first player to the bid winner
-	int startingPlayer = maxIndex; 
+	int startingPlayer = maxIndex;
 
 	int currentPlayer = startingPlayer; //Makes it so that starting player is the first "current player"
-	int numberOfTurns; //At what turn the game ends
+	int numberOfTurns; //At what turn the game end
 
 	switch (numberOfPlayers) {
 	case 2:
 		numberOfTurns = 13;
 		break;
 	case 3:
-		numberOfTurns = 10;
+		numberOfTurns = 1; //FIX ME
 		break;
 	case 4:
 		numberOfTurns = 8;
@@ -274,6 +447,12 @@ int main()
 			cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::" << endl;
 			cout << "::::::::::::It is currently Player " << currentPlayer + 1 << "'s turn::::::::::::" << endl;
 			cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::\n" << endl;
+
+			//if it's the last turn, sets the "last turn" boolean inside the Player
+			if (currentTurn == numberOfTurns - 1) {
+				players[currentPlayer].setHandStatus(true);
+			}
+
 
 			deck.printDeck();
 			if (!players[currentPlayer].getIsNPC()) {
@@ -311,6 +490,7 @@ int main()
 			//Giving the player a choice of actions
 			while (1) {
 				int choice = 0;
+
 				if (!players[currentPlayer].getIsNPC()) {
 					cout << "\nWhat would you like to do: " << endl;
 					cout << "1: View Map." << endl;
@@ -354,9 +534,12 @@ int main()
 
 							vector<Card> v = players[currentPlayer].getHand();
 							v.push_back(chosenCard);
+							//WELTON+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+							//====================================================================================
 
 							players[currentPlayer].setHand(v);
-							deck.removeCard(cardChoice); 
+							deck.removeCard(cardChoice);
+							/////////////////////////////////////////////////////////////////////////////////////
 							break;
 						}
 						else if (cardChoice == 2 || 3) {
@@ -371,7 +554,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								deck.removeCard(cardChoice); 
+								deck.removeCard(cardChoice);
 								break;
 							}
 						}
@@ -386,7 +569,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								deck.removeCard(cardChoice); 
+								deck.removeCard(cardChoice);
 								break;
 							}
 						}
@@ -401,7 +584,7 @@ int main()
 								v.push_back(chosenCard);
 
 								players[currentPlayer].setHand(v);
-								deck.removeCard(cardChoice); 
+								deck.removeCard(cardChoice);
 								break;
 							}
 						}
@@ -420,7 +603,7 @@ int main()
 				}
 			}
 			//:::::::::::::::::::::::::::::::::::PART 4::::::::::::::::::::::::::::::::::::::::::::::
-			cout << "Time to do the action of your card" << endl;
+			//cout << "Time to do the action of your card" << endl;
 			int numberOfActions = 0;
 			if (chosenCard.getOperator() == "")
 				numberOfActions = 1;
@@ -454,6 +637,7 @@ int main()
 					}
 					cout << "3: Ignore action" << endl;
 					cin >> playerChoice;
+
 				}
 				else {
 					playerChoice = players[currentPlayer].getStrategy()->getChoice(chosenCard) + 1;
@@ -620,7 +804,6 @@ int main()
 									cout << "Sorry you have no armies available!" << endl;
 								}
 							}
-
 						}//End PLACE
 						else if (chosenCard.getAction1() == "place") {
 							//Place armies. 
@@ -706,8 +889,14 @@ int main()
 												players[currentPlayer].destroyArmy(Map::instance()->getCountries()[playerArmiesToDestroy[regionSelected - 1] - 1], players[playerSelected - 1]);
 												innerCounter--;
 												//playersTargeted = vector<int>(0);
-												
 											}
+											int countryID = playerArmiesToDestroy[regionSelected - 1];
+											int playerID = players[playerSelected - 1].getPlayerID();
+											Map::instance()->killArmy(countryID, playerID);
+											players.at(currentPlayer).Notify();
+
+											innerCounter--;
+										}
 									}
 								}
 								else {
@@ -715,17 +904,13 @@ int main()
 									innerCounter = 0;
 								}
 							}
-
-
 						}
 						innerCounter--;
 					}
 					numberOfActions -= 1;
 
 				}
-				/*else if (playerChoice == 1 && cardActionUsed != 1) {
-					
-				}*/
+
 				else if (playerChoice == 2 && cardActionUsed != 2) {
 					if (multipleChoices) {
 						cardActionUsed = playerChoice;
@@ -943,7 +1128,9 @@ int main()
 									while (playerSelected > playersTargeted.size() || playerSelected < 1) {
 										cout << "Choose player you want to remove armies from: " << endl;
 										for (int i = 0; i < playersTargeted.size(); i++) {
+
 											cout << i + 1 << ": Player " << playersTargeted[i] + 1 << endl;
+
 										}
 										if (playerSelected > playersTargeted.size() && playerSelected < 1) {
 											cin >> playerSelected;
@@ -962,11 +1149,19 @@ int main()
 													cin >> regionSelected;
 												}
 											}
+
 											cout << "Destroying player armies" << endl;
 											players[currentPlayer].destroyArmy(Map::instance()->getCountries()[playerArmiesToDestroy[regionSelected - 1] - 1], players[playerSelected - 1]);
 											innerCounter--;
 											//playersTargeted = vector<int>(0);
 
+
+											int countryID = playerArmiesToDestroy[regionSelected - 1];
+											int playerID = players[playerSelected - 1].getPlayerID();
+											Map::instance()->killArmy(countryID, playerID);
+											players.at(currentPlayer).Notify();
+
+											innerCounter--;
 										}
 									}
 								}
@@ -975,8 +1170,6 @@ int main()
 									innerCounter = 0;
 								}
 							}
-
-
 						}
 						innerCounter--;
 					}
@@ -1011,54 +1204,33 @@ int main()
 	//:::::::::::::::::::::::::::::::::::PART 6::::::::::::::::::::::::::::::::::::::::::::::
 
 	vector<int> scores;
+	cout << "============================================================";
+	cout << "\n\n======================= FINAL SCORES =======================\n\n";
+	cout << "============================================================\n";
 
-	cout << "\n\n========================FINAL SCORES========================\n\n";
-	for (int i = 0; i < players.size(); i++) {
-		cout << "Player " << i+1 << ": " << players.at(i).computeScore(*Map::instance()) << endl;
-		scores.push_back(players.at(i).computeScore(*Map::instance()));
-		//i0 = p1 score, i1 = p2 score, i2 = p3 score
+	for (int i = 0; i < players.size(); i++) //push to scores vector for winner computation
+	{ 
+	scores.push_back(players.at(i).computeScore(*Map::instance())); 
+	//i0 = p1 score, i1 = p2 score, i2 = p3 score, etc
 	}
 
-
-	int topScore = *max_element(scores.begin(), scores.end());
-
-	int topIndex = std::distance(scores.begin(), max_element(scores.begin(), scores.end()));
-
-
-	//Place all the tie members in another vector and compare just them
-
-	vector<Player> tied;
-	for (int i = 0; i < scores.size(); i++) {
-		if (scores.at(i) == topScore) {
-			//push the player ID to a new 
-			tied.push_back(players.at(i));
-			//tied should be a vector of players for whom the final score is equivalent
-
-		}
-		else {
-			//then the player at topIndex is the winner
-			cout << "\n\n\nCongrats! Player " << players.at(topIndex).getPlayerID() + 1 << " is the winner\n";
-		}
+	for (int i = 0; i < players.size(); i++) //display final results table
+	{
+		cout << "\nPLAYER " << i+1 << ": " << endl;
+		cout << "Victory Points:		" << scores[i] << endl;
+		cout << "Cards:			" << players.at(i).getHand().size() << endl;
+		cout << "Coins:			" << players.at(i).getAvailableCoins() << endl;
 	}
-
-
-	if (tied.size() > 1) {
 	
-		int coinsMax = 0;
-		Player coinWinner;
-		//Process the ties.. For each tied player
-		for (int i = 0; i < tied.size(); i++) {
-			//Get most coins left
-			if (tied.at(i).getAvailableCoins() > coinsMax) {
-				coinsMax = tied.at(i).getAvailableCoins();
-				coinWinner = tied.at(i);
-			}
-				
-		}
-		
-		cout << "\n\n\nCongrats! Player " << coinWinner.getPlayerID() + 1 << " is the winner\n";
+	//int winnerID = (getWinner(scores, players).getPlayerID()) + 1;
+	declareWinner(scores, players);
 
+	/*try {
+		cout << "\n\n\n\n CONGRATS PLAYER" << getWinner(scores, players).getPlayerID() << ". YOU WIN!!!";		
 	}
+	catch (string std) {
+		cout << std;
+	}*/
 	
 }
 
@@ -1071,3 +1243,4 @@ const int random(int min, int max) { //range : [min, max)
 	}
 	return min + rand() % ((max + 1) - min);
 }
+

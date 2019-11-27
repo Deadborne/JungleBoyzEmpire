@@ -5,8 +5,9 @@
 #include "Country.h"
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graphviz.hpp>
+#include "Player.h"
 typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
-
+class Player;
 
 class Map
 {
@@ -16,6 +17,7 @@ private:
 	static Map* mapInstance;
 	Map();
 
+	vector<Player*> players;
 public:
 	
 	std::vector<std::string> split(std::string _stringToBeSplit, std::string _delimeter);
@@ -34,5 +36,10 @@ public:
 
 	static Map* instance(); //lazy instantiation
 	static void resetInstance();
+
+	vector<Player*> getPlayers();
+	void setPlayers(vector<Player*> x);
+
+	void killArmy(int countryID, int playerID);
 
 };
