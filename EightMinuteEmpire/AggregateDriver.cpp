@@ -21,6 +21,8 @@ using namespace boost;
 
 
 //Handles final calculations
+
+const int random(int a, int b);
 void declareWinner(vector<int> scores, vector<Player> players) {
 
 	//get the top score
@@ -1198,24 +1200,7 @@ int main()
 		cout << "Coins:			" << players.at(i).getAvailableCoins() << endl;
 	}
 
-
-	if (tied.size() > 1) {
-	
-		int coinsMax = 0;
-		Player coinWinner;
-		//Process the ties.. For each tied player
-		for (int i = 0; i < tied.size(); i++) {
-			//Get most coins left
-			if (tied.at(i).getAvailableCoins() > coinsMax) {
-				coinsMax = tied.at(i).getAvailableCoins();
-				coinWinner = tied.at(i);
-			}
-				
-		}
-		
-		cout << "\n\n\nCongrats! Player " << coinWinner.getPlayerID() + 1 << " is the winner\n";
-
-	}
+	declareWinner(scores, players);
 	
 }
 
@@ -1230,7 +1215,6 @@ const int random(int min, int max) { //range : [min, max)
 }
 	
 	//int winnerID = (getWinner(scores, players).getPlayerID()) + 1;
-	declareWinner(scores, players);
 
 	/*try {
 		cout << "\n\n\n\n CONGRATS PLAYER" << getWinner(scores, players).getPlayerID() << ". YOU WIN!!!";		
@@ -1239,4 +1223,3 @@ const int random(int min, int max) { //range : [min, max)
 		cout << std;
 	}*/
 	
-}
