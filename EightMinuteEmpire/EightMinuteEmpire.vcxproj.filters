@@ -159,6 +159,9 @@
     <ClInclude Include="Bid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -172,9 +175,6 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Bid.cpp">
-      <Filter>Source Files\Bid</Filter>
     </ClCompile>
     <ClCompile Include="Bid.cpp">
       <Filter>Source Files\Bid</Filter>
@@ -268,6 +268,15 @@
     </ClCompile>
     <ClCompile Include="Npc.cpp">
       <Filter>Source Files\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="BidDriver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Part6Supplemental.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bid.cpp">
+      <Filter>Source Files\Bid</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

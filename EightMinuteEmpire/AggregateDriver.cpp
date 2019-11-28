@@ -224,25 +224,6 @@ int main()
 		cout << "Player " << p.getPlayerID() << " is ready, and has " << p.getAvailableCoins() << " coins!" << endl;
 	}
 
-
-
-
-	//-----------------------------------------Jank Storage-----------------------------------
-	//Create copy location																	//
-	vector<Player*> playersCopy;															//
-																							//
-	for (int i = 0; i != players.size(); i++) {												//
-		playersCopy.push_back(&players[i]);														//
-	}																						//
-																							//
-	//Copy the players into the map so we can use it globally w/o passing as param			//
-	Map::instance()->setPlayers(playersCopy);												//
-	//playersCopy.clear;																		//
-	//----------------------------------------------------------------------------------------
-
-
-
-
 	//Adding our bots into the game
 	for (int i = 0; i < numberOfBots; i++) {
 		Player p = Player();
@@ -252,6 +233,7 @@ int main()
 		//p.setGreedStrategy(GreedStrategy());
 		players.push_back(p);
 	}
+
 	int oldNumberOfPlayers = numberOfPlayers;
 	//Updating numberOfPlayers
 	numberOfPlayers = numberOfPlayers + numberOfBots;
@@ -347,12 +329,14 @@ int main()
 		dates[i] = players[i].getBirthday();
 	}
 
-	for (int i = 0; i < bids.size(); i++) {
-		if (bids[i] == NULL) {
+	//bots automatically bid 0 and are infinitely old, guaranteeing they don't start.
+	for (int i = 0; i < players.size(); i++) {
+		if (players[i].getIsNPC() == true) {
 			bids[i] = 0;
 			dates[i] = 0;
 		}
 	}
+
 	Bid calculator = Bid();
 	int maxIndex = calculator.calculateBid(bids);
 	// If no maximum bidding cost was found, which may happen often, the players' dates are compared.
@@ -433,6 +417,13 @@ int main()
 		numberOfTurns = 7;
 		break;
 	}
+
+	//Copy the players into the map so we can use it globally w/o passing as param																	
+	vector<Player*> playersCopy;																																				
+	for (int i = 0; i != players.size(); i++) {												
+		playersCopy.push_back(&players[i]);													
+	}																																								
+	Map::instance()->setPlayers(playersCopy);												
 
 	//This is the main game loop!
 	for (int currentTurn = 0; currentTurn < numberOfTurns; currentTurn++) {

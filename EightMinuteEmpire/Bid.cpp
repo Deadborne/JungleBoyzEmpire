@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Bid.h"
+#include "Map.h"
 #include <vector>
 #include <algorithm>
 #include <math.h>
@@ -45,7 +46,7 @@ void Bid::setBid(int playerId) {
 			}
 
 		}
-		catch (exception e) {
+		catch (std::exception e) {
 			cout << "Invalid bid amount. Try again: ";
 		}
 	}
@@ -67,7 +68,7 @@ void Bid::setBid(int playerId, int maxBid) {
 			}
 
 		}
-		catch (exception e) {
+		catch (std::exception e) {
 			cout << "Invalid bid amount. Try again: ";
 		}
 	}
@@ -91,7 +92,7 @@ void Bid::setDate(int playerId) {
 			}
 
 		}
-		catch (exception e) {
+		catch (std::exception e) {
 			cout << "Invalid bid amount. Try again: ";
 		}
 	}
@@ -130,32 +131,36 @@ int Bid::calculateBid(std::vector<int> bidList) {
 }
 
 int Bid::calculateDate(std::vector<int> dateList) {
-	cout << "Calculating Bids: ";
+	cout << "Finding youngest player: " << endl;
 	int maxBid = 0;
 	int maxBidIndex = -1;
 	bool isFirstFindBid = false;
 	bool isTied = false;
-	maxBid = *max_element(dateList.begin(), dateList.end());
+	//maxBid = *max_element(dateList.begin(), dateList.end());
 
 	//Looking for the index
 
+	int maxDate = -1;
+	int maxDateIndex = -1;
+
 	for (int i = 0; i < dateList.size(); i++) {
-		if (maxBid == dateList.at(i)) {
-			if (isFirstFindBid) {
-				isTied = true;
-			}
-			else {
-				isFirstFindBid = true;
-				maxBidIndex = i;
-			}
+		if (dateList[i] > maxDate) {
+			maxDate = dateList[i];
+			maxDateIndex = i;
+			isTied = false;
+		}
+		else if (dateList[i] == maxDate) {
+			cout << dateList[i];
+			isTied = true;
 		}
 	}
 
 	if (isTied) {
-		return -1;
+		cout << "TWINS!? I give up. Player 1 will have to start!" << endl;
+		return 0;
 	}
-	else {
-		return maxBidIndex;
-	}
+
+	else
+		return maxDateIndex;
 }
 
