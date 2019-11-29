@@ -28,6 +28,7 @@ void declareWinner(vector<int> scores, vector<Player> players) {
 	//get the top score
 	int topScore = *max_element(scores.begin(), scores.end());
 
+
 	//get the index of the top score
 	int topIndex = std::distance(scores.begin(), max_element(scores.begin(), scores.end()));
 
@@ -41,24 +42,26 @@ void declareWinner(vector<int> scores, vector<Player> players) {
 			dupeTop++;
 	}
 
+	vector<Player*> tied;
+	vector<Player*> stillTied;
+
 	//if theres more than one value matching the topScore, we have some sort of tie and need to compare 'em
 	if (dupeTop > 1) {
-		vector<Player> tied;
 		for (int i = 0; i < scores.size(); i++) {
 			//if they are one of the fools who tied, get that player and add em to a subset of players who have the same score
 			if (scores[i] == topScore)
-				tied.push_back(players[i]);
+				tied.push_back(Map::instance()->getPlayers()[i]);
 		}
 
 		//now we need to check who of the tied players has the most remaining coins
 		int coinsMax = 0;
-		Player coinWinner;
+		Player* coinWinner;
 
 		//For each tied player
 		for (int i = 0; i < tied.size(); i++) {
 			//if a player has more coins than the current max coins,
-			if (tied[i].getAvailableCoins() > coinsMax) {
-				coinsMax = tied[i].getAvailableCoins();			//that player's coin count becomes the max
+			if (tied[i]->getAvailableCoins() > coinsMax) {
+				coinsMax = tied[i]->getAvailableCoins();			//that player's coin count becomes the max
 				coinWinner = tied[i];							//and that player becomes the winner of the tie
 			}
 		}
@@ -66,27 +69,27 @@ void declareWinner(vector<int> scores, vector<Player> players) {
 		//We must now see if there is more than one person with that same number of coins
 		int dupeCoins = 0;
 		for (int i = 0; i < tied.size(); i++) {
-			if (tied[i].getAvailableCoins() == coinsMax)
+			if (tied[i]->getAvailableCoins() == coinsMax)
 				dupeCoins++;
 		}
 
 		//if theres still a tie between players after checking their coin counts
 		if (dupeCoins > 1) {
-			vector<Player> stillTied;
+			
 
 			//Get the people who are still somehow tied
 			for (int i = 0; i < tied.size(); i++) {
-				if (tied[i].getAvailableCoins() == coinsMax)
+				if (tied[i]->getAvailableCoins() == coinsMax)
 					stillTied.push_back(tied[i]);
 			}
 
 			//Find minimum remaining armies - meaning whoever has placed the most armies wins
 			int minArmies = 100;
-			Player finalWinner;
+			Player* finalWinner;
 
 			for (int i = 0; i < stillTied.size(); i++) {
-				if (stillTied[i].getAvailableArmies() < minArmies) {
-					minArmies = stillTied[i].getAvailableArmies();
+				if (stillTied[i]->getAvailableArmies() < minArmies) {
+					minArmies = stillTied[i]->getAvailableArmies();
 					finalWinner = stillTied[i];
 				}
 
@@ -94,30 +97,31 @@ void declareWinner(vector<int> scores, vector<Player> players) {
 
 			int dupeArmies = 0;
 			for (int i = 0; i < stillTied.size(); i++) {
-				if (stillTied[i].getAvailableArmies() == minArmies)
+				if (stillTied[i]->getAvailableArmies() == minArmies)
 					dupeArmies++;
 			}
 
 			if (dupeArmies <= 1) {
-				cout << "\n\n CONGRATS PLAYER" << finalWinner.getPlayerID() << ". YOU WIN!!!";
+				cout << "\n\n CONGRATS PLAYER" << finalWinner->getPlayerID() << ". YOU WIN, AND ARE NOW AN HONORARY JUNGLE BOI.";
 				return;
 
 			}
 			else {
-				throw string("\n\n\n\n\n\n\n\n\n\n\n\n\n\\nCongrats!!!!! You broke the game. How inconsiderate.");
+				cout << "\nA TIE OF THIS PROPORTIONS HAS NOT BEEN SEEN SINCE THE TIME OF THE DINOSAURS. YOU ARE ALL WINNERS!" << endl;
+				return;
 			}
 
 
 		}
 		else {
-			cout << "\n\n CONGRATS PLAYER" << coinWinner.getPlayerID() << ". YOU WIN!!!";
+			cout << "\n\n CONGRATS PLAYER" << coinWinner->getPlayerID() << ". YOU WIN, AND ARE NOW AN HONORARY JUNGLE BOI.";
 			return;
 		}
 
 	}
 	else {
 		//otherwise, the player with the top score wins, obviously
-		cout << "\n\n CONGRATS PLAYER" << players.at(topIndex).getPlayerID() << ". YOU WIN!!!";
+		cout << "\n\n CONGRATS PLAYER" << players.at(topIndex).getPlayerID() << ". YOU WIN, AND ARE NOW AN HONORARY JUNGLE BOI.";
 		return;
 	}
 
@@ -408,7 +412,7 @@ int main()
 		numberOfTurns = 13;
 		break;
 	case 3:
-		numberOfTurns = 1; //FIX ME
+		numberOfTurns = 11;
 		break;
 	case 4:
 		numberOfTurns = 8;
