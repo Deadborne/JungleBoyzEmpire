@@ -19,113 +19,8 @@ using namespace std;
 #include <boost/graph/graph_utility.hpp>
 using namespace boost;
 
-
-//Handles final calculations
-
 const int random(int a, int b);
-void declareWinner(vector<int> scores, vector<Player> players) {
-
-	//get the top score
-	int topScore = *max_element(scores.begin(), scores.end());
-
-
-	//get the index of the top score
-	int topIndex = std::distance(scores.begin(), max_element(scores.begin(), scores.end()));
-
-
-	//Are there even any duplicates high scores out here
-	//Run through scores and see if there is more than one value matching topScore
-
-	int dupeTop = 0;
-	for (int i = 0; i < scores.size(); i++) {
-		if (scores[i] == topScore)
-			dupeTop++;
-	}
-
-	vector<Player*> tied;
-	vector<Player*> stillTied;
-
-	//if theres more than one value matching the topScore, we have some sort of tie and need to compare 'em
-	if (dupeTop > 1) {
-		for (int i = 0; i < scores.size(); i++) {
-			//if they are one of the fools who tied, get that player and add em to a subset of players who have the same score
-			if (scores[i] == topScore)
-				tied.push_back(Map::instance()->getPlayers()[i]);
-		}
-
-		//now we need to check who of the tied players has the most remaining coins
-		int coinsMax = 0;
-		Player* coinWinner;
-
-		//For each tied player
-		for (int i = 0; i < tied.size(); i++) {
-			//if a player has more coins than the current max coins,
-			if (tied[i]->getAvailableCoins() > coinsMax) {
-				coinsMax = tied[i]->getAvailableCoins();			//that player's coin count becomes the max
-				coinWinner = tied[i];							//and that player becomes the winner of the tie
-			}
-		}
-
-		//We must now see if there is more than one person with that same number of coins
-		int dupeCoins = 0;
-		for (int i = 0; i < tied.size(); i++) {
-			if (tied[i]->getAvailableCoins() == coinsMax)
-				dupeCoins++;
-		}
-
-		//if theres still a tie between players after checking their coin counts
-		if (dupeCoins > 1) {
-			
-
-			//Get the people who are still somehow tied
-			for (int i = 0; i < tied.size(); i++) {
-				if (tied[i]->getAvailableCoins() == coinsMax)
-					stillTied.push_back(tied[i]);
-			}
-
-			//Find minimum remaining armies - meaning whoever has placed the most armies wins
-			int minArmies = 100;
-			Player* finalWinner;
-
-			for (int i = 0; i < stillTied.size(); i++) {
-				if (stillTied[i]->getAvailableArmies() < minArmies) {
-					minArmies = stillTied[i]->getAvailableArmies();
-					finalWinner = stillTied[i];
-				}
-
-			}
-
-			int dupeArmies = 0;
-			for (int i = 0; i < stillTied.size(); i++) {
-				if (stillTied[i]->getAvailableArmies() == minArmies)
-					dupeArmies++;
-			}
-
-			if (dupeArmies <= 1) {
-				cout << "\n\n CONGRATS PLAYER" << finalWinner->getPlayerID() << ". YOU WIN, AND ARE NOW AN HONORARY JUNGLE BOI.";
-				return;
-
-			}
-			else {
-				cout << "\nA TIE OF THIS PROPORTIONS HAS NOT BEEN SEEN SINCE THE TIME OF THE DINOSAURS. YOU ARE ALL WINNERS!" << endl;
-				return;
-			}
-
-
-		}
-		else {
-			cout << "\n\n CONGRATS PLAYER" << coinWinner->getPlayerID() << ". YOU WIN, AND ARE NOW AN HONORARY JUNGLE BOI.";
-			return;
-		}
-
-	}
-	else {
-		//otherwise, the player with the top score wins, obviously
-		cout << "\n\n CONGRATS PLAYER" << players.at(topIndex).getPlayerID() << ". YOU WIN, AND ARE NOW AN HONORARY JUNGLE BOI.";
-		return;
-	}
-
-}
+void declareWinner(vector<int> scores, vector<Player> players);
 
 int main()
 {
@@ -149,6 +44,25 @@ int main()
 
 	//[Requirement 1: Reading the Map] 
 
+	cout << "[SELECT GAME MODE]" << endl;
+
+	int gameMode = 0; // Mode 1: Normal Game , Mode 2: Bot Tournament
+
+	while (1) {
+		cout << "\n1: NORMAL GAME \n2: AI TOURNAMENT" << endl;
+		cin >> gameMode;
+		if (gameMode != NULL && gameMode > 0 && gameMode < 3)
+			break;
+		else {
+			cin.clear();
+			cin.ignore();
+			cout << "Invalid game mode." << endl;
+		}
+	}
+
+	cin.clear();
+	cin.ignore();
+
 	cout << "[PART 1: GAME START]" << endl;
 
 	typedef boost::adjacency_list<listS, vecS, undirectedS> Graph;
@@ -167,37 +81,56 @@ int main()
 	int startingCoins; //the number of coins started with, adjusted to the number of players
 
 	//Entering the number of players. Loops until a correct number is chosen.
-	while (1) {
-		cout << "Select the number of players, from 2 to 5." << endl;
-		cin >> numberOfPlayers;
-		if (numberOfPlayers != NULL && numberOfPlayers > 1 && numberOfPlayers < 6)
-			break;
-		else {
-			cin.clear();
-			cin.ignore();
-			cout << "Invalid number of players." << endl;
+	if (gameMode == 1) {
+		while (1) {
+			cout << "Select the number of players, from 2 to 5." << endl;
+			cin >> numberOfPlayers;
+			if (numberOfPlayers != NULL && numberOfPlayers > 1 && numberOfPlayers < 6)
+				break;
+			else {
+				cin.clear();
+				cin.ignore();
+				cout << "Invalid number of players." << endl;
+			}
 		}
 	}
+	else numberOfPlayers = 0;
 
 	int numberOfBots = 0;
+
 	if (numberOfPlayers <= 4) {
 		//Gets the most number of bots you can get
 		int maxBots = 5 - numberOfPlayers;
 		cout << "Select how many bots you would like to add to your game" << endl;
 		numberOfBots = -1;
 		while (numberOfBots > maxBots + 1 || numberOfBots < 1) {
-			for (int i = 0; i <= maxBots; i++) {
-				cout << i + 1 << "): Add " << i << " bot(s) to the game" << endl;
+
+			if (gameMode == 1) {
+				for (int i = 0; i <= maxBots; i++) {
+					cout << i + 1 << "): Add " << i << " bot(s) to the game" << endl;
+				}
+
+				if (numberOfBots > maxBots + 1 || numberOfBots < 1) {
+					cin >> numberOfBots;
+				}
 			}
 
-			if (numberOfBots > maxBots + 1 || numberOfBots < 1) {
-				cin >> numberOfBots;
+			else {
+				for (int i = 2; i <= maxBots; i++) {
+					cout << i << "): Add " << i << " bot(s) to the game" << endl;
+				}
+				if (numberOfBots > maxBots + 1 || numberOfBots < 1) {
+					cin >> numberOfBots;
+				}
 			}
+
 		}
 		
 	}
+
 	//Fixing off by 1 error :) 
-	numberOfBots = numberOfBots - 1;
+	if (gameMode == 1)
+		numberOfBots = numberOfBots - 1;
 
 	//giving each player the right amount of coins, depending on the number of players.
 	switch (numberOfPlayers + numberOfBots) {
@@ -234,7 +167,6 @@ int main()
 		p.setAvailableCoins(startingCoins);
 		p.setPlayerID(players.size() + 1);
 		p.setIsNPC(true);
-		//p.setGreedStrategy(GreedStrategy());
 		players.push_back(p);
 	}
 
@@ -253,6 +185,41 @@ int main()
 		players[i].printHand(); //Displaying the hand. Look, ma, there's nothing in my hands! (should show nothing)
 	}
 	cout << "" << endl;
+
+	//[Tournament Mode: Initializing Bots]
+	if (gameMode == 2) {
+
+		for (int i = 0; i < players.size(); i++) {
+
+			int botSelect = 0;
+
+			while (1) {
+				cout << "Choose the strategy for bot " << i + 1 << ": " << endl;
+				cout << "1: Greed Bot" << endl;
+				cout << "2: Moderate Bot" << endl;
+				cin >> botSelect;
+
+				if (botSelect == 1) {
+					players[i].setGreedStrategy(GreedStrategy());
+					break;
+				}
+				else if (botSelect == 2) {
+					players[i].setModerateStrategy(ModerateStrategy());
+					break;
+				}
+				else {
+					cout << "Invalid choice. Defaulting to Moderate Bot." << endl;
+					players[i].setModerateStrategy(ModerateStrategy());
+					break;
+				}
+			}
+		}
+	}
+
+	if (players.size() == 0) {
+		cout << "Great going! A game with 0 bots and 0 players, huh? You will never be a Jungle Boi now." << endl;
+		return 0;
+	}
 
 	//:::::::::::::::::::::::::::::::::::PART 2::::::::::::::::::::::::::::::::::::::::::::::
 	cout << Map::instance()->getCountries().at(9).getCountryId();
@@ -292,12 +259,22 @@ int main()
 		int placingPlayer = 1; //The player who gets to choose where to place the army
 		for (int i = 0; i < npc.getAvailableArmies(); i++) {
 			Map::instance()->showEverything(); //show the map so players can decide where to put NPC armies
-			cout << "Player " << placingPlayer << ", choose a region to place non-player army: ";
-			cin >> selectCountry;
-			while (selectCountry > Map::instance()->getCountries().size() || selectCountry < 1) {
-				cout << "Invalid Country ID. Try again: ";
+
+
+			if (gameMode == 1) {
+				cout << "Player " << placingPlayer << ", choose a region to place non-player army: ";
 				cin >> selectCountry;
+				while (selectCountry > Map::instance()->getCountries().size() || selectCountry < 1) {
+					cout << "Invalid Country ID. Try again: ";
+					cin >> selectCountry;
+				}
 			}
+
+			else { //in a bot tournament, bots place NPCs randomly
+				cout << "Bot " << placingPlayer << " is choosing where to place an NPC army...";
+				selectCountry = random(1, Map::instance()->getCountries().size());
+			}
+
 			npc.placeNewArmies(1, Map::instance()->giveMeCountry(selectCountry));
 			//It's the next player's turn to place NPC armies
 			if (placingPlayer == 1)
@@ -306,7 +283,7 @@ int main()
 				placingPlayer = 1;
 		}
 	}
-	else {
+	else{
 
 	}
 
@@ -406,6 +383,7 @@ int main()
 
 	int currentPlayer = startingPlayer; //Makes it so that starting player is the first "current player"
 	int numberOfTurns; //At what turn the game end
+	int tournamentTurn = 0; //turns for a tournament game. Game ends when this reaches 30.
 
 	switch (numberOfPlayers) {
 	case 2:
@@ -435,9 +413,13 @@ int main()
 		//This loop ensures that each player goes once before the turn goes up by 1
 		for (int numberOfPlayersWhoWent = 0; numberOfPlayersWhoWent < numberOfPlayers; numberOfPlayersWhoWent++) {
 
+			tournamentTurn++; //individual turn counter
+
 			cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::" << endl;
 			cout << "::::::::::::It is currently Player " << currentPlayer + 1 << "'s turn::::::::::::" << endl;
 			cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::\n" << endl;
+			if (gameMode == 2)
+				cout << "TURN " << tournamentTurn + 1 << " OF THE TOURNAMENT:" << endl;
 
 			//if it's the last turn, sets the "last turn" boolean inside the Player
 			if (currentTurn == numberOfTurns - 1) {
@@ -450,30 +432,32 @@ int main()
 				cout << "You have " << players[currentPlayer].getAvailableCoins() << " coins." << endl;
 			}
 			else {
-				int yesOrNo = -1;
-				yesOrNo = 1;
-				cout << "NPCs Turn" << endl;
-				if (yesOrNo == 1) {
-					//Selects new strategy for bot
-					yesOrNo = -1;
-					while (yesOrNo != 1 && yesOrNo != 2) {
-						cout << "Choose the bots strategy!" << endl;
-						cout << "1: Greed Bot" << endl;
-						cout << "2: Moderate Bot" << endl;
-						if (yesOrNo != 1 && yesOrNo != 2) {
-							cin >> yesOrNo;
-						}
-					}
+				if (gameMode == 1) { //In a normal game you can change a bot's strategy. In tournament, you can't.
+					int yesOrNo = -1;
+					yesOrNo = 1;
+					cout << "NPCs Turn" << endl;
 					if (yesOrNo == 1) {
-						players[currentPlayer].setGreedStrategy(GreedStrategy());
+						//Selects new strategy for bot
+						yesOrNo = -1;
+						while (yesOrNo != 1 && yesOrNo != 2) {
+							cout << "Choose the bots strategy!" << endl;
+							cout << "1: Greed Bot" << endl;
+							cout << "2: Moderate Bot" << endl;
+							if (yesOrNo != 1 && yesOrNo != 2) {
+								cin >> yesOrNo;
+							}
+						}
+						if (yesOrNo == 1) {
+							players[currentPlayer].setGreedStrategy(GreedStrategy());
+						}
+						else {
+							players[currentPlayer].setModerateStrategy(ModerateStrategy());
+						}
+
 					}
 					else {
-						players[currentPlayer].setModerateStrategy(ModerateStrategy());
+
 					}
-
-				}
-				else {
-
 				}
 			}
 			Card chosenCard = Card(); //This will be used to determine what action to take.
@@ -1171,7 +1155,10 @@ int main()
 			currentPlayer++; //Passes the turn to the next player
 			if (currentPlayer > (numberOfPlayers - 1)) //Example: if there are 3 players and currentPlayer is 4, sets it to player[0]'s turn
 				currentPlayer = 0;
+
 		}
+		if (gameMode == 2 && tournamentTurn >= 30)
+			break; //tournament ends after 30 bot turns.
 	}
 
 	//:::::::::::::::::::::::::::::::::::PART 6::::::::::::::::::::::::::::::::::::::::::::::
@@ -1209,12 +1196,109 @@ const int random(int min, int max) { //range : [min, max)
 	return min + rand() % ((max + 1) - min);
 }
 	
-	//int winnerID = (getWinner(scores, players).getPlayerID()) + 1;
 
-	/*try {
-		cout << "\n\n\n\n CONGRATS PLAYER" << getWinner(scores, players).getPlayerID() << ". YOU WIN!!!";		
+//Handles final calculations
+
+void declareWinner(vector<int> scores, vector<Player> players) {
+
+	//get the top score
+	int topScore = *max_element(scores.begin(), scores.end());
+
+
+	//get the index of the top score
+	int topIndex = std::distance(scores.begin(), max_element(scores.begin(), scores.end()));
+
+
+	//Are there even any duplicates high scores out here
+	//Run through scores and see if there is more than one value matching topScore
+
+	int dupeTop = 0;
+	for (int i = 0; i < scores.size(); i++) {
+		if (scores[i] == topScore)
+			dupeTop++;
 	}
-	catch (string std) {
-		cout << std;
-	}*/
-	
+
+	vector<Player*> tied;
+	vector<Player*> stillTied;
+
+	//if theres more than one value matching the topScore, we have some sort of tie and need to compare 'em
+	if (dupeTop > 1) {
+		for (int i = 0; i < scores.size(); i++) {
+			//if they are one of the fools who tied, get that player and add em to a subset of players who have the same score
+			if (scores[i] == topScore)
+				tied.push_back(Map::instance()->getPlayers()[i]);
+		}
+
+		//now we need to check who of the tied players has the most remaining coins
+		int coinsMax = 0;
+		Player* coinWinner;
+
+		//For each tied player
+		for (int i = 0; i < tied.size(); i++) {
+			//if a player has more coins than the current max coins,
+			if (tied[i]->getAvailableCoins() > coinsMax) {
+				coinsMax = tied[i]->getAvailableCoins();			//that player's coin count becomes the max
+				coinWinner = tied[i];							//and that player becomes the winner of the tie
+			}
+		}
+
+		//We must now see if there is more than one person with that same number of coins
+		int dupeCoins = 0;
+		for (int i = 0; i < tied.size(); i++) {
+			if (tied[i]->getAvailableCoins() == coinsMax)
+				dupeCoins++;
+		}
+
+		//if theres still a tie between players after checking their coin counts
+		if (dupeCoins > 1) {
+
+
+			//Get the people who are still somehow tied
+			for (int i = 0; i < tied.size(); i++) {
+				if (tied[i]->getAvailableCoins() == coinsMax)
+					stillTied.push_back(tied[i]);
+			}
+
+			//Find minimum remaining armies - meaning whoever has placed the most armies wins
+			int minArmies = 100;
+			Player* finalWinner;
+
+			for (int i = 0; i < stillTied.size(); i++) {
+				if (stillTied[i]->getAvailableArmies() < minArmies) {
+					minArmies = stillTied[i]->getAvailableArmies();
+					finalWinner = stillTied[i];
+				}
+
+			}
+
+			int dupeArmies = 0;
+			for (int i = 0; i < stillTied.size(); i++) {
+				if (stillTied[i]->getAvailableArmies() == minArmies)
+					dupeArmies++;
+			}
+
+			if (dupeArmies <= 1) {
+				cout << "\n\n CONGRATS PLAYER" << finalWinner->getPlayerID() << ". YOU WIN, AND ARE NOW AN HONORARY JUNGLE BOI.";
+				return;
+
+			}
+			else {
+				cout << "\nA TIE OF THIS PROPORTIONS HAS NOT BEEN SEEN SINCE THE TIME OF THE DINOSAURS. YOU ARE ALL WINNERS!" << endl;
+				return;
+			}
+
+
+		}
+		else {
+			cout << "\n\n CONGRATS PLAYER" << coinWinner->getPlayerID() << ". YOU WIN, AND ARE NOW AN HONORARY JUNGLE BOI.";
+			return;
+		}
+
+	}
+	else {
+		//otherwise, the player with the top score wins, obviously
+		cout << "\n\n CONGRATS PLAYER" << players.at(topIndex).getPlayerID() << ". YOU WIN, AND ARE NOW AN HONORARY JUNGLE BOI.";
+		return;
+	}
+
+}

@@ -182,11 +182,8 @@ Graph Map::ReadMap(string f)
 
 		if (hasStarter && connected) { //checks if the map also has a starting point. Won't create a map without one.
 			//output the map
-			cout << "This is your current game map!" << endl;
-			write_graphviz(cout, GameMap);
-			//output continent subgraph
-			cout << "\nThis is continent subgraph!" << endl;
-			write_graphviz(cout, ContinentMap);
+			cout << "Map loaded!\n" << endl;
+
 			return GameMap;
 		}
 		else if (!connected) {
