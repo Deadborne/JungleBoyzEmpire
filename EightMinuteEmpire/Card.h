@@ -105,6 +105,7 @@ public:
 	std::vector<Card> getSpace() const;
 	int getDeckSize() const;
 	void printDeck();
+	void printDeckWhole();
 	void eraseBack();
 	void removeCard(int i);
 };

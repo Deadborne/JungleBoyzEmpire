@@ -118,17 +118,14 @@ void Deck::initializeDeck(int players) {
 		ptrCard.push_back(CardsFactory::Create("coal",		1,	"moveOver",	2,	"",			0,	"",		true));
 	}
 
-
 	//Copy contents of ptrCards into the actual deck
 
 	for (int i = 0; i < ptrCard.size(); i++) {
-		deck.push_back(*ptrCard.at(i));
+		deck[i] = *ptrCard.at(i);
+		ptrCard.at(i)->printCard();
 	}
 
-
-
-
-
+	//printDeckWhole();
 
 	//deck.shrink_to_fit();
 }
@@ -152,6 +149,15 @@ void Deck::printDeck() {
 	int j = 0;
 	for (auto& i : space) {
 		cout << "[" << j+1 << "] " << i.printCard() << endl;
+		j++;
+	}
+	cout << "Card 1: Free, Card 2: 1 Coin, Card 3: 1 Coin, Card 4: 2 Coins, Card 5: 2 Coins, Card 6: 3 Coins." << endl;
+}
+
+void Deck::printDeckWhole() {
+	int j = 0;
+	for (auto& i : deck) {
+		cout << "[" << j + 1 << "] " << i.printCard() << endl;
 		j++;
 	}
 	cout << "Card 1: Free, Card 2: 1 Coin, Card 3: 1 Coin, Card 4: 2 Coins, Card 5: 2 Coins, Card 6: 3 Coins." << endl;
