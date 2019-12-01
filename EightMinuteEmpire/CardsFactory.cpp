@@ -20,8 +20,10 @@ Card* CardsFactory::Create(string good, int goodAmount, string action1, int n1, 
 		return new ShardCard(goodAmount, action1, n1, action2, n2, op, n5);
 	else if (good == "wildcard")
 		return new WildCard(goodAmount, action1, n1, action2, n2, op, n5);
+	
+		
 
-	return NULL;
+	
 }
 
 

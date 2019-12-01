@@ -34,7 +34,7 @@ public:
 	//!!!!!!!!!!!!!!!Welton from here
 	virtual ~Card();
 
-	virtual void createdIn() = 0;
+	//virtual void createdIn() = 0;
 
 
 
