@@ -67,10 +67,10 @@ void Deck::initializeDeck(int players) {
 
 
 	if (players == 5) { // only insert these cards if the amount of players is 5
-		deck.push_back(Card("anvil", 2, "move", 4, "", 0, "", true));
-		deck.push_back(Card("shard", 1, "place", 2, "", 0, "", true));
-		deck.push_back(Card("carrot", 1, "place", 4, "move", 2, "or", true));
-		deck.push_back(Card("coal", 1, "moveOver", 2, "", 0, "", true));
+		deck.push_back(Card("anvil",	2,	"move",		4,	"",			0,	"",		true));
+		deck.push_back(Card("shard",	1,	"place",	2,	"",			0,	"",		true));
+		deck.push_back(Card("carrot",	1,	"place",	4,	"move",		2,	"or",	true));
+		deck.push_back(Card("coal",		1,	"moveOver",	2,	"",			0,	"",		true));
 	}
 	deck.shrink_to_fit();
 }

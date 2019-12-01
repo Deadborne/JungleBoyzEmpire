@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 class Card {
 private:
 	std::string good;
@@ -17,7 +19,7 @@ public:
 	Card();
 	Card(std::string gd, int num, std::string act1, int n1, std::string act2, int n2, std::string op, bool n5);
 	Card(const Card& c);
-	~Card();
+	//~Card();
 	std::string getGood() const;
 	int getGoodAmount() const;
 	std::string getAction1() const;
@@ -28,7 +30,62 @@ public:
 	bool getIsFive() const;
 	std::string printCard();
 	std::string formatAction(std::string action, std::string number);
+
+	//!!!!!!!!!!!!!!!Welton from here
+	virtual ~Card();
+
+	//virtual void createdIn() = 0;
+
+
+
 };
+
+class TreeCard : public Card {
+	//From the tree constructor, we would just call the Card constructor with the already known good type and some passed information
+public:
+	
+	TreeCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5);
+	~TreeCard();
+};
+
+class AnvilCard : public Card {
+public:
+
+	AnvilCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5);
+	~AnvilCard();
+};
+
+class CarrotCard : public Card {
+public:
+
+	CarrotCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5);
+	~CarrotCard();
+};
+
+class CoalCard : public Card {
+public:
+
+	CoalCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5);
+	~CoalCard();
+};
+
+class ShardCard : public Card {
+public:
+
+	ShardCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5);
+	~ShardCard();
+};
+
+class WildCard : public Card {
+public:
+
+	WildCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5);
+	~WildCard();
+};
+
+
+
+
 
 class Deck {
 private:

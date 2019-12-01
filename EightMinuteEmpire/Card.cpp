@@ -106,3 +106,49 @@ string Card::formatAction(std::string action, std::string number) {
 	return formattedString;
 
 }
+
+//Factory Pattern -->
+
+//Implementations for each subclass constructor. Basically just calls the superclass Card constructor... IS this legal?
+
+
+
+TreeCard::TreeCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5) {
+	Card("tree", goodAmount, action1, n1, action2, n2, op, n5);
+}
+TreeCard::~TreeCard() {}
+
+AnvilCard::AnvilCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5)
+{
+	Card("anvil", goodAmount, action1, n1, action2, n2, op, n5);
+}
+
+AnvilCard::~AnvilCard() {}
+
+CarrotCard::CarrotCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5)
+{
+	Card("carrot", goodAmount, action1, n1, action2, n2, op, n5);
+}
+
+CarrotCard::~CarrotCard() {}
+
+CoalCard::CoalCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5)
+{
+	Card("coal", goodAmount, action1, n1, action2, n2, op, n5);
+}
+
+CoalCard::~CoalCard() {}
+
+ShardCard::ShardCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5)
+{
+	Card("shard", goodAmount, action1, n1, action2, n2, op, n5);
+}
+
+ShardCard::~ShardCard() {}
+
+WildCard::WildCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5)
+{
+	Card("wildcard", goodAmount, action1, n1, action2, n2, op, n5);
+}
+
+WildCard::~WildCard() {}
