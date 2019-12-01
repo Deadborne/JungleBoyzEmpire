@@ -26,9 +26,13 @@ void Deck::initializeDeck(int players) {
 	cout << "DECK SIZE: " << deck.size() << endl;
 	cout << "FRONT CARDS SIZE: " << space.size() << endl;
 
-	deck[0] =  Card("tree",		1,	"move",			3,	"",			0,	"",		false);
-	deck[1] =  Card("anvil",	1,	"place",		3,	"",			0,	"",		false);
-	deck[2] =  Card("anvil",	1,	"place",		3,	"move",		3,	"or",	false);
+	//deck[0] =  Card("tree",		1,	"move",			3,	"",			0,	"",		false);
+	deck[0] = TreeCard(1, "move", 3, "", 0, "", false);
+
+	//deck[1] =  Card("anvil",	1,	"place",		3,	"",			0,	"",		false);
+	deck[1] = AnvilCard(1, "place", 3, "", 0, "", false);
+	//deck[2] =  Card("anvil",	1,	"place",		3,	"move",		3,	"or",	false);
+	deck[2] = AnvilCard(1, "place", 3, "move", 3, "or", false);
 	deck[3] =  Card("wildcard", 1,	"moveOver",		2,	"",			0,	"",		false);
 	deck[4] =  Card("tree",		1,	"moveOver",		4,	"",			0,	"",		false);
 	deck[5] =  Card("anvil",	1,	"moveOver",		3,	"",			0,	"",		false);
