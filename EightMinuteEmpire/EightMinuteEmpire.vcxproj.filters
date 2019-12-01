@@ -55,6 +55,12 @@
     <Filter Include="Header Files\GameObservers">
       <UniqueIdentifier>{902dd1ba-dcde-47fe-bb45-49d510b654d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Factories">
+      <UniqueIdentifier>{62324d63-8311-4a40-9bfa-92f2b6ee700a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Factories">
+      <UniqueIdentifier>{db4c4040-1377-4737-b6b9-f92247911f02}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -161,6 +167,12 @@
     </ClInclude>
     <ClInclude Include="Bid.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CardsFactory.h">
+      <Filter>Header Files\Factories</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -277,6 +289,9 @@
     </ClCompile>
     <ClCompile Include="Bid.cpp">
       <Filter>Source Files\Bid</Filter>
+    </ClCompile>
+    <ClCompile Include="CardsFactory.cpp">
+      <Filter>Source Files\Factories</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

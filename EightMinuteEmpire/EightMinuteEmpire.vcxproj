@@ -146,6 +146,7 @@
   <ItemGroup>
     <ClInclude Include="Bid.h" />
     <ClInclude Include="Card.h" />
+    <ClInclude Include="CardsFactory.h" />
     <ClInclude Include="Continent.h" />
     <ClInclude Include="Country.h" />
     <ClInclude Include="Bid.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="AggregateDriver.cpp" />
     <ClCompile Include="Bid.cpp" />
     <ClCompile Include="BidDriver.cpp" />
+    <ClCompile Include="CardsFactory.cpp" />
     <ClCompile Include="GreedStrategy.cpp" />
     <ClCompile Include="ModerateStrategy.cpp" />
     <ClCompile Include="Npc.cpp" />
