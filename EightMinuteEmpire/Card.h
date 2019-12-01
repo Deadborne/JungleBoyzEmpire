@@ -10,7 +10,7 @@ private:
 	int amount;
 	std::string action1;
 	int num1;
-	std::string action2;
+	std::string action2; 
 	int num2;
 	std::string operate;
 	bool isFive;
@@ -34,7 +34,7 @@ public:
 	//!!!!!!!!!!!!!!!Welton from here
 	virtual ~Card();
 
-	//virtual void createdIn() = 0;
+	virtual void createdIn() = 0;
 
 
 

@@ -5,6 +5,9 @@
 #include <algorithm>
 #include <iterator>
 #include <stdlib.h>
+
+#include "CardsFactory.h"
+
 using namespace std;
 
 Deck::Deck() : deck(38), space(6), players(5) {
@@ -27,47 +30,91 @@ void Deck::initializeDeck(int players) {
 	cout << "FRONT CARDS SIZE: " << space.size() << endl;
 
 	//deck[0] =  Card("tree",		1,	"move",			3,	"",			0,	"",		false);
-	deck[0] = TreeCard(1, "move", 3, "", 0, "", false);
+	deck[0] = CardsFactory::Create("tree", 1, "move", 3, "", 0, "", false);
 
 	//deck[1] =  Card("anvil",	1,	"place",		3,	"",			0,	"",		false);
-	deck[1] = AnvilCard(1, "place", 3, "", 0, "", false);
+	deck[1] = CardsFactory::Create("anvil", 1, "place", 3, "", 0, "", false);
+
 	//deck[2] =  Card("anvil",	1,	"place",		3,	"move",		3,	"or",	false);
-	deck[2] = AnvilCard(1, "place", 3, "move", 3, "or", false);
-	deck[3] =  Card("wildcard", 1,	"moveOver",		2,	"",			0,	"",		false);
-	deck[4] =  Card("tree",		1,	"moveOver",		4,	"",			0,	"",		false);
-	deck[5] =  Card("anvil",	1,	"moveOver",		3,	"",			0,	"",		false);
-	deck[6] =  Card("wildcard", 1,	"place",		2,	"",			0,	"",		false);
-	deck[7] =  Card("coal",		1,	"place",		2,	"",			0,	"",		false);
-	deck[8] =  Card("shard",	1,	"place",		2,	"",			0,	"",		false);
-	deck[9] =  Card("coal",		1,	"place",		3,	"",			0,	"",		false);
-	deck[10] = Card("anvil",	1,	"place",		3,	"",			0,	"",		false);
-	deck[11] = Card("carrot",	2,	"place",		3,	"",			0,	"",		false);
-	deck[12] = Card("coal",		1,	"place",		2,	"build",	1,	"or",	false);
-	deck[13] = Card("anvil",	1,	"build",		1,	"",			0,	"",		false);
-	deck[14] = Card("carrot",	1,	"build",		1,	"",			0,	"",		false);
-	deck[15] = Card("carrot",	1,	"build",		1,	"",			0,	"",		false);
-	deck[16] = Card("tree",		1,	"build",		1,	"",			0,	"",		false);
-	deck[17] = Card("tree",		1,	"build",		1,	"",			0,	"",		false);
-	deck[18] = Card("shard",	1,	"place",		2,	"",			0,	"",		false);
-	deck[19] = Card("carrot",	1,	"destroy",		1,	"place",	1,	"and",	false);
-	deck[20] = Card("shard",	1,	"move",			2,	"",			0,	"",		false);
-	deck[21] = Card("tree",		1,	"destroy",		1,	"build",	1,	"or",	false);
-	deck[22] = Card("anvil",	1,	"move",			4,	"",			0,	"",		false);
-	deck[23] = Card("anvil",	1,	"place",		3,	"move",		4,	"or",	false);
-	deck[24] = Card("anvil",	1,	"place",		3,	"move",		4,	"or",	false);
-	deck[25] = Card("carrot",	1,	"moveOver",		3,	"",			0,	"",		false);
-	deck[26] = Card("tree",		1,	"moveOver",		3,	"",			0,	"",		false);
-	deck[27] = Card("coal",		1,	"moveOver",		3,	"",			0,	"",		false);
-	deck[28] = Card("carrot",	2,	"move",			4,	"",			0,	"",		false);
-	deck[29] = Card("advil",	1,	"move",			5,	"",			0,	"",		false);
-	deck[30] = Card("coal",		1,	"moveOver",		2,	"",			0,	"",		false);
-	deck[31] = Card("wildcard", 1,	"moveOver",		3,	"",			0,	"",		false);
-	deck[32] = Card("carrot",	1,	"move",			5,	"",			0,	"",		false);
-	deck[33] = Card("coal",		1,	"move",			2,	"",			0,	"",		false);
-	deck[34] = Card("tree",		1,	"place",		2,	"move",		3,	"or",	false);
-	deck[35] = Card("carrot",	1,	"move",			4,	"",			0,	"",		false);
-	deck[36] = Card("carrot",	1,	"place",		3,	"",			0,	"",		false);
-	deck[37] = Card("shard",	1,	"place",		1,	"",			0,	"",		false);
+	deck[2] = CardsFactory::Create("anvil", 1, "place", 3, "move", 3, "or", false);
+
+	//deck[3] =  Card("wildcard", 1,	"moveOver",		2,	"",			0,	"",		false);
+	deck[3] = CardsFactory::Create("wildcard", 1, "moveOver", 2, "", 0, "", false);
+
+	//deck[4] =  Card("tree",		1,	"moveOver",		4,	"",			0,	"",		false);
+	deck[4] = CardsFactory::Create("tree", 1, "moveOver", 4, "", 0, "", false);
+
+
+	deck[5] = CardsFactory::Create("anvil", 1, "moveOver", 3, "", 0, "", false);
+	deck[6] = CardsFactory::Create("wildcard", 1, "place", 2, "", 0, "", false);
+	deck[7] = CardsFactory::Create("coal", 1, "place", 2, "", 0, "", false);
+	deck[8] = CardsFactory::Create("shard", 1, "place", 2, "", 0, "", false);
+	deck[9] = CardsFactory::Create("coal", 1, "place", 3, "", 0, "", false);
+	deck[10] = CardsFactory::Create("anvil", 1, "place", 3, "", 0, "", false);
+	deck[11] = CardsFactory::Create("carrot", 2, "place", 3, "", 0, "", false);
+	deck[12] = CardsFactory::Create("coal", 1, "place", 2, "build", 1, "or", false);
+	deck[13] = CardsFactory::Create("anvil", 1, "build", 1, "", 0, "", false);
+	deck[14] = CardsFactory::Create("carrot", 1, "build", 1, "", 0, "", false);
+	deck[15] = CardsFactory::Create("carrot", 1, "build", 1, "", 0, "", false);
+	deck[16] = CardsFactory::Create("tree", 1, "build", 1, "", 0, "", false);
+	deck[17] = CardsFactory::Create("tree", 1, "build", 1, "", 0, "", false);
+	deck[18] = CardsFactory::Create("shard", 1, "place", 2, "", 0, "", false);
+	deck[19] = CardsFactory::Create("carrot", 1, "destroy", 1, "place", 1, "and", false);
+	deck[20] = CardsFactory::Create("shard", 1, "move", 2, "", 0, "", false);
+	deck[21] = CardsFactory::Create("tree", 1, "destroy", 1, "build", 1, "or", false);
+	deck[22] = CardsFactory::Create("anvil", 1, "move", 4, "", 0, "", false);
+	deck[23] = CardsFactory::Create("anvil", 1, "place", 3, "move", 4, "or", false);
+	deck[24] = CardsFactory::Create("anvil", 1, "place", 3, "move", 4, "or", false);
+	deck[25] = CardsFactory::Create("carrot", 1, "moveOver", 3, "", 0, "", false);
+	deck[26] = CardsFactory::Create("tree", 1, "moveOver", 3, "", 0, "", false);
+	deck[27] = CardsFactory::Create("coal", 1, "moveOver", 3, "", 0, "", false);
+	deck[28] = CardsFactory::Create("carrot", 2, "move", 4, "", 0, "", false);
+	deck[29] = CardsFactory::Create("anvil", 1, "move", 5, "", 0, "", false);
+	deck[30] = CardsFactory::Create("coal", 1, "moveOver", 2, "", 0, "", false);
+	deck[31] = CardsFactory::Create("wildcard", 1, "moveOver", 3, "", 0, "", false);
+	deck[32] = CardsFactory::Create("carrot", 1, "move", 5, "", 0, "", false);
+	deck[33] = CardsFactory::Create("coal", 1, "move", 2, "", 0, "", false);
+	deck[34] = CardsFactory::Create("tree", 1, "place", 2, "move", 3, "or", false);
+	deck[35] = CardsFactory::Create("carrot", 1, "move", 4, "", 0, "", false);
+	deck[36] = CardsFactory::Create("carrot", 1, "place", 3, "", 0, "", false);
+	deck[37] = CardsFactory::Create("shard", 1, "place", 1, "", 0, "", false);
+
+
+
+
+	//deck[5] =  Card("anvil",	1,	"moveOver",		3,	"",			0,	"",		false);
+	//deck[6] =  Card("wildcard", 1,	"place",		2,	"",			0,	"",		false);
+	//deck[7] =  Card("coal",		1,	"place",		2,	"",			0,	"",		false);
+	//deck[8] =  Card("shard",	1,	"place",		2,	"",			0,	"",		false);
+	//deck[9] =  Card("coal",		1,	"place",		3,	"",			0,	"",		false);
+	//deck[10] = Card("anvil",	1,	"place",		3,	"",			0,	"",		false);
+	//deck[11] = Card("carrot",	2,	"place",		3,	"",			0,	"",		false);
+	//deck[12] = Card("coal",		1,	"place",		2,	"build",	1,	"or",	false);
+	//deck[13] = Card("anvil",	1,	"build",		1,	"",			0,	"",		false);
+	//deck[14] = Card("carrot",	1,	"build",		1,	"",			0,	"",		false);
+	//deck[15] = Card("carrot",	1,	"build",		1,	"",			0,	"",		false);
+	//deck[16] = Card("tree",		1,	"build",		1,	"",			0,	"",		false);
+	//deck[17] = Card("tree",		1,	"build",		1,	"",			0,	"",		false);
+	//deck[18] = Card("shard",	1,	"place",		2,	"",			0,	"",		false);
+	//deck[19] = Card("carrot",	1,	"destroy",		1,	"place",	1,	"and",	false);
+	//deck[20] = Card("shard",	1,	"move",			2,	"",			0,	"",		false);
+	//deck[21] = Card("tree",		1,	"destroy",		1,	"build",	1,	"or",	false);
+	//deck[22] = Card("anvil",	1,	"move",			4,	"",			0,	"",		false);
+	//deck[23] = Card("anvil",	1,	"place",		3,	"move",		4,	"or",	false);
+	//deck[24] = Card("anvil",	1,	"place",		3,	"move",		4,	"or",	false);
+	//deck[25] = Card("carrot",	1,	"moveOver",		3,	"",			0,	"",		false);
+	//deck[26] = Card("tree",		1,	"moveOver",		3,	"",			0,	"",		false);
+	//deck[27] = Card("coal",		1,	"moveOver",		3,	"",			0,	"",		false);
+	//deck[28] = Card("carrot",	2,	"move",			4,	"",			0,	"",		false);
+	//deck[29] = Card("anvil",	1,	"move",			5,	"",			0,	"",		false);
+	//deck[30] = Card("coal",		1,	"moveOver",		2,	"",			0,	"",		false);
+	//deck[31] = Card("wildcard", 1,	"moveOver",		3,	"",			0,	"",		false);
+	//deck[32] = Card("carrot",	1,	"move",			5,	"",			0,	"",		false);
+	//deck[33] = Card("coal",		1,	"move",			2,	"",			0,	"",		false);
+	//deck[34] = Card("tree",		1,	"place",		2,	"move",		3,	"or",	false);
+	//deck[35] = Card("carrot",	1,	"move",			4,	"",			0,	"",		false);
+	//deck[36] = Card("carrot",	1,	"place",		3,	"",			0,	"",		false);
+	//deck[37] = Card("shard",	1,	"place",		1,	"",			0,	"",		false);
 
 
 	if (players == 5) { // only insert these cards if the amount of players is 5

@@ -117,6 +117,7 @@ string Card::formatAction(std::string action, std::string number) {
 
 TreeCard::TreeCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5) {
 	Card("tree", goodAmount, action1, n1, action2, n2, op, n5);
+
 }
 TreeCard::~TreeCard() {}
 
