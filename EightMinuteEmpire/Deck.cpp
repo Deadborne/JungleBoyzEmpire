@@ -30,6 +30,7 @@ void Deck::initializeDeck(int players) {
 	cout << "FRONT CARDS SIZE: " << space.size() << endl;
 
 	vector<Card*> ptrCard;
+	ptrCard.resize(38);
 	
 	ptrCard[0] = CardsFactory::Create("tree", 1, "move", 3, "", 0, "", false);
 	ptrCard[1] = CardsFactory::Create("anvil", 1, "place", 3, "", 0, "", false);
