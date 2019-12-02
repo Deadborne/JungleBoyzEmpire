@@ -108,50 +108,33 @@ string Card::formatAction(std::string action, std::string number) {
 }
 
 //Factory Pattern -->
-
-//Implementations for each subclass constructor. Basically just calls the superclass Card constructor... IS this legal?
-
-//Note the alternative (if we want to not be calling the card constructor) is to implement a new constructor for each individual card type. 
-//They would all look the same more or less. It feels cleaner to do it this way, but im not sure if it breaks any rules for pattern 
-//implementations...
-
-TreeCard::TreeCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5) {
-	Card("tree", goodAmount, action1, n1, action2, n2, op, n5);
-
-}
+TreeCard::TreeCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5) :
+	Card("tree", goodAmount, action1, n1, action2, n2, op, n5)
+{}
 TreeCard::~TreeCard() {}
 
-AnvilCard::AnvilCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5)
-{
-	Card("anvil", goodAmount, action1, n1, action2, n2, op, n5);
-}
+AnvilCard::AnvilCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5) :
+	Card("anvil", goodAmount, action1, n1, action2, n2, op, n5)
 
+{}
 AnvilCard::~AnvilCard() {}
 
-CarrotCard::CarrotCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5)
-{
-	Card("carrot", goodAmount, action1, n1, action2, n2, op, n5);
-}
-
+CarrotCard::CarrotCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5) : 
+	Card("carrot", goodAmount, action1, n1, action2, n2, op, n5)
+{}
 CarrotCard::~CarrotCard() {}
 
-CoalCard::CoalCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5)
-{
-	Card("coal", goodAmount, action1, n1, action2, n2, op, n5);
-}
-
+CoalCard::CoalCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5) :
+	Card("coal", goodAmount, action1, n1, action2, n2, op, n5)
+{}
 CoalCard::~CoalCard() {}
 
-ShardCard::ShardCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5)
-{
-	Card("shard", goodAmount, action1, n1, action2, n2, op, n5);
-}
-
+ShardCard::ShardCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5) :
+	Card("shard", goodAmount, action1, n1, action2, n2, op, n5)
+{}
 ShardCard::~ShardCard() {}
 
-WildCard::WildCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5)
-{
-	Card("wildcard", goodAmount, action1, n1, action2, n2, op, n5);
-}
-
+WildCard::WildCard(int goodAmount, string action1, int n1, string action2, int n2, string op, bool n5) :
+	Card("wildcard", goodAmount, action1, n1, action2, n2, op, n5)
+{}
 WildCard::~WildCard() {}

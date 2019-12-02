@@ -6,10 +6,6 @@
 
 using namespace std;
 
-
-
-
-
 class CardsFactory {
 
 public:
