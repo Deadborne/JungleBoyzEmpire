@@ -688,7 +688,12 @@ int main()
 												cout << i + 1 << ": Country " << Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[i] - 1].getCountryId() << endl;
 											}
 											if (moveChoice > players[currentPlayer].getArmyLocations(*Map::instance()).size() || moveChoice < 1) {
-												cin >> moveChoice;
+												if (players[currentPlayer].getIsNPC()) {
+													moveChoice = random(1, players[currentPlayer].getArmyLocations(*Map::instance()).size());
+												}
+												else {
+													cin >> moveChoice;
+												}
 											}
 
 										}
@@ -713,8 +718,14 @@ int main()
 
 											}
 
-											if (countryDest > countriesOnSameContinent.size() || countryDest < 1)
-												cin >> countryDest;
+											if (countryDest > countriesOnSameContinent.size() || countryDest < 1) {
+												if (players[currentPlayer].getIsNPC()) {
+													moveChoice = random(1, players[currentPlayer].getArmyLocations(*Map::instance()).size());
+												}
+												else {
+													cin >> countryDest;
+												}
+											}
 										}
 									}
 									
@@ -747,7 +758,12 @@ int main()
 											cout << i + 1 << ": Country " << Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[i] - 1].getCountryId() << endl;
 										}
 										if (moveChoice > players[currentPlayer].getArmyLocations(*Map::instance()).size() || moveChoice < 1) {
-											cin >> moveChoice;
+											if (players[currentPlayer].getIsNPC()) {
+												moveChoice = random(1, players[currentPlayer].getArmyLocations(*Map::instance()).size());
+											}
+											else {
+												cin >> moveChoice;
+											}
 										}
 
 									}
@@ -764,8 +780,15 @@ int main()
 											cout << i + 1 << ": Country " << Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).at(i) << endl;
 										}
 
-										if (countryDest > Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).size() || countryDest < 1)
-											cin >> countryDest;
+										if (countryDest > Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).size() || countryDest < 1) {
+											if (players[currentPlayer].getIsNPC()) {
+												countryDest = random(1, Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).size() + 1);
+											}
+											else {
+												cin >> countryDest;
+											}
+
+										}
 									}
 
 									players[currentPlayer].moveArmies(1, Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1], Map::instance()->getCountries()[Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).at(countryDest - 1) - 1]);
@@ -945,7 +968,12 @@ int main()
 												cout << i + 1 << ": Country " << Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[i] - 1].getCountryId() << endl;
 											}
 											if (moveChoice > players[currentPlayer].getArmyLocations(*Map::instance()).size() || moveChoice < 1) {
-												cin >> moveChoice;
+												if (players[currentPlayer].getIsNPC()) {
+													moveChoice = random(1, players[currentPlayer].getArmyLocations(*Map::instance()).size());
+												}
+												else {
+													cin >> moveChoice;
+												}
 											}
 
 										}
@@ -970,8 +998,15 @@ int main()
 
 											}
 
-											if (countryDest > countriesOnSameContinent.size() || countryDest < 1)
-												cin >> countryDest;
+											if (countryDest > countriesOnSameContinent.size() || countryDest < 1) {
+												if (players[currentPlayer].getIsNPC()) {
+													countryDest = random(1, countriesOnSameContinent.size());
+												}
+												else {
+													cin >> countryDest;
+												}
+											}
+
 										}
 									}
 
@@ -1004,7 +1039,13 @@ int main()
 											cout << i + 1 << ": Country " << Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[i] - 1].getCountryId() << endl;
 										}
 										if (moveChoice > players[currentPlayer].getArmyLocations(*Map::instance()).size() || moveChoice < 1) {
-											cin >> moveChoice;
+											if (players[currentPlayer].getIsNPC()) {
+												moveChoice = random(1, players[currentPlayer].getArmyLocations(*Map::instance()).size());
+											}
+											else {
+												cin >> moveChoice;
+											}
+											
 										}
 
 									}
@@ -1021,8 +1062,15 @@ int main()
 											cout << i + 1 << ": Country " << Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).at(i) << endl;
 										}
 
-										if (countryDest > Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).size() || countryDest < 1)
-											cin >> countryDest;
+										if (countryDest > Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).size() || countryDest < 1) {
+											if (players[currentPlayer].getIsNPC()) {
+												countryDest = random(1, Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).size());
+											}
+											else {
+												cin >> countryDest;
+											}
+										}
+											
 									}
 
 									players[currentPlayer].moveArmies(1, Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1], Map::instance()->getCountries()[Map::instance()->getCountries()[players[currentPlayer].getArmyLocations(*Map::instance())[moveChoice - 1] - 1].returnAdjacencies(GameMap).at(countryDest - 1) - 1]);
@@ -1139,8 +1187,6 @@ int main()
 				}
 				else {
 					cout << "Invalid Action" << endl;
-					cin.clear();
-					cin.ignore();
 				}
 			}
 
