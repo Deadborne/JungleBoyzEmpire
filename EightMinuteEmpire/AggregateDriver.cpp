@@ -1186,6 +1186,9 @@ int main()
 					numberOfActions -= 1;
 				}
 				else {
+					if (gameMode == 2) {
+						numberOfActions = 0;
+					}
 					cout << "Invalid Action" << endl;
 				}
 			}
