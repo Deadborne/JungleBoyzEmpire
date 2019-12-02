@@ -10,26 +10,23 @@
 
 using namespace std;
 
-Deck::Deck() : deck(38), space(6), players(5) {
+Deck::Deck() : deck(0), space(6), players(5) {
 	initializeDeck(5),
 	shuffleDeck(),
 	initializeSpace();
 };
 
-Deck::Deck(int num) : deck(38), space(6), players(num) {
+Deck::Deck(int num) : deck(0), space(6), players(num) {
 	initializeDeck(num),
 	shuffleDeck(),
 	initializeSpace();
 };
-
-Deck::~Deck() {};
 
 // Created deck object with 42 cards
 void Deck::initializeDeck(int players) {
 	cout << "DECK SIZE: " << deck.size() << endl;
 	cout << "FRONT CARDS SIZE: " << space.size() << endl;
 
-	vector<Card*> ptrCard;
 	//ptrCard.resize(38);
 
 	ptrCard.push_back(CardsFactory::Create("tree", 1, "move", 3, "", 0, "", false));
@@ -127,7 +124,8 @@ void Deck::initializeDeck(int players) {
 		//cout << ptrCard.at(i)->printCard() << endl;
 	}
 
-	//printDeckWhole();
+	printDeckWhole();
+	cout << endl;
 
 	//deck.shrink_to_fit();
 }
@@ -137,7 +135,15 @@ void Deck::initializeSpace() {
 		space[i] = deck[0];
 		deck.erase(deck.begin());
 	}
+	printDeck();
 }
+
+// Destructor
+Deck::~Deck() {
+	for (int i = 0; i < deck.size(); i++) {
+		delete ptrCard.at(i);
+	}
+};
 
 // Shuffle deck method
 void Deck::shuffleDeck() {

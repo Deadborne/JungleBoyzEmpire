@@ -92,6 +92,7 @@ private:
 	int players;
 	std::vector<Card> deck;
 	std::vector<Card> space;
+	std::vector<Card*> ptrCard;
 	void initializeDeck(int players);
 	void initializeSpace();
 	void shuffleDeck();
